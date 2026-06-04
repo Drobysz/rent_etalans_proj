@@ -8,8 +8,10 @@ class Payment extends Model
 {
     protected $fillable = [
         'apart_id',
-        'checkin',
-        'checkout',
+        // 'checkin',
+        // 'checkout','
+        'client_number',
+        'days_number',
         'email',
         'reserve_id',
         'total_price'

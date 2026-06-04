@@ -26,7 +26,10 @@ class StripeController extends Controller
 
         $checkout_session = $this->createInvoice(
             $data['email'],
-            $data['service_ids']
+            $data['service_ids'],
+            $data['reserve_id'],
+            $data['client_number'],
+            $data['days_number']
         );
 
         return response()->json([ 'url' => $checkout_session->url ], 200);
@@ -71,7 +74,7 @@ class StripeController extends Controller
                     'unit_amount' => (int) round($price * 100),
                     'product_data' => [
                         'name' => $service->name,
-                        // 'images' => $service->image_url ? [$service->image_url] : [],
+                        'images' => $service->image_url ? [$service->image_url] : [],
                     ],
                 ],
             ];
@@ -82,7 +85,10 @@ class StripeController extends Controller
 
     private function createInvoice(
         string $email,
-        array $service_ids
+        array $service_ids,
+        string $reserve_id,
+        int $client_number,
+        int $days_number
     ){
         $lineItems = $this->getServiceInvoiceItems($service_ids);
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -98,7 +104,10 @@ class StripeController extends Controller
                 'cancel_url'  => env('APP_FRONT_URL') . '/cancel',
 
                 'metadata' => [
-                    'service_ids' => implode(',', $service_ids),
+                    'service_ids'   => implode(',', $service_ids),
+                    'reserve_id'    => $reserve_id,
+                    'client_number' => (string) $client_number,
+                    'days_number'   => (string) $days_number
                 ],
             ],
             [

@@ -18,14 +18,14 @@ class PaymentController extends Controller
     public function index()
     {
         return Payment::query()
-            ->with(['services', 'apartment'])
+            ->with(['services'])
             ->orderByDesc('id')
             ->paginate(7);
     }
 
     public function show(Payment $payment)
     {
-        return $payment->load(['services', 'apartment']);
+        return $payment->load(['services']);
     }
 
     public function store(PaymentStoreRequest $request)
@@ -36,11 +36,6 @@ class PaymentController extends Controller
 
         $payment = DB::transaction( function () use ($data, $serviceIds)
         {
-            $total_price = Service::query()
-                ->whereIn('id', $serviceIds)
-                ->sum('price');
-
-            $data['total_price'] = $total_price;
             $payment = Payment::create($data);
 
             if (!empty($serviceIds)) {
@@ -51,7 +46,7 @@ class PaymentController extends Controller
         });
 
         return response()->json(
-            $payment->load(['services', 'apartment']),
+            $payment->load(['services']),
             201
         );
     }

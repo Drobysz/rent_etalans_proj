@@ -23,6 +23,9 @@ class StripeStoreRequest extends FormRequest
     {
         return [
             'email'         => ['required', 'string', 'max:80'],
+            'client_number' => ['required', 'numeric', 'digits_between:1,20'],
+            'days_number'   => ['required', 'numeric', 'digits_between:1,365'],
+            'reserve_id'    => ['required', 'string', 'max:20'],
             'service_ids'   => ['required', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id']
         ];

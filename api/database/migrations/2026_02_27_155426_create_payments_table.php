@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('apart_id')->nullable();
-            $table->dateTime('checkin');
-            $table->dateTime('checkout');
+            // $table->dateTime('checkin');
+            // $table->dateTime('checkout');
+            $table->unsignedBigInteger('client_number');
+            $table->unsignedBigInteger('days_number');
+            
             $table->string('email', length: 80);
             $table->foreign('apart_id')
                 ->references('id')
