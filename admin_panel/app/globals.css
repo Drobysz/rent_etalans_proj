@@ -12,7 +12,10 @@
   --admin-text-soft: #78808c;
   --admin-primary: #24272d;
   --admin-primary-hover: #111318;
+  --admin-success: #15803d;
+  --admin-success-bg: #ecfdf3;
   --admin-danger: #b42318;
+  --admin-danger-bg: #fef3f2;
   --admin-focus: #6b7280;
   --admin-radius: 8px;
   --admin-radius-sm: 6px;

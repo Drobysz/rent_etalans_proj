@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import CloseIcon from "@/assets/close.svg";
 import EditIcon from "@/assets/edit.svg";
 import { formatDateTime, formatMoney } from "@/helpers";
 import styles from "./style.module.scss";
 import type { ServiceCardProps } from "./ServiceCard.props";
 
-export function ServiceCard({ service }: ServiceCardProps) {
+export function ServiceCard({ deleteAction, service }: ServiceCardProps) {
   const image = service.images[0];
 
   return (
@@ -24,17 +25,30 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
         <p className={styles.description}>{service.description}</p>
         <div className={styles.meta}>
-          <span>{service.status}</span>
+          <span>{service.visible ? "Visible" : "Hidden"}</span>
+          <span>{service.fixedPrice ? "Fixed price" : "Per day"}</span>
           <span>Updated {formatDateTime(service.updatedAt)}</span>
         </div>
       </div>
-      <Link
-        className={styles.editButton}
-        href={`/services/${service.id}/edit`}
-        aria-label={`Edit ${service.name}`}
-      >
-        <EditIcon aria-hidden="true" />
-      </Link>
+      <div className={styles.actions}>
+        <Link
+          className={styles.editButton}
+          href={`/services/${service.id}/edit`}
+          aria-label={`Edit ${service.name}`}
+        >
+          <EditIcon aria-hidden="true" />
+        </Link>
+        <form action={deleteAction}>
+          <input type="hidden" name="serviceId" value={service.id} />
+          <button
+            className={styles.deleteButton}
+            type="submit"
+            aria-label={`Delete ${service.name}`}
+          >
+            <CloseIcon aria-hidden="true" />
+          </button>
+        </form>
+      </div>
     </article>
   );
 }

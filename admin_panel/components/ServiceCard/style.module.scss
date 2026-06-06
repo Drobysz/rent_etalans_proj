@@ -53,9 +53,14 @@
   color: var(--admin-text-soft);
 }
 
-.editButton {
+.actions {
+  @apply flex flex-col gap-2 p-3 pl-0;
+}
+
+.editButton,
+.deleteButton {
   @apply inline-flex h-8 w-8 items-center
-    justify-center m-3;
+    justify-center;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text-muted);
@@ -65,13 +70,20 @@
     background-color 140ms var(--admin-ease);
 }
 
-.editButton:hover {
+.editButton:hover,
+.deleteButton:hover {
   background: var(--admin-surface-subtle);
   border-color: var(--admin-border-strong);
   color: var(--admin-text);
 }
 
-.editButton svg {
+.deleteButton:hover {
+  border-color: color-mix(in srgb, var(--admin-danger) 24%, var(--admin-border));
+  color: var(--admin-danger);
+}
+
+.editButton svg,
+.deleteButton svg {
   @apply h-4 w-4;
 }
 
@@ -82,6 +94,10 @@
 
   .media {
     @apply col-span-2 m-3 mb-0;
+  }
+
+  .actions {
+    @apply row-start-2 col-start-2 flex-row;
   }
 
   .image,

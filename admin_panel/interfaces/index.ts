@@ -13,6 +13,16 @@ export type Service = {
   status: "active" | "draft";
   updatedAt: string;
   images: ServiceImage[];
+  visible: boolean;
+  fixedPrice: boolean;
+};
+
+export type NotificationStatus = "success" | "error";
+
+export type AppNotification = {
+  id: string;
+  message: string;
+  status: NotificationStatus;
 };
 
 export type PaymentInfo = {

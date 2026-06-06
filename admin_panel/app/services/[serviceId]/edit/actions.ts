@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { requireAdmin } from "@/auth/sessions";
 import { serviceFormSchema, type ServiceFormActionState } from "../../_sections/ServiceForm/ServiceForm.schema";
 
 function getSelectedImage(formData: FormData) {
@@ -51,6 +52,8 @@ export async function updateServiceAction(
     name: formData.get("name"),
     price: formData.get("price"),
     description: formData.get("description"),
+    visible: formData.get("visible"),
+    fixed_price: formData.get("fixed_price"),
   });
 
   if (!serviceId) {
@@ -65,6 +68,8 @@ export async function updateServiceAction(
         name: flattened.name?.[0],
         price: flattened.price?.[0],
         description: flattened.description?.[0],
+        visible: flattened.visible?.[0],
+        fixed_price: flattened.fixed_price?.[0],
       },
     };
   }
@@ -72,14 +77,24 @@ export async function updateServiceAction(
   const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
   if (!apiUrl) {
-    return { message: "API_URL is not configured. The form data is valid." };
+    return {
+      message: "API_URL is not configured. The form data is valid.",
+      notification: {
+        id: "service-update-api-missing",
+        status: "error",
+        message: "Service was not updated.",
+      },
+    };
   }
+
+  const session = await requireAdmin();
 
   try {
     const response = await fetch(`${apiUrl}/services/${serviceId}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${session.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(parsed.data),
@@ -87,7 +102,14 @@ export async function updateServiceAction(
     });
 
     if (!response.ok) {
-      return { message: "Service was not updated. Check the form and try again." };
+      return {
+        message: "Service was not updated. Check the form and try again.",
+        notification: {
+          id: `service-update-${response.status}`,
+          status: "error",
+          message: "Service was not updated.",
+        },
+      };
     }
 
     const selectedImage = getSelectedImage(formData);
@@ -101,12 +123,26 @@ export async function updateServiceAction(
       );
 
       if (!imageResponse.ok) {
-        return { message: "Service details were saved, but the image was not updated." };
+        return {
+          message: "Service details were saved, but the image was not updated.",
+          notification: {
+            id: `service-image-update-${imageResponse.status}`,
+            status: "error",
+            message: "Service image was not updated.",
+          },
+        };
       }
     }
   } catch {
-    return { message: "Unable to reach the API." };
+    return {
+      message: "Unable to reach the API.",
+      notification: {
+        id: "service-update-fetch-error",
+        status: "error",
+        message: "Unable to reach the API.",
+      },
+    };
   }
 
-  redirect("/services");
+  redirect("/services?notification=service-updated");
 }

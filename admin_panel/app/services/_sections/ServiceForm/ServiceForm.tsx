@@ -7,7 +7,9 @@ import {
   ServiceImageField,
   ServiceTextareaField,
   ServiceTextField,
+  ServiceToggleField,
 } from "./_components";
+import { NotificationToast } from "@/components";
 import type { ServiceFormActionState } from "./ServiceForm.schema";
 import type { ServiceFormProps } from "./ServiceForm.props";
 import styles from "./style.module.scss";
@@ -54,6 +56,22 @@ export function ServiceForm({
           defaultValue={service?.description}
           error={state.fieldErrors?.description}
         />
+        <div className={styles.statusGrid}>
+          <ServiceToggleField
+            label="Visibility"
+            name="visible"
+            defaultChecked={service?.visible ?? true}
+            onLabel="Visible"
+            offLabel="Hidden"
+          />
+          <ServiceToggleField
+            label="Price"
+            name="fixed_price"
+            defaultChecked={service?.fixedPrice ?? false}
+            onLabel="Fixed price"
+            offLabel="Per day"
+          />
+        </div>
         <ServiceImageField
           error={state.fieldErrors?.images}
           existingImage={existingImage}
@@ -61,6 +79,7 @@ export function ServiceForm({
         />
 
         {state.message ? <p className={styles.message}>{state.message}</p> : null}
+        <NotificationToast notification={state.notification} />
 
         <ServiceFormActions mode={mode} pending={pending} />
       </form>

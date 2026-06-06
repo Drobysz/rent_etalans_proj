@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+
+.toast {
+  @apply fixed right-5 bottom-5 z-50 max-w-[360px]
+    px-4 py-3 text-[14px];
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  box-shadow: 0 8px 24px rgb(17 24 39 / 12%);
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.success {
+  border-color: color-mix(in srgb, var(--admin-success) 30%, var(--admin-border));
+  background: var(--admin-success-bg);
+  color: var(--admin-success);
+}
+
+.error {
+  border-color: color-mix(in srgb, var(--admin-danger) 30%, var(--admin-border));
+  background: var(--admin-danger-bg);
+  color: var(--admin-danger);
+}
+
+@media (max-width: 560px) {
+  .toast {
+    @apply right-3 bottom-3 left-3 max-w-none;
+  }
+}
