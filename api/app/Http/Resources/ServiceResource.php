@@ -19,6 +19,8 @@ class ServiceResource extends JsonResource
             'id'          => $this->id,
             'name'        => $this->name,
             'description' => $this->description,
+            'visible'     => $this->visible,
+            'fixed_price' => $this->fixed_price,
             'price'       => $this->price,
             'images' => $this->whenLoaded('images', function () {
                 return $this->images->map(function ($image) {

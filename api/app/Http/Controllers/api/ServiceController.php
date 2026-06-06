@@ -13,6 +13,7 @@ use App\Http\Requests\{
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -29,11 +30,21 @@ class ServiceController extends Controller
         return new ServiceResource($service);
     }
 
+    public function showAllVisible()
+    {
+        return ServiceResource::collection(
+            Service::with('images')
+                ->where('visible', true)
+                ->latest('id')
+                ->get()
+        );
+    }
+
     public function store(ServiceStoreRequest $request)
     {
 
         $data = $request->validated();
-        unset($data['image']);
+        unset($data['images']);
         $service = Service::create($data);
 
         foreach ($request->file('images') as $file)

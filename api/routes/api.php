@@ -16,10 +16,14 @@ use App\Http\Controllers\api\{
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/users/me', [AuthController::class, 'me'])
     ->middleware('auth:sanctum');
+Route::get('/services/visible', [ServiceController::class, 'showAllVisible']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users', [UserController::class, 'store']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
+
+    Route::apiResource('services', ServiceController::class);
 });
 
 Route::get('/user', function (Request $request) {
@@ -27,7 +31,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('apartments', ApartmentController::class);
-Route::apiResource('services', ServiceController::class);
 Route::get('/payments/dashboard', [PaymentController::class, 'dashboard']);
 Route::apiResource('payments', PaymentController::class)
     ->except(['update']);

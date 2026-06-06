@@ -26,6 +26,8 @@ class ServiceStoreRequest extends FormRequest
             'price'       => ['required', 'numeric', 'min:0'],
             'description' => ['required', 'string', 'max:500'],
             'images'      => ['required', 'array'],
+            'visible'     => ['sometimes', 'boolean'],
+            'fixed_price' => ['required', 'boolean'],
             'images.*'    => ['required', 'image', 'max:104240']
         ];
     }

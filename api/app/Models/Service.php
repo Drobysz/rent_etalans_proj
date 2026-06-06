@@ -10,7 +10,14 @@ class Service extends Model
     protected $fillable = [
         'name',
         'description',
-        'price'
+        'price',
+        'visible',
+        'fixed_price',
+    ];
+
+    protected $casts = [
+        'visible' => 'boolean',
+        'fixed_price' => 'boolean',
     ];
 
     public function payments()

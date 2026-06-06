@@ -24,6 +24,8 @@ class ServiceUpdateRequest extends FormRequest
         return [
             'name'        => ['sometimes', 'string', 'max:30'],
             'price'       => ['sometimes', 'numeric', 'min:0'],
+            'visible'     => ['sometimes', 'boolean'],
+            'fixed_price' => ['sometimes', 'boolean'],
             'description' => ['sometimes', 'string', 'max:500']
         ];
     }
