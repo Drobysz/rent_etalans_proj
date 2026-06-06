@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .grid {
-  display: grid;
-  gap: 12px;
+  @apply grid;
+  @apply gap-3;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }

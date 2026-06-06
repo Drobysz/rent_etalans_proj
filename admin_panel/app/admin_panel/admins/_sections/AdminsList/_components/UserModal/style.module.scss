@@ -1,14 +1,14 @@
 @reference "tailwindcss";
 
 .backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  display: grid;
-  place-items: center;
+  @apply fixed;
+  @apply inset-0;
+  @apply z-40;
+  @apply grid;
+  @apply place-items-center;
   background: rgb(17 24 39 / 22%);
   backdrop-filter: blur(8px);
-  padding: 20px;
+  @apply p-5;
 }
 
 .modal {
@@ -20,32 +20,32 @@
 }
 
 .header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
+  @apply flex;
+  @apply items-start;
+  @apply justify-between;
+  @apply gap-4;
   border-bottom: 1px solid var(--admin-border);
-  padding: 18px 20px;
+  @apply px-5 py-[18px];
 }
 
 .header h2 {
-  font-size: 18px;
+  @apply text-[18px];
   font-weight: 600;
   color: var(--admin-text);
 }
 
 .header p {
-  margin-top: 4px;
-  font-size: 14px;
+  @apply mt-1;
+  @apply text-[14px];
   color: var(--admin-text-muted);
 }
 
 .closeButton {
-  display: inline-flex;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply w-8;
+  @apply h-8;
+  @apply items-center;
+  @apply justify-center;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
@@ -63,35 +63,35 @@
 }
 
 .closeButton svg {
-  width: 16px;
-  height: 16px;
+  @apply w-4;
+  @apply h-4;
 }
 
 .form {
-  display: grid;
-  gap: 14px;
-  padding: 20px;
+  @apply grid;
+  @apply gap-3.5;
+  @apply p-5;
 }
 
 .field {
-  display: grid;
-  gap: 6px;
+  @apply grid;
+  @apply gap-1.5;
 }
 
 .field span {
-  font-size: 13px;
+  @apply text-[13px];
   font-weight: 500;
   color: var(--admin-text);
 }
 
 .field input,
 .field select {
-  height: 38px;
+  @apply h-[38px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
   color: var(--admin-text);
-  padding: 0 10px;
+  @apply px-2.5;
 }
 
 .field input:focus,
@@ -101,27 +101,27 @@
 
 .field strong,
 .error {
-  font-size: 13px;
+  @apply text-[13px];
   font-weight: 500;
   color: var(--admin-danger);
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding-top: 4px;
+  @apply flex;
+  @apply justify-end;
+  @apply gap-2;
+  @apply pt-1;
 }
 
 .primaryButton,
 .secondaryButton {
-  display: inline-flex;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-9;
+  @apply items-center;
+  @apply justify-center;
   border-radius: var(--admin-radius-sm);
-  padding: 0 12px;
-  font-size: 14px;
+  @apply px-3;
+  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -131,7 +131,7 @@
 .primaryButton {
   border: 1px solid var(--admin-primary);
   background: var(--admin-primary);
-  color: #fff;
+  @apply text-white;
 }
 
 .primaryButton:hover {

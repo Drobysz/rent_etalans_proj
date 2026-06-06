@@ -1,35 +1,35 @@
 @reference "tailwindcss";
 
 .tableWrap {
-  overflow-x: auto;
+  @apply overflow-x-auto;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
 }
 
 .table {
-  width: 100%;
-  min-width: 640px;
-  border-collapse: collapse;
+  @apply w-full;
+  @apply min-w-[640px];
+  @apply border-collapse;
 }
 
 .table th,
 .table td {
-  padding: 12px 16px;
-  text-align: left;
+  @apply px-4 py-3;
+  @apply text-left;
   border-bottom: 1px solid var(--admin-border);
 }
 
 .table th {
   background: var(--admin-sidebar);
   color: var(--admin-text-muted);
-  font-size: 13px;
+  @apply text-[13px];
   font-weight: 500;
 }
 
 .table td {
   color: var(--admin-text);
-  font-size: 14px;
+  @apply text-[14px];
 }
 
 .table tr:last-child td {
@@ -37,20 +37,20 @@
 }
 
 .actions {
-  text-align: right;
+  @apply text-right;
 }
 
 .editButton {
-  display: inline-flex;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-8;
+  @apply items-center;
+  @apply justify-center;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
   color: var(--admin-text);
-  padding: 0 12px;
-  font-size: 14px;
+  @apply px-3;
+  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),

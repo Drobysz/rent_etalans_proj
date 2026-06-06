@@ -1,21 +1,21 @@
 @reference "tailwindcss";
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  @apply flex;
+  @apply items-center;
+  @apply justify-between;
+  @apply gap-4;
 }
 
 .title {
-  font-size: 20px;
+  @apply text-[20px];
   font-weight: 600;
   line-height: 28px;
   color: var(--admin-text);
 }
 
 .count {
-  margin-top: 4px;
-  font-size: 14px;
+  @apply mt-1;
+  @apply text-[14px];
   color: var(--admin-text-muted);
 }

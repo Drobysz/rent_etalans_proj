@@ -1,20 +1,20 @@
 @reference "tailwindcss";
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  @apply flex;
+  @apply justify-end;
+  @apply gap-2.5;
 }
 
 .secondaryButton,
 .submitButton {
-  display: inline-flex;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-9;
+  @apply items-center;
+  @apply justify-center;
   border-radius: var(--admin-radius-sm);
-  padding: 0 12px;
-  font-size: 14px;
+  @apply px-3;
+  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -36,7 +36,7 @@
 .submitButton {
   border: 1px solid var(--admin-primary);
   background: var(--admin-primary);
-  color: white;
+  @apply text-white;
 }
 
 .submitButton:hover {
@@ -44,12 +44,12 @@
 }
 
 .submitButton:disabled {
-  opacity: 0.65;
+  @apply opacity-65;
 }
 
 @media (max-width: 640px) {
   .actions {
-    align-items: stretch;
-    flex-direction: column;
+    @apply items-stretch;
+    @apply flex-col;
   }
 }

@@ -1,23 +1,23 @@
 @reference "tailwindcss";
 
 .shell {
-  display: grid;
-  min-height: 100vh;
+  @apply grid;
+  @apply min-h-screen;
   grid-template-columns: auto minmax(0, 1fr);
   background: var(--admin-bg);
 }
 
 .main {
-  min-width: 0;
-  padding: 28px 32px;
+  @apply min-w-0;
+  @apply px-8 py-7;
 }
 
 @media (max-width: 760px) {
   .shell {
-    grid-template-columns: 1fr;
+    @apply grid-cols-1;
   }
 
   .main {
-    padding: 20px 16px 28px;
+    @apply px-4 pb-7 pt-5;
   }
 }

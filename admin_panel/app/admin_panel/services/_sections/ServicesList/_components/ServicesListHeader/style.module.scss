@@ -1,36 +1,36 @@
 @reference "tailwindcss";
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  @apply flex;
+  @apply items-center;
+  @apply justify-between;
+  @apply gap-4;
 }
 
 .title {
-  font-size: 20px;
+  @apply text-[20px];
   font-weight: 600;
   line-height: 28px;
   color: var(--admin-text);
 }
 
 .count {
-  margin-top: 4px;
-  font-size: 14px;
+  @apply mt-1;
+  @apply text-[14px];
   color: var(--admin-text-muted);
 }
 
 .createButton {
-  display: inline-flex;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-9;
+  @apply items-center;
+  @apply justify-center;
   border: 1px solid var(--admin-primary);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-primary);
-  padding: 0 12px;
-  color: white;
-  font-size: 14px;
+  @apply px-3;
+  @apply text-white;
+  @apply text-[14px];
   font-weight: 500;
   transition: background-color 140ms var(--admin-ease);
 }
@@ -41,7 +41,7 @@
 
 @media (max-width: 560px) {
   .header {
-    align-items: flex-start;
-    flex-direction: column;
+    @apply items-start;
+    @apply flex-col;
   }
 }

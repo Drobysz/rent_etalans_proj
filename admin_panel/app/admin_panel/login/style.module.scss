@@ -1,36 +1,36 @@
 @reference "tailwindcss";
 
 .page {
-  display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 32px 16px;
+  @apply grid;
+  @apply min-h-screen;
+  @apply place-items-center;
+  @apply px-4 py-8;
   background: var(--admin-bg);
 }
 
 .panel {
-  width: 100%;
-  max-width: 384px;
-  padding: 20px;
+  @apply w-full;
+  @apply max-w-sm;
+  @apply p-5;
   border-radius: var(--admin-radius);
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
 }
 
 .header {
-  display: grid;
-  gap: 4px;
-  margin-bottom: 20px;
+  @apply grid;
+  @apply gap-1;
+  @apply mb-5;
 }
 
 .header h1 {
-  font-size: 20px;
+  @apply text-[20px];
   font-weight: 600;
   color: var(--admin-text);
 }
 
 .header p {
-  font-size: 14px;
+  @apply text-[14px];
   line-height: 24px;
   color: var(--admin-text-muted);
 }

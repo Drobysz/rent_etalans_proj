@@ -1,22 +1,22 @@
 @reference "tailwindcss";
 
 .section {
-  display: grid;
-  gap: 20px;
-  max-width: 760px;
+  @apply grid;
+  @apply gap-5;
+  @apply max-w-[760px];
 }
 
 .form {
-  display: grid;
-  gap: 16px;
+  @apply grid;
+  @apply gap-4;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  padding: 18px;
+  @apply p-[18px];
 }
 
 .message {
   color: var(--admin-text-muted);
-  font-size: 14px;
+  @apply text-[14px];
   font-weight: 500;
 }

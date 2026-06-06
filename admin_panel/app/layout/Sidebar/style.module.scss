@@ -1,23 +1,23 @@
 @reference "tailwindcss";
 
 .sidebar {
-  position: sticky;
-  top: 0;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  overflow: hidden;
+  @apply sticky;
+  @apply top-0;
+  @apply flex;
+  @apply h-screen;
+  @apply flex-col;
+  @apply overflow-hidden;
   border-right: 1px solid var(--admin-border);
   background: var(--admin-sidebar);
 }
 
 .top {
-  display: flex;
-  height: 56px;
-  align-items: center;
-  gap: 8px;
+  @apply flex;
+  @apply h-14;
+  @apply items-center;
+  @apply gap-2;
   border-bottom: 1px solid var(--admin-border);
-  padding: 0 16px;
+  @apply px-4;
 }
 
 .menuButton,
@@ -29,12 +29,17 @@
     border-color 140ms var(--admin-ease);
 }
 
+.logoutButton {
+  @apply flex items-center justify-center
+   gap-2 w-fit;
+}
+
 .menuButton {
-  display: inline-flex;
-  height: 32px;
-  width: 32px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-8;
+  @apply w-8;
+  @apply items-center;
+  @apply justify-center;
   border: 1px solid transparent;
   color: var(--admin-text-muted);
 }
@@ -46,35 +51,35 @@
 
 .menuButton svg,
 .navLink svg {
-  height: 16px;
-  width: 16px;
-  flex-shrink: 0;
+  @apply h-4;
+  @apply w-4;
+  @apply shrink-0;
 }
 
 .productName {
-  overflow: hidden;
-  font-size: 14px;
+  @apply overflow-hidden;
+  @apply text-[14px];
   font-weight: 500;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @apply text-ellipsis;
+  @apply whitespace-nowrap;
   color: var(--admin-text);
 }
 
 .nav {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px;
+  @apply flex;
+  @apply flex-1;
+  @apply flex-col;
+  @apply gap-1;
+  @apply p-3;
 }
 
 .navLink {
-  display: flex;
-  height: 36px;
-  align-items: center;
-  gap: 8px;
-  padding: 0 8px;
-  font-size: 14px;
+  @apply flex;
+  @apply h-9;
+  @apply items-center;
+  @apply gap-2;
+  @apply px-2;
+  @apply text-[14px];
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text-muted);
   transition:
@@ -94,30 +99,30 @@
 
 .account {
   border-top: 1px solid var(--admin-border);
-  padding: 12px;
+  @apply p-3;
 }
 
 .accountText {
-  display: grid;
-  gap: 2px;
-  margin-bottom: 12px;
-  font-size: 12px;
+  @apply grid;
+  @apply gap-0.5;
+  @apply mb-3;
+  @apply text-[12px];
   color: var(--admin-text-soft);
 }
 
 .accountText span:first-child {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @apply overflow-hidden;
+  @apply text-ellipsis;
+  @apply whitespace-nowrap;
   color: var(--admin-text-muted);
 }
 
 .logoutButton {
-  height: 32px;
-  width: 100%;
+  @apply h-8;
+  @apply w-full;
   border: 1px solid var(--admin-border);
-  padding: 0 8px;
-  font-size: 14px;
+  @apply px-2;
+  @apply text-[14px];
   color: var(--admin-text-muted);
   background: var(--admin-surface);
 }
@@ -128,27 +133,27 @@
 }
 
 .collapsed .top {
-  justify-content: center;
-  padding: 0;
+  @apply justify-center;
+  @apply p-0;
 }
 
 .collapsed .nav {
-  align-items: center;
-  padding-right: 8px;
-  padding-left: 8px;
+  @apply items-center;
+  @apply pr-2;
+  @apply pl-2;
 }
 
 .collapsed .navLink {
-  width: 40px;
-  justify-content: center;
-  padding: 0;
+  @apply w-10;
+  @apply justify-center;
+  @apply p-0;
 }
 
 @media (max-width: 760px) {
   .sidebar {
-    position: relative;
-    height: auto;
-    width: 100%;
+    @apply relative;
+    @apply h-auto;
+    @apply w-full;
     width: 100% !important;
   }
 }

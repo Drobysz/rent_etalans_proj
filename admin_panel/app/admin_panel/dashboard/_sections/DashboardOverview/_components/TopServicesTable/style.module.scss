@@ -1,46 +1,46 @@
 @reference "tailwindcss";
 
 .panel {
-  display: grid;
-  align-content: start;
-  gap: 14px;
+  @apply grid;
+  @apply content-start;
+  @apply gap-3.5;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  padding: 18px;
+  @apply p-[18px];
 }
 
 .header h2 {
-  font-size: 16px;
+  @apply text-[16px];
   font-weight: 600;
   color: var(--admin-text);
 }
 
 .tableWrap {
-  overflow-x: auto;
+  @apply overflow-x-auto;
 }
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
+  @apply w-full;
+  @apply border-collapse;
 }
 
 .table th,
 .table td {
   border-bottom: 1px solid var(--admin-border);
-  padding: 10px 0;
-  text-align: left;
+  @apply py-2.5;
+  @apply text-left;
 }
 
 .table th {
   color: var(--admin-text-muted);
-  font-size: 13px;
+  @apply text-[13px];
   font-weight: 500;
 }
 
 .table td {
   color: var(--admin-text);
-  font-size: 14px;
+  @apply text-[14px];
 }
 
 .table tr:last-child td {

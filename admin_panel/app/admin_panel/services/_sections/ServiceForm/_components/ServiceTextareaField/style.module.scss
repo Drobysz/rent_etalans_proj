@@ -1,23 +1,23 @@
 @reference "tailwindcss";
 
 .field {
-  display: grid;
-  gap: 6px;
+  @apply grid;
+  @apply gap-1.5;
   color: var(--admin-text);
-  font-size: 14px;
+  @apply text-[14px];
   font-weight: 500;
 }
 
 .field textarea {
-  min-height: 132px;
-  width: 100%;
-  resize: vertical;
+  @apply min-h-[132px];
+  @apply w-full;
+  @apply resize-y;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
-  padding: 10px;
+  @apply p-2.5;
   color: var(--admin-text);
-  font-size: 14px;
+  @apply text-[14px];
   font-weight: 400;
   line-height: 22px;
 }
@@ -28,6 +28,6 @@
 
 .field strong {
   color: var(--admin-danger);
-  font-size: 14px;
+  @apply text-[14px];
   font-weight: 500;
 }

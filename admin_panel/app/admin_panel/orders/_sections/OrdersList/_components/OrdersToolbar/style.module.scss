@@ -1,37 +1,37 @@
 @reference "tailwindcss";
 
 .toolbar {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 12px;
+  @apply flex;
+  @apply items-end;
+  @apply justify-between;
+  @apply gap-3;
 }
 
 .searchForm {
-  display: flex;
-  align-items: end;
-  gap: 8px;
+  @apply flex;
+  @apply items-end;
+  @apply gap-2;
 }
 
 .searchField {
-  display: grid;
-  gap: 6px;
+  @apply grid;
+  @apply gap-1.5;
 }
 
 .searchField span {
-  font-size: 13px;
+  @apply text-[13px];
   font-weight: 500;
   color: var(--admin-text);
 }
 
 .searchField input {
-  height: 36px;
-  min-width: 240px;
+  @apply h-9;
+  @apply min-w-60;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
   color: var(--admin-text);
-  padding: 0 10px;
+  @apply px-2.5;
 }
 
 .searchField input:focus {
@@ -40,13 +40,13 @@
 
 .button,
 .secondaryButton {
-  display: inline-flex;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
+  @apply inline-flex;
+  @apply h-9;
+  @apply items-center;
+  @apply justify-center;
   border-radius: var(--admin-radius-sm);
-  padding: 0 12px;
-  font-size: 14px;
+  @apply px-3;
+  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -57,7 +57,7 @@
 .button {
   border: 1px solid var(--admin-primary);
   background: var(--admin-primary);
-  color: #fff;
+  @apply text-white;
 }
 
 .button:hover {
@@ -78,12 +78,12 @@
 @media (max-width: 720px) {
   .toolbar,
   .searchForm {
-    align-items: stretch;
-    flex-direction: column;
+    @apply items-stretch;
+    @apply flex-col;
   }
 
   .searchField input {
-    min-width: 0;
-    width: 100%;
+    @apply min-w-0;
+    @apply w-full;
   }
 }

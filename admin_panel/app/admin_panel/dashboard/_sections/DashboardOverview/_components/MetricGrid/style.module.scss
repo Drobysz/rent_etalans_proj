@@ -1,40 +1,40 @@
 @reference "tailwindcss";
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  @apply grid;
+  @apply grid-cols-3;
+  @apply gap-3;
 }
 
 .metric {
-  display: grid;
-  gap: 8px;
+  @apply grid;
+  @apply gap-2;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  padding: 16px;
+  @apply p-4;
 }
 
 .metric span {
   color: var(--admin-text-muted);
-  font-size: 13px;
+  @apply text-[13px];
 }
 
 .metric strong {
   color: var(--admin-text);
-  font-size: 22px;
+  @apply text-[22px];
   font-weight: 600;
   line-height: 28px;
 }
 
 @media (max-width: 900px) {
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    @apply grid-cols-2;
   }
 }
 
 @media (max-width: 560px) {
   .grid {
-    grid-template-columns: 1fr;
+    @apply grid-cols-1;
   }
 }

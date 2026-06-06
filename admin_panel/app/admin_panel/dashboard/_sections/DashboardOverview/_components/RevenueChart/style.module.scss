@@ -1,44 +1,44 @@
 @reference "tailwindcss";
 
 .panel {
-  display: grid;
-  gap: 18px;
+  @apply grid;
+  @apply gap-[18px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  padding: 18px;
+  @apply p-[18px];
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  @apply flex;
+  @apply items-center;
+  @apply justify-between;
+  @apply gap-3;
 }
 
 .header h2 {
-  font-size: 16px;
+  @apply text-[16px];
   font-weight: 600;
   color: var(--admin-text);
 }
 
 .tabs {
-  display: flex;
-  gap: 4px;
+  @apply flex;
+  @apply gap-1;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface-subtle);
-  padding: 3px;
+  @apply p-[3px];
 }
 
 .tab {
-  height: 28px;
+  @apply h-7;
   border: 0;
-  border-radius: 4px;
-  background: transparent;
+  @apply rounded;
+  @apply bg-transparent;
   color: var(--admin-text-muted);
-  padding: 0 9px;
-  font-size: 13px;
+  @apply px-[9px];
+  @apply text-[13px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -52,61 +52,61 @@
 }
 
 .chart {
-  display: grid;
-  grid-auto-flow: column;
+  @apply grid;
+  @apply grid-flow-col;
   grid-auto-columns: minmax(72px, 1fr);
-  align-items: end;
-  gap: 10px;
-  min-height: 260px;
-  overflow-x: hidden;
-  padding-top: 8px;
+  @apply items-end;
+  @apply gap-2.5;
+  @apply min-h-[260px];
+  @apply overflow-x-hidden;
+  @apply pt-2;
 }
 
 .scrollableChart {
-  grid-auto-columns: 96px;
-  justify-content: start;
-  overflow-x: auto;
-  padding-bottom: 4px;
+  @apply auto-cols-[96px];
+  @apply justify-start;
+  @apply overflow-x-auto;
+  @apply pb-1;
 }
 
 .barGroup {
-  display: grid;
+  @apply grid;
   grid-template-rows: 1fr auto;
-  gap: 8px;
-  min-width: 72px;
-  height: 260px;
+  @apply gap-2;
+  @apply min-w-[72px];
+  @apply h-[260px];
 }
 
 .scrollableChart .barGroup {
-  min-width: 96px;
+  @apply min-w-24;
 }
 
 .barTrack {
-  display: flex;
-  align-items: end;
-  min-height: 220px;
+  @apply flex;
+  @apply items-end;
+  @apply min-h-[220px];
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface-subtle);
-  overflow: hidden;
+  @apply overflow-hidden;
 }
 
 .bar {
-  width: 100%;
+  @apply w-full;
   background: var(--admin-primary);
 }
 
 .barGroup span {
-  overflow: hidden;
+  @apply overflow-hidden;
   color: var(--admin-text-muted);
-  font-size: 12px;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @apply text-[12px];
+  @apply text-center;
+  @apply text-ellipsis;
+  @apply whitespace-nowrap;
 }
 
 @media (max-width: 560px) {
   .header {
-    align-items: flex-start;
-    flex-direction: column;
+    @apply items-start;
+    @apply flex-col;
   }
 }

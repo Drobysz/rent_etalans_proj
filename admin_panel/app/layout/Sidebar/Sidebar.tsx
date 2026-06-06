@@ -11,6 +11,8 @@ import DashboardIcon from "@/assets/dashboard.svg";
 import MenuIcon from "@/assets/menu.svg";
 import OrdersIcon from "@/assets/orders.svg";
 import ServicesIcon from "@/assets/services.svg";
+import SignOutIcon from "@/assets/sign_out.svg";
+import XIcon from "@/assets/close.svg";
 import styles from "./style.module.scss";
 import type { SidebarProps } from "./Sidebar.props";
 
@@ -38,7 +40,7 @@ export function Sidebar({ user }: SidebarProps) {
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           onClick={() => setCollapsed((value) => !value)}
         >
-          <MenuIcon aria-hidden="true" />
+          {collapsed ? <MenuIcon aria-hidden="true" /> : <XIcon aria-hidden="true" />}
         </button>
         {!collapsed ? <span className={styles.productName}>Rent services</span> : null}
       </div>
@@ -73,7 +75,7 @@ export function Sidebar({ user }: SidebarProps) {
         ) : null}
         <form action={logoutAction}>
           <button className={styles.logoutButton} type="submit">
-            {collapsed ? "Out" : "Log out"}
+            <SignOutIcon aria-hidden="true" /> {!collapsed && "Log out"}
           </button>
         </form>
       </div>

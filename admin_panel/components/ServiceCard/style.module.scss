@@ -1,62 +1,62 @@
 @reference "tailwindcss";
 
 .card {
-  display: grid;
+  @apply grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  min-height: 148px;
+  @apply min-h-[148px];
   border-radius: var(--admin-radius);
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
 }
 
 .content {
-  display: grid;
-  gap: 12px;
-  padding: 16px;
+  @apply grid;
+  @apply gap-3;
+  @apply p-4;
 }
 
 .topLine {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+  @apply flex;
+  @apply items-start;
+  @apply justify-between;
+  @apply gap-3;
 }
 
 .name {
-  font-size: 16px;
+  @apply text-[16px];
   font-weight: 500;
   color: var(--admin-text);
 }
 
 .price {
-  font-size: 14px;
+  @apply text-[14px];
   font-weight: 500;
-  white-space: nowrap;
+  @apply whitespace-nowrap;
   color: var(--admin-text);
 }
 
 .description {
-  font-size: 14px;
+  @apply text-[14px];
   line-height: 24px;
   color: var(--admin-text-muted);
 }
 
 .meta {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 12px;
-  row-gap: 4px;
-  font-size: 12px;
+  @apply flex;
+  @apply flex-wrap;
+  @apply gap-x-3;
+  @apply gap-y-1;
+  @apply text-[12px];
   color: var(--admin-text-soft);
 }
 
 .editButton {
-  display: inline-flex;
-  height: 32px;
-  width: 32px;
-  align-items: center;
-  justify-content: center;
-  margin: 12px;
+  @apply inline-flex;
+  @apply h-8;
+  @apply w-8;
+  @apply items-center;
+  @apply justify-center;
+  @apply m-3;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text-muted);
@@ -73,6 +73,6 @@
 }
 
 .editButton svg {
-  height: 16px;
-  width: 16px;
+  @apply h-4;
+  @apply w-4;
 }
