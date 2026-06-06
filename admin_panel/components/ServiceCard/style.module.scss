@@ -2,10 +2,23 @@
 
 .card {
   @apply grid min-h-[148px];
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 152px minmax(0, 1fr) auto;
   border-radius: var(--admin-radius);
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
+}
+
+.media {
+  @apply m-3 mr-0 overflow-hidden;
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface-subtle);
+}
+
+.image,
+.emptyImage {
+  @apply flex h-full min-h-[124px] w-full
+    items-center justify-center object-cover text-[12px];
+  color: var(--admin-text-soft);
 }
 
 .content {
@@ -60,4 +73,19 @@
 
 .editButton svg {
   @apply h-4 w-4;
+}
+
+@media (max-width: 720px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .media {
+    @apply col-span-2 m-3 mb-0;
+  }
+
+  .image,
+  .emptyImage {
+    @apply min-h-[160px];
+  }
 }

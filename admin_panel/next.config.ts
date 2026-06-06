@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
+
   webpack(config) {
     const excludeSvg = (rules: Array<Record<string, unknown>>) => {
       rules.forEach((rule) => {

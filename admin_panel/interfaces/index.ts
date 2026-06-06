@@ -1,3 +1,10 @@
+export type ServiceImage = {
+  id: string;
+  filename: string;
+  path: string;
+  url: string;
+};
+
 export type Service = {
   id: string;
   name: string;
@@ -5,6 +12,7 @@ export type Service = {
   price: number;
   status: "active" | "draft";
   updatedAt: string;
+  images: ServiceImage[];
 };
 
 export type PaymentInfo = {

@@ -53,9 +53,10 @@ class ServiceController extends Controller
             ->setStatusCode(201);
     }
 
-    public function update(Service $service, ServiceStoreRequest $request)
+    public function update(Service $service, ServiceUpdateRequest $request)
     {
         $service->update($request->validated());
+        $service->load(['images']);
 
         return new ServiceResource($service);
     }

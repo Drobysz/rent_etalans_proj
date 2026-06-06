@@ -1,4 +1,5 @@
 export type ServiceTextFieldProps = {
+  defaultValue?: number | string;
   error?: string;
   label: string;
   maxLength?: number;

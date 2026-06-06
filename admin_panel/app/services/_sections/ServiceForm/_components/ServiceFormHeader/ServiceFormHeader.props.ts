@@ -1,6 +1,5 @@
 import type { ServiceFormMode } from "../../ServiceForm.props";
 
-export type ServiceFormActionsProps = {
+export type ServiceFormHeaderProps = {
   mode: ServiceFormMode;
-  pending: boolean;
 };

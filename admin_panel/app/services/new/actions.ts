@@ -1,24 +1,15 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { serviceFormSchema, type ServiceFormActionState } from "../_sections/ServiceForm/ServiceForm.schema";
 
-const createServiceSchema = z.object({
-  name: z.string().min(1, "Enter a service name.").max(30, "Use 30 characters or fewer."),
-  price: z.coerce.number().min(0, "Price must be zero or higher."),
-  description: z.string().min(1, "Enter a description.").max(500, "Use 500 characters or fewer."),
-});
-
-export type CreateServiceActionState = {
-  message?: string;
-  fieldErrors?: Partial<Record<"name" | "price" | "description" | "images", string>>;
-};
+export type CreateServiceActionState = ServiceFormActionState;
 
 export async function createServiceAction(
   _previousState: CreateServiceActionState,
   formData: FormData,
 ): Promise<CreateServiceActionState> {
-  const parsed = createServiceSchema.safeParse({
+  const parsed = serviceFormSchema.safeParse({
     name: formData.get("name"),
     price: formData.get("price"),
     description: formData.get("description"),

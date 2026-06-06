@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import EditIcon from "@/assets/edit.svg";
 import { formatDateTime, formatMoney } from "@/helpers";
@@ -5,8 +6,17 @@ import styles from "./style.module.scss";
 import type { ServiceCardProps } from "./ServiceCard.props";
 
 export function ServiceCard({ service }: ServiceCardProps) {
+  const image = service.images[0];
+
   return (
     <article className={styles.card}>
+      <div className={styles.media}>
+        {image ? (
+          <img className={styles.image} src={image.url} alt={`${service.name} image`} />
+        ) : (
+          <span className={styles.emptyImage}>No image</span>
+        )}
+      </div>
       <div className={styles.content}>
         <div className={styles.topLine}>
           <h2 className={styles.name}>{service.name}</h2>
