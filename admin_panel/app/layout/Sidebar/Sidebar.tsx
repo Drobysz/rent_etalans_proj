@@ -13,19 +13,25 @@ import OrdersIcon from "@/assets/orders.svg";
 import ServicesIcon from "@/assets/services.svg";
 import SignOutIcon from "@/assets/sign_out.svg";
 import XIcon from "@/assets/close.svg";
+import { useWindowWidth } from "@/hooks";
 import styles from "./style.module.scss";
 import type { SidebarProps } from "./Sidebar.props";
 
 const navigation = [
-  { href: "/admin_panel/dashboard", label: "Dashboard", icon: DashboardIcon, superadminOnly: false },
-  { href: "/admin_panel/services", label: "Services", icon: ServicesIcon, superadminOnly: false },
-  { href: "/admin_panel/orders", label: "Orders", icon: OrdersIcon, superadminOnly: false },
-  { href: "/admin_panel/admins", label: "Admins", icon: AdminsIcon, superadminOnly: true },
+  { href: "/", label: "Dashboard", icon: DashboardIcon, superadminOnly: false },
+  { href: "/services", label: "Services", icon: ServicesIcon, superadminOnly: false },
+  { href: "/orders", label: "Orders", icon: OrdersIcon, superadminOnly: false },
+  { href: "/admins", label: "Admins", icon: AdminsIcon, superadminOnly: true },
 ] as const;
 
 export function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const width = useWindowWidth();
+
+  if (width == null) return null;
+
+  const isMobile = width <= 760;
 
   return (
     <motion.aside
@@ -42,10 +48,13 @@ export function Sidebar({ user }: SidebarProps) {
         >
           {collapsed ? <MenuIcon aria-hidden="true" /> : <XIcon aria-hidden="true" />}
         </button>
-        {!collapsed ? <span className={styles.productName}>Rent services</span> : null}
+        {!collapsed || isMobile ? <span className={styles.productName}>Rent services</span> : null}
       </div>
 
-      <nav className={styles.nav} aria-label="Admin navigation">
+      <nav
+        className={cn(styles.nav, collapsed ? styles.collapsed_nav : styles.uncollapsed_nav)}
+        aria-label="Admin navigation"
+      >
         {navigation
           .filter((item) => !item.superadminOnly || user.role === "superadmin")
           .map((item) => {

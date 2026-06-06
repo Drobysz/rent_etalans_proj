@@ -38,7 +38,7 @@ export async function requireUser() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/admin_panel/login");
+    redirect("/login");
   }
 
   return session;
@@ -48,7 +48,7 @@ export async function requireAdmin() {
   const session = await requireUser();
 
   if (!["admin", "superadmin"].includes(session.role)) {
-    redirect("/admin_panel/login");
+    redirect("/login");
   }
 
   return session;
@@ -58,7 +58,7 @@ export async function requireSuperadmin() {
   const session = await requireUser();
 
   if (session.role !== "superadmin") {
-    redirect("/admin_panel/login");
+    redirect("/login");
   }
 
   return session;

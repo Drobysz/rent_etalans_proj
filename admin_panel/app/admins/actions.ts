@@ -91,7 +91,7 @@ export async function saveUserAction(
       return { message: payload?.message ?? "Unable to save user." };
     }
 
-    revalidatePath("/admin_panel/admins");
+    revalidatePath("/admins");
 
     return {
       success: true,

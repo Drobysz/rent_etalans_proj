@@ -53,6 +53,7 @@
 }
 
 .secondaryButton {
+  @apply flex items-center gap-1;
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
   color: var(--admin-text);

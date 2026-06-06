@@ -11,7 +11,7 @@ type OrdersPageProps = {
 export default async function OrdersPage({ searchParams }: OrdersPageProps) {
   const params = await searchParams;
   const reserveId = params.reserve_id?.trim() ?? "";
-  const sort = params.sort === "asc" ? "asc" : "desc";
+  const sort = params.sort === "desc" ? "desc" : "asc";
   const orders = await getOrders({ reserveId, sort });
 
   return <OrdersList orders={orders} reserveId={reserveId} sort={sort} />;

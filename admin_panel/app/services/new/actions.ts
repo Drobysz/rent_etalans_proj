@@ -65,5 +65,5 @@ export async function createServiceAction(
     return { message: "Unable to reach the API." };
   }
 
-  redirect("/admin_panel/services");
+  redirect("/services");
 }

@@ -84,10 +84,10 @@ export async function loginAction(
     expiresAt: Date.now() + SESSION_TTL_MS,
   });
 
-  redirect("/admin_panel/dashboard");
+  redirect("/");
 }
 
 export async function logoutAction() {
   await deleteSession();
-  redirect("/admin_panel/login");
+  redirect("/login");
 }

@@ -7,7 +7,7 @@ export default async function LoginPage() {
   const session = await getSession();
 
   if (session && ["admin", "superadmin"].includes(session.role)) {
-    redirect("/admin_panel/dashboard");
+    redirect("/");
   }
 
   return (

@@ -22,10 +22,11 @@ class PaymentController extends Controller
             'reserve_id' => ['nullable', 'string', 'max:20'],
             'sort' => ['nullable', 'in:asc,desc'],
         ]);
+        $reserveId = trim((string) ($data['reserve_id'] ?? ''));
 
         return Payment::query()
             ->with(['services'])
-            ->when($data['reserve_id'] ?? null, function ($query, string $reserveId) {
+            ->when($reserveId !== '', function ($query) use ($reserveId) {
                 $query->where('reserve_id', 'like', "%{$reserveId}%");
             })
             ->orderBy('created_at', $data['sort'] ?? 'desc')

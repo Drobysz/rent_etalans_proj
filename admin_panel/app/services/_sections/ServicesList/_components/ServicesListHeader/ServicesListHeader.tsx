@@ -9,7 +9,7 @@ export function ServicesListHeader({ count }: ServicesListHeaderProps) {
         <h1 className={styles.title}>Services</h1>
         <p className={styles.count}>{count} services</p>
       </div>
-      <Link className={styles.createButton} href="/admin_panel/services/new">
+      <Link className={styles.createButton} href="/services/new">
         Create service
       </Link>
     </div>
