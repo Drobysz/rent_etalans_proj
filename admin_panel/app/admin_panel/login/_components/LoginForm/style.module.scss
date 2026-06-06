@@ -1,0 +1,56 @@
+@reference "tailwindcss";
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.field input {
+  height: 36px;
+  border: 1px solid var(--admin-border);
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.field input:focus {
+  border-color: var(--admin-border-strong);
+}
+
+.field strong,
+.error {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--admin-danger);
+}
+
+.submitButton {
+  height: 36px;
+  border: 1px solid var(--admin-primary);
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-primary);
+  color: white;
+  transition: background-color 140ms var(--admin-ease);
+}
+
+.submitButton:hover {
+  background: var(--admin-primary-hover);
+}
+
+.submitButton:disabled {
+  opacity: 0.65;
+}

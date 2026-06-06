@@ -1,0 +1,55 @@
+@reference "tailwindcss";
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.secondaryButton,
+.submitButton {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--admin-radius-sm);
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background-color 140ms var(--admin-ease),
+    border-color 140ms var(--admin-ease),
+    color 140ms var(--admin-ease);
+}
+
+.secondaryButton {
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.secondaryButton:hover {
+  border-color: var(--admin-border-strong);
+  background: var(--admin-surface-subtle);
+}
+
+.submitButton {
+  border: 1px solid var(--admin-primary);
+  background: var(--admin-primary);
+  color: white;
+}
+
+.submitButton:hover {
+  background: var(--admin-primary-hover);
+}
+
+.submitButton:disabled {
+  opacity: 0.65;
+}
+
+@media (max-width: 640px) {
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

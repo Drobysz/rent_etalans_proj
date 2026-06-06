@@ -1,0 +1,89 @@
+@reference "tailwindcss";
+
+.toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.searchForm {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+
+.searchField {
+  display: grid;
+  gap: 6px;
+}
+
+.searchField span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--admin-text);
+}
+
+.searchField input {
+  height: 36px;
+  min-width: 240px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  padding: 0 10px;
+}
+
+.searchField input:focus {
+  border-color: var(--admin-border-strong);
+}
+
+.button,
+.secondaryButton {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--admin-radius-sm);
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background-color 140ms var(--admin-ease),
+    border-color 140ms var(--admin-ease),
+    color 140ms var(--admin-ease);
+}
+
+.button {
+  border: 1px solid var(--admin-primary);
+  background: var(--admin-primary);
+  color: #fff;
+}
+
+.button:hover {
+  background: var(--admin-primary-hover);
+}
+
+.secondaryButton {
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.secondaryButton:hover {
+  border-color: var(--admin-border-strong);
+  background: var(--admin-surface-subtle);
+}
+
+@media (max-width: 720px) {
+  .toolbar,
+  .searchForm {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .searchField input {
+    min-width: 0;
+    width: 100%;
+  }
+}

@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --admin-bg: #f6f7f8;
+  --admin-surface: #ffffff;
+  --admin-surface-subtle: #f1f2f4;
+  --admin-sidebar: #fbfbfc;
+  --admin-border: #d8dbe0;
+  --admin-border-strong: #c7cbd1;
+  --admin-text: #17191d;
+  --admin-text-muted: #5f6672;
+  --admin-text-soft: #78808c;
+  --admin-primary: #24272d;
+  --admin-primary-hover: #111318;
+  --admin-danger: #b42318;
+  --admin-focus: #6b7280;
+  --admin-radius: 8px;
+  --admin-radius-sm: 6px;
+  --admin-shadow-modal: 0 18px 48px rgb(17 24 39 / 14%);
+  --admin-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --background: var(--admin-bg);
+  --foreground: var(--admin-text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-admin-bg: var(--admin-bg);
+  --color-admin-surface: var(--admin-surface);
+  --color-admin-surface-subtle: var(--admin-surface-subtle);
+  --color-admin-sidebar: var(--admin-sidebar);
+  --color-admin-border: var(--admin-border);
+  --color-admin-text: var(--admin-text);
+  --color-admin-text-muted: var(--admin-text-muted);
+  --color-admin-primary: var(--admin-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--admin-focus);
+  outline-offset: 2px;
 }

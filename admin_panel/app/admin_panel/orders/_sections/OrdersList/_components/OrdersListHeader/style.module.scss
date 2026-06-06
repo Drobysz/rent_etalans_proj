@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--admin-text);
+}
+
+.count {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--admin-text-muted);
+}

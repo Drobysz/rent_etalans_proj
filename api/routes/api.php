@@ -3,13 +3,24 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\{
+use App\Http\Controllers\api\{
     ApartmentController,
+    AuthController,
     PaymentController,
     ServiceController,
     StripeController,
-    ImageController
+    ImageController,
+    UserController
 };
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::get('/users/me', [AuthController::class, 'me'])
+    ->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::patch('/users/{user}', [UserController::class, 'update']);
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -17,6 +28,7 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('apartments', ApartmentController::class);
 Route::apiResource('services', ServiceController::class);
+Route::get('/payments/dashboard', [PaymentController::class, 'dashboard']);
 Route::apiResource('payments', PaymentController::class)
     ->except(['update']);
 Route::apiResource('image-uploader', ImageController::class)

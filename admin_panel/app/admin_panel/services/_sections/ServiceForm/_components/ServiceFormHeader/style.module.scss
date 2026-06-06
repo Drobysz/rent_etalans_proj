@@ -1,0 +1,51 @@
+@reference "tailwindcss";
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--admin-text);
+}
+
+.note {
+  margin-top: 4px;
+  color: var(--admin-text-muted);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.cancelLink {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  padding: 0 12px;
+  color: var(--admin-text);
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background-color 140ms var(--admin-ease),
+    border-color 140ms var(--admin-ease);
+}
+
+.cancelLink:hover {
+  border-color: var(--admin-border-strong);
+  background: var(--admin-surface-subtle);
+}
+
+@media (max-width: 640px) {
+  .header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
