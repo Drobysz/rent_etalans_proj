@@ -1,34 +1,23 @@
 @reference "tailwindcss";
 
 .field {
-  @apply grid;
-  @apply gap-1.5;
+  @apply grid gap-1.5 text-[14px];
   color: var(--admin-text);
-  @apply text-[14px];
   font-weight: 500;
 }
 
 .fileControl {
-  @apply flex;
-  @apply items-center;
-  @apply gap-2.5;
+  @apply flex items-center gap-2.5;
 }
 
 .fileButton {
-  @apply relative;
-  @apply inline-flex;
-  @apply h-9;
-  @apply w-fit;
-  @apply cursor-pointer;
-  @apply items-center;
-  @apply justify-center;
-  @apply overflow-hidden;
+  @apply relative inline-flex h-9 w-fit
+    cursor-pointer items-center justify-center overflow-hidden
+    px-3 text-[14px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
-  @apply px-3;
   color: var(--admin-text);
-  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -42,33 +31,21 @@
 }
 
 .fileButton input[type="file"] {
-  @apply absolute;
-  @apply inset-0;
-  @apply cursor-pointer;
-  @apply opacity-0;
+  @apply absolute inset-0 cursor-pointer opacity-0;
 }
 
 .previewButton {
-  @apply relative;
-  @apply inline-flex;
-  @apply h-11;
-  @apply w-16;
-  @apply shrink-0;
-  @apply cursor-pointer;
-  @apply overflow-hidden;
+  @apply relative inline-flex h-11 w-16
+    shrink-0 cursor-pointer overflow-hidden p-0;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
-  @apply p-0;
 }
 
 .preview {
-  @apply block;
-  @apply h-full;
-  @apply w-full;
+  @apply block h-full w-full bg-center
+    bg-cover;
   background-color: var(--admin-surface-subtle);
-  @apply bg-center;
-  @apply bg-cover;
   transition: filter 140ms var(--admin-ease);
 }
 
@@ -77,22 +54,13 @@
 }
 
 .removeIcon {
-  @apply absolute;
-  @apply top-1;
-  @apply right-1;
-  @apply inline-flex;
-  @apply h-[18px];
-  @apply w-[18px];
-  @apply items-center;
-  @apply justify-center;
+  @apply absolute top-1 right-1 inline-flex
+    h-[18px] w-[18px] items-center justify-center
+    rounded-full text-white text-[14px] opacity-0;
   border: 1px solid rgb(255 255 255 / 70%);
-  @apply rounded-full;
   background: rgb(17 24 39 / 76%);
-  @apply text-white;
-  @apply text-[14px];
   font-weight: 500;
   line-height: 1;
-  @apply opacity-0;
   transition: opacity 140ms var(--admin-ease);
 }
 
@@ -102,12 +70,11 @@
 }
 
 .removeIconInner {
-  @apply relative;
-  @apply -top-px;
+  @apply relative -top-px;
 }
 
 .field strong {
-  color: var(--admin-danger);
   @apply text-[14px];
+  color: var(--admin-danger);
   font-weight: 500;
 }

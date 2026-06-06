@@ -1,13 +1,10 @@
 @reference "tailwindcss";
 
 .panel {
-  @apply grid;
-  @apply content-start;
-  @apply gap-3.5;
+  @apply grid content-start gap-3.5 p-[18px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  @apply p-[18px];
 }
 
 .header h2 {
@@ -21,26 +18,24 @@
 }
 
 .table {
-  @apply w-full;
-  @apply border-collapse;
+  @apply w-full border-collapse;
 }
 
 .table th,
 .table td {
+  @apply py-2.5 text-left;
   border-bottom: 1px solid var(--admin-border);
-  @apply py-2.5;
-  @apply text-left;
 }
 
 .table th {
-  color: var(--admin-text-muted);
   @apply text-[13px];
+  color: var(--admin-text-muted);
   font-weight: 500;
 }
 
 .table td {
-  color: var(--admin-text);
   @apply text-[14px];
+  color: var(--admin-text);
 }
 
 .table tr:last-child td {

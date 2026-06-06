@@ -1,14 +1,10 @@
 @reference "tailwindcss";
 
 .backdrop {
-  @apply fixed;
-  @apply inset-0;
-  @apply z-40;
-  @apply grid;
-  @apply place-items-center;
+  @apply fixed inset-0 z-40 grid
+    place-items-center p-5;
   background: rgb(17 24 39 / 22%);
   backdrop-filter: blur(8px);
-  @apply p-5;
 }
 
 .modal {
@@ -20,12 +16,9 @@
 }
 
 .header {
-  @apply flex;
-  @apply items-start;
-  @apply justify-between;
-  @apply gap-4;
+  @apply flex items-start justify-between gap-4
+    px-5 py-[18px];
   border-bottom: 1px solid var(--admin-border);
-  @apply px-5 py-[18px];
 }
 
 .header h2 {
@@ -35,17 +28,13 @@
 }
 
 .header p {
-  @apply mt-1;
-  @apply text-[14px];
+  @apply mt-1 text-[14px];
   color: var(--admin-text-muted);
 }
 
 .closeButton {
-  @apply inline-flex;
-  @apply w-8;
-  @apply h-8;
-  @apply items-center;
-  @apply justify-center;
+  @apply inline-flex w-8 h-8 items-center
+    justify-center;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
@@ -63,19 +52,15 @@
 }
 
 .closeButton svg {
-  @apply w-4;
-  @apply h-4;
+  @apply w-4 h-4;
 }
 
 .form {
-  @apply grid;
-  @apply gap-3.5;
-  @apply p-5;
+  @apply grid gap-3.5 p-5;
 }
 
 .field {
-  @apply grid;
-  @apply gap-1.5;
+  @apply grid gap-1.5;
 }
 
 .field span {
@@ -86,12 +71,11 @@
 
 .field input,
 .field select {
-  @apply h-[38px];
+  @apply h-[38px] px-2.5;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
   color: var(--admin-text);
-  @apply px-2.5;
 }
 
 .field input:focus,
@@ -107,21 +91,14 @@
 }
 
 .actions {
-  @apply flex;
-  @apply justify-end;
-  @apply gap-2;
-  @apply pt-1;
+  @apply flex justify-end gap-2 pt-1;
 }
 
 .primaryButton,
 .secondaryButton {
-  @apply inline-flex;
-  @apply h-9;
-  @apply items-center;
-  @apply justify-center;
+  @apply inline-flex h-9 items-center justify-center
+    px-3 text-[14px];
   border-radius: var(--admin-radius-sm);
-  @apply px-3;
-  @apply text-[14px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -129,9 +106,9 @@
 }
 
 .primaryButton {
+  @apply text-white;
   border: 1px solid var(--admin-primary);
   background: var(--admin-primary);
-  @apply text-white;
 }
 
 .primaryButton:hover {

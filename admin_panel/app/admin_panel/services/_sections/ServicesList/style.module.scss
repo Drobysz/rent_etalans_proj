@@ -1,6 +1,5 @@
 @reference "tailwindcss";
 
 .section {
-  @apply grid;
-  @apply gap-5;
+  @apply grid gap-5;
 }

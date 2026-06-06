@@ -1,10 +1,7 @@
 @reference "tailwindcss";
 
 .header {
-  @apply flex;
-  @apply items-center;
-  @apply justify-between;
-  @apply gap-4;
+  @apply flex items-center justify-between gap-4;
 }
 
 .title {
@@ -15,7 +12,6 @@
 }
 
 .description {
-  @apply mt-1;
-  @apply text-[14px];
+  @apply mt-1 text-[14px];
   color: var(--admin-text-muted);
 }

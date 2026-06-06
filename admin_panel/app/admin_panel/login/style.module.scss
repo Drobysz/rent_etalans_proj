@@ -1,26 +1,20 @@
 @reference "tailwindcss";
 
 .page {
-  @apply grid;
-  @apply min-h-screen;
-  @apply place-items-center;
-  @apply px-4 py-8;
+  @apply grid min-h-screen place-items-center px-4
+    py-8;
   background: var(--admin-bg);
 }
 
 .panel {
-  @apply w-full;
-  @apply max-w-sm;
-  @apply p-5;
+  @apply w-full max-w-sm p-5;
   border-radius: var(--admin-radius);
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
 }
 
 .header {
-  @apply grid;
-  @apply gap-1;
-  @apply mb-5;
+  @apply grid gap-1 mb-5;
 }
 
 .header h1 {

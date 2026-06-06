@@ -1,14 +1,12 @@
 @reference "tailwindcss";
 
 .section {
-  @apply grid;
-  @apply gap-5;
+  @apply grid gap-5;
 }
 
 .grid {
-  @apply grid;
+  @apply grid gap-5;
   grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
-  @apply gap-5;
 }
 
 @media (max-width: 980px) {

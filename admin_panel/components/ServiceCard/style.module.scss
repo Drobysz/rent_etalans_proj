@@ -1,25 +1,19 @@
 @reference "tailwindcss";
 
 .card {
-  @apply grid;
+  @apply grid min-h-[148px];
   grid-template-columns: minmax(0, 1fr) auto;
-  @apply min-h-[148px];
   border-radius: var(--admin-radius);
   border: 1px solid var(--admin-border);
   background: var(--admin-surface);
 }
 
 .content {
-  @apply grid;
-  @apply gap-3;
-  @apply p-4;
+  @apply grid gap-3 p-4;
 }
 
 .topLine {
-  @apply flex;
-  @apply items-start;
-  @apply justify-between;
-  @apply gap-3;
+  @apply flex items-start justify-between gap-3;
 }
 
 .name {
@@ -29,9 +23,8 @@
 }
 
 .price {
-  @apply text-[14px];
+  @apply text-[14px] whitespace-nowrap;
   font-weight: 500;
-  @apply whitespace-nowrap;
   color: var(--admin-text);
 }
 
@@ -42,21 +35,14 @@
 }
 
 .meta {
-  @apply flex;
-  @apply flex-wrap;
-  @apply gap-x-3;
-  @apply gap-y-1;
-  @apply text-[12px];
+  @apply flex flex-wrap gap-x-3 gap-y-1
+    text-[12px];
   color: var(--admin-text-soft);
 }
 
 .editButton {
-  @apply inline-flex;
-  @apply h-8;
-  @apply w-8;
-  @apply items-center;
-  @apply justify-center;
-  @apply m-3;
+  @apply inline-flex h-8 w-8 items-center
+    justify-center m-3;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text-muted);
@@ -73,6 +59,5 @@
 }
 
 .editButton svg {
-  @apply h-4;
-  @apply w-4;
+  @apply h-4 w-4;
 }

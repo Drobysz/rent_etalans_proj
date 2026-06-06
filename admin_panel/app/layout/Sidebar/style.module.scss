@@ -1,23 +1,16 @@
 @reference "tailwindcss";
 
 .sidebar {
-  @apply sticky;
-  @apply top-0;
-  @apply flex;
-  @apply h-screen;
-  @apply flex-col;
-  @apply overflow-hidden;
+  @apply sticky top-0 flex h-screen
+    flex-col overflow-hidden;
   border-right: 1px solid var(--admin-border);
   background: var(--admin-sidebar);
 }
 
 .top {
-  @apply flex;
-  @apply h-14;
-  @apply items-center;
-  @apply gap-2;
+  @apply flex h-14 items-center gap-2
+    px-4;
   border-bottom: 1px solid var(--admin-border);
-  @apply px-4;
 }
 
 .menuButton,
@@ -30,16 +23,13 @@
 }
 
 .logoutButton {
-  @apply flex items-center justify-center
-   gap-2 w-fit;
+  @apply flex items-center justify-center gap-2
+    w-fit;
 }
 
 .menuButton {
-  @apply inline-flex;
-  @apply h-8;
-  @apply w-8;
-  @apply items-center;
-  @apply justify-center;
+  @apply inline-flex h-8 w-8 items-center
+    justify-center;
   border: 1px solid transparent;
   color: var(--admin-text-muted);
 }
@@ -51,35 +41,23 @@
 
 .menuButton svg,
 .navLink svg {
-  @apply h-4;
-  @apply w-4;
-  @apply shrink-0;
+  @apply h-4 w-4 shrink-0;
 }
 
 .productName {
-  @apply overflow-hidden;
-  @apply text-[14px];
+  @apply overflow-hidden text-[14px] text-ellipsis whitespace-nowrap;
   font-weight: 500;
-  @apply text-ellipsis;
-  @apply whitespace-nowrap;
   color: var(--admin-text);
 }
 
 .nav {
-  @apply flex;
-  @apply flex-1;
-  @apply flex-col;
-  @apply gap-1;
-  @apply p-3;
+  @apply flex flex-1 flex-col gap-1
+    p-3;
 }
 
 .navLink {
-  @apply flex;
-  @apply h-9;
-  @apply items-center;
-  @apply gap-2;
-  @apply px-2;
-  @apply text-[14px];
+  @apply flex h-9 items-center gap-2
+    px-2 text-[14px];
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text-muted);
   transition:
@@ -98,31 +76,23 @@
 }
 
 .account {
-  border-top: 1px solid var(--admin-border);
   @apply p-3;
+  border-top: 1px solid var(--admin-border);
 }
 
 .accountText {
-  @apply grid;
-  @apply gap-0.5;
-  @apply mb-3;
-  @apply text-[12px];
+  @apply grid gap-0.5 mb-3 text-[12px];
   color: var(--admin-text-soft);
 }
 
 .accountText span:first-child {
-  @apply overflow-hidden;
-  @apply text-ellipsis;
-  @apply whitespace-nowrap;
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
   color: var(--admin-text-muted);
 }
 
 .logoutButton {
-  @apply h-8;
-  @apply w-full;
+  @apply h-8 w-full px-2 text-[14px];
   border: 1px solid var(--admin-border);
-  @apply px-2;
-  @apply text-[14px];
   color: var(--admin-text-muted);
   background: var(--admin-surface);
 }
@@ -133,27 +103,20 @@
 }
 
 .collapsed .top {
-  @apply justify-center;
-  @apply p-0;
+  @apply justify-center p-0;
 }
 
 .collapsed .nav {
-  @apply items-center;
-  @apply pr-2;
-  @apply pl-2;
+  @apply items-center pr-2 pl-2;
 }
 
 .collapsed .navLink {
-  @apply w-10;
-  @apply justify-center;
-  @apply p-0;
+  @apply w-10 justify-center p-0;
 }
 
 @media (max-width: 760px) {
   .sidebar {
-    @apply relative;
-    @apply h-auto;
-    @apply w-full;
+    @apply relative h-auto w-full;
     width: 100% !important;
   }
 }

@@ -8,17 +8,14 @@
 }
 
 .table {
-  @apply w-full;
-  @apply min-w-[860px];
-  @apply border-collapse;
-  @apply text-left;
-  @apply text-[14px];
+  @apply w-full min-w-[860px] border-collapse text-left
+    text-[14px];
 }
 
 .table th {
+  @apply px-4 py-3;
   border-bottom: 1px solid var(--admin-border);
   background: var(--admin-sidebar);
-  @apply px-4 py-3;
   color: var(--admin-text-muted);
   font-weight: 500;
 }

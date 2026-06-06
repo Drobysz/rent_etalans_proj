@@ -1,19 +1,14 @@
 @reference "tailwindcss";
 
 .panel {
-  @apply grid;
-  @apply gap-[18px];
+  @apply grid gap-[18px] p-[18px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   background: var(--admin-surface);
-  @apply p-[18px];
 }
 
 .header {
-  @apply flex;
-  @apply items-center;
-  @apply justify-between;
-  @apply gap-3;
+  @apply flex items-center justify-between gap-3;
 }
 
 .header h2 {
@@ -23,22 +18,17 @@
 }
 
 .tabs {
-  @apply flex;
-  @apply gap-1;
+  @apply flex gap-1 p-[3px];
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface-subtle);
-  @apply p-[3px];
 }
 
 .tab {
-  @apply h-7;
+  @apply h-7 rounded bg-transparent px-[9px]
+    text-[13px];
   border: 0;
-  @apply rounded;
-  @apply bg-transparent;
   color: var(--admin-text-muted);
-  @apply px-[9px];
-  @apply text-[13px];
   font-weight: 500;
   transition:
     background-color 140ms var(--admin-ease),
@@ -52,29 +42,18 @@
 }
 
 .chart {
-  @apply grid;
-  @apply grid-flow-col;
+  @apply grid grid-flow-col items-end gap-2.5
+    min-h-[260px] overflow-x-hidden pt-2;
   grid-auto-columns: minmax(72px, 1fr);
-  @apply items-end;
-  @apply gap-2.5;
-  @apply min-h-[260px];
-  @apply overflow-x-hidden;
-  @apply pt-2;
 }
 
 .scrollableChart {
-  @apply auto-cols-[96px];
-  @apply justify-start;
-  @apply overflow-x-auto;
-  @apply pb-1;
+  @apply auto-cols-[96px] justify-start overflow-x-auto pb-1;
 }
 
 .barGroup {
-  @apply grid;
+  @apply grid gap-2 min-w-[72px] h-[260px];
   grid-template-rows: 1fr auto;
-  @apply gap-2;
-  @apply min-w-[72px];
-  @apply h-[260px];
 }
 
 .scrollableChart .barGroup {
@@ -82,12 +61,9 @@
 }
 
 .barTrack {
-  @apply flex;
-  @apply items-end;
-  @apply min-h-[220px];
+  @apply flex items-end min-h-[220px] overflow-hidden;
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface-subtle);
-  @apply overflow-hidden;
 }
 
 .bar {
@@ -96,17 +72,13 @@
 }
 
 .barGroup span {
-  @apply overflow-hidden;
+  @apply overflow-hidden text-[12px] text-center text-ellipsis
+    whitespace-nowrap;
   color: var(--admin-text-muted);
-  @apply text-[12px];
-  @apply text-center;
-  @apply text-ellipsis;
-  @apply whitespace-nowrap;
 }
 
 @media (max-width: 560px) {
   .header {
-    @apply items-start;
-    @apply flex-col;
+    @apply items-start flex-col;
   }
 }

@@ -9,8 +9,7 @@
 }
 
 .row td {
-  @apply px-4 py-3;
-  @apply align-top;
+  @apply px-4 py-3 align-top;
   color: var(--admin-text);
 }
 
@@ -29,8 +28,7 @@
 }
 
 .subtle {
-  @apply mt-1;
-  @apply text-[12px];
+  @apply mt-1 text-[12px];
 }
 
 .actions {
@@ -38,13 +36,9 @@
 }
 
 .paymentButton {
-  @apply inline-flex;
-  @apply h-8;
-  @apply items-center;
-  @apply justify-center;
+  @apply inline-flex h-8 items-center justify-center
+    px-3 text-[14px];
   border: 1px solid var(--admin-border);
-  @apply px-3;
-  @apply text-[14px];
   font-weight: 500;
   border-radius: var(--admin-radius-sm);
   color: var(--admin-text);
