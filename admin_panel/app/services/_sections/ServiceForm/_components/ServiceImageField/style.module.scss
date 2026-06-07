@@ -7,7 +7,7 @@
 }
 
 .fileControl {
-  @apply flex items-center gap-2.5;
+  @apply flex flex-wrap items-center gap-2.5;
 }
 
 .fileButton {
@@ -34,17 +34,12 @@
   @apply absolute inset-0 cursor-pointer opacity-0;
 }
 
-.previewButton,
-.previewFrame {
+.previewButton {
   @apply relative inline-flex h-11 w-16
-    shrink-0 overflow-hidden p-0;
+    shrink-0 cursor-pointer overflow-hidden p-0;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
-}
-
-.previewButton {
-  @apply cursor-pointer;
 }
 
 .preview {

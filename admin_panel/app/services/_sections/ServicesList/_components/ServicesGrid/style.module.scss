@@ -1,6 +1,5 @@
 @reference "tailwindcss";
 
 .grid {
-  @apply grid gap-3;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  @apply flex flex-col gap-4 max-w-200;
 }

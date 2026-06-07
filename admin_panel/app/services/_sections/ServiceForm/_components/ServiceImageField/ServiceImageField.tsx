@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, CSSProperties, DragEvent } from "react";
 import styles from "./style.module.scss";
 import type { ServiceImageFieldProps } from "./ServiceImageField.props";
+import type { ServiceImage } from "@/interfaces";
 
 type ImagePreview = {
   isObjectUrl: boolean;
@@ -14,19 +15,13 @@ type ImagePreview = {
 
 export function ServiceImageField({
   error,
-  existingImage,
+  existingImages = [],
   required = false,
 }: ServiceImageFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<ImagePreview | null>(
-    existingImage
-      ? {
-          isObjectUrl: false,
-          name: existingImage.filename,
-          url: existingImage.url,
-        }
-      : null,
-  );
+  const [currentImages, setCurrentImages] = useState<ServiceImage[]>(existingImages);
+  const [removedImageIds, setRemovedImageIds] = useState<string[]>([]);
+  const [preview, setPreview] = useState<ImagePreview | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -91,14 +86,22 @@ export function ServiceImageField({
     setSelectedImage(null);
   };
 
+  const removeExistingImage = (image: ServiceImage) => {
+    setCurrentImages((images) => images.filter((item) => item.id !== image.id));
+    setRemovedImageIds((ids) => [...ids, image.id]);
+  };
+
   const previewStyle: CSSProperties | undefined = preview
     ? { backgroundImage: `url("${preview.url}")` }
     : undefined;
-  const canRemovePreview = Boolean(preview?.isObjectUrl);
+  const requiresImage = required && !preview && currentImages.length === 0;
 
   return (
-    <label className={styles.field}>
+    <div className={styles.field}>
       <span>Image</span>
+      {removedImageIds.map((imageId) => (
+        <input key={imageId} type="hidden" name="deleteImageIds" value={imageId} />
+      ))}
       <span className={styles.fileControl}>
         <span
           className={cn(styles.fileButton, isDragging && styles.dragging)}
@@ -112,12 +115,31 @@ export function ServiceImageField({
             name="images"
             type="file"
             accept="image/*"
-            required={required && !preview}
+            required={requiresImage}
             aria-invalid={Boolean(error)}
             onChange={handleFileChange}
           />
         </span>
-        {preview && canRemovePreview ? (
+        {currentImages.map((image) => (
+          <button
+            key={image.id}
+            className={styles.previewButton}
+            type="button"
+            onClick={() => removeExistingImage(image)}
+            aria-label={`Remove image: ${image.filename}`}
+          >
+            <span
+              className={styles.preview}
+              style={{ backgroundImage: `url("${image.url}")` }}
+              title={image.filename}
+              aria-hidden="true"
+            />
+            <span className={styles.removeIcon} aria-hidden="true">
+              <span className={styles.removeIconInner}>×</span>
+            </span>
+          </button>
+        ))}
+        {preview ? (
           <button
             className={styles.previewButton}
             type="button"
@@ -135,13 +157,8 @@ export function ServiceImageField({
             </span>
           </button>
         ) : null}
-        {preview && !canRemovePreview ? (
-          <span className={styles.previewFrame} title={preview.name}>
-            <span className={styles.preview} style={previewStyle} aria-hidden="true" />
-          </span>
-        ) : null}
       </span>
       {error ? <strong>{error}</strong> : null}
-    </label>
+    </div>
   );
 }

@@ -1,14 +1,14 @@
 @reference "tailwindcss";
 
 .field {
-  @apply grid gap-1.5 text-[14px];
+  @apply grid gap-1.5 text-sm;
   color: var(--admin-text);
   font-weight: 500;
 }
 
 .toggleButton {
   @apply inline-flex h-9 w-fit items-center
-    justify-center px-3 text-[14px];
+    justify-center px-3 text-sm;
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface);
@@ -26,11 +26,9 @@
 }
 
 .active {
-  border-color: var(--admin-primary);
-  background: var(--admin-primary);
-  color: white;
+ @apply bg-blue-200/30 border-blue-500/30 text-blue-700/70;
 }
 
 .active:hover {
-  background: var(--admin-primary-hover);
+  @apply bg-blue-300/50 border-blue-500/50 text-blue-700/90;
 }

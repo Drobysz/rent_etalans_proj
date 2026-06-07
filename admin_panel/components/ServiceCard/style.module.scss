@@ -72,9 +72,11 @@
 
 .editButton:hover,
 .deleteButton:hover {
-  background: var(--admin-surface-subtle);
-  border-color: var(--admin-border-strong);
-  color: var(--admin-text);
+ @apply bg-gray-100/40;
+}
+
+.editButton:hover {
+  @apply border-blue-500/30 text-blue-700/70;
 }
 
 .deleteButton:hover {

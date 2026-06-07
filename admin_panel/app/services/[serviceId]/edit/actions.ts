@@ -10,34 +10,54 @@ function getSelectedImage(formData: FormData) {
   return image instanceof File && image.size > 0 ? image : null;
 }
 
-async function updateServiceImage(
+async function readApiMessage(response: Response, fallback: string) {
+  const payload = (await response.json().catch(() => null)) as {
+    message?: string;
+    res?: string;
+  } | null;
+
+  return payload?.res ?? payload?.message ?? fallback;
+}
+
+async function addServiceImage(
   apiUrl: string,
   serviceId: string,
-  currentImageId: string | null,
+  accessToken: string,
   image: File,
 ) {
   const payload = new FormData();
   payload.set("object_id", serviceId);
   payload.set("object_type", "service");
-
-  if (currentImageId) {
-    payload.set("_method", "PATCH");
-    payload.set("new_image", image);
-
-    return fetch(`${apiUrl}/image-uploader/${currentImageId}`, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: payload,
-      cache: "no-store",
-    });
-  }
-
   payload.set("image", image);
 
   return fetch(`${apiUrl}/image-uploader`, {
     method: "POST",
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
     body: payload,
+    cache: "no-store",
+  });
+}
+
+async function deleteServiceImage(
+  apiUrl: string,
+  serviceId: string,
+  accessToken: string,
+  imageId: string,
+) {
+  const params = new URLSearchParams({
+    object_id: serviceId,
+    object_type: "service",
+  });
+
+  return fetch(`${apiUrl}/image-uploader/${imageId}?${params.toString()}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
     cache: "no-store",
   });
 }
@@ -47,7 +67,10 @@ export async function updateServiceAction(
   formData: FormData,
 ): Promise<ServiceFormActionState> {
   const serviceId = String(formData.get("serviceId") ?? "");
-  const currentImageId = formData.get("currentImageId");
+  const deletedImageIds = formData
+    .getAll("deleteImageIds")
+    .map((imageId) => String(imageId))
+    .filter(Boolean);
   const parsed = serviceFormSchema.safeParse({
     name: formData.get("name"),
     price: formData.get("price"),
@@ -114,21 +137,45 @@ export async function updateServiceAction(
 
     const selectedImage = getSelectedImage(formData);
 
-    if (selectedImage) {
-      const imageResponse = await updateServiceImage(
+    for (const imageId of deletedImageIds) {
+      const imageResponse = await deleteServiceImage(
         apiUrl,
         serviceId,
-        typeof currentImageId === "string" ? currentImageId : null,
+        session.accessToken,
+        imageId,
+      );
+
+      if (!imageResponse.ok) {
+        const message = await readApiMessage(imageResponse, "Service image was not deleted.");
+
+        return {
+          message,
+          notification: {
+            id: `service-image-delete-${imageResponse.status}`,
+            status: "error",
+            message,
+          },
+        };
+      }
+    }
+
+    if (selectedImage) {
+      const imageResponse = await addServiceImage(
+        apiUrl,
+        serviceId,
+        session.accessToken,
         selectedImage,
       );
 
       if (!imageResponse.ok) {
+        const message = await readApiMessage(imageResponse, "Service image was not uploaded.");
+
         return {
-          message: "Service details were saved, but the image was not updated.",
+          message,
           notification: {
-            id: `service-image-update-${imageResponse.status}`,
+            id: `service-image-add-${imageResponse.status}`,
             status: "error",
-            message: "Service image was not updated.",
+            message,
           },
         };
       }

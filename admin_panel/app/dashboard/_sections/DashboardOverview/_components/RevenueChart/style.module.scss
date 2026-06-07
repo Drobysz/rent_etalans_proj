@@ -67,8 +67,7 @@
 }
 
 .bar {
-  @apply w-full;
-  background: var(--admin-primary);
+  @apply w-full bg-green-500;
 }
 
 .barGroup span {

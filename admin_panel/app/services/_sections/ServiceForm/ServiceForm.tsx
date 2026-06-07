@@ -23,7 +23,6 @@ export function ServiceForm({
   service,
 }: ServiceFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
-  const existingImage = service?.images[0];
 
   return (
     <section className={styles.section}>
@@ -31,7 +30,6 @@ export function ServiceForm({
 
       <form className={styles.form} action={formAction}>
         {service ? <input type="hidden" name="serviceId" value={service.id} /> : null}
-        {existingImage ? <input type="hidden" name="currentImageId" value={existingImage.id} /> : null}
         <ServiceTextField
           label="Name"
           name="name"
@@ -74,7 +72,7 @@ export function ServiceForm({
         </div>
         <ServiceImageField
           error={state.fieldErrors?.images}
-          existingImage={existingImage}
+          existingImages={service?.images ?? []}
           required={imageRequired}
         />
 
