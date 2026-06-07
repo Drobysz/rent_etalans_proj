@@ -13,7 +13,10 @@ use App\Http\Requests\{
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
+use Throwable;
 
 class ServiceController extends Controller
 {
@@ -42,21 +45,41 @@ class ServiceController extends Controller
 
     public function store(ServiceStoreRequest $request)
     {
-
         $data = $request->validated();
+        $files = $request->file('images', []);
+        $uploadedPaths = [];
         unset($data['images']);
-        $service = Service::create($data);
 
-        foreach ($request->file('images') as $file)
-            {
-                $filename = $file->getClientOriginalName();
-                $path = $file->store("service-cards-imgs/{$service->id}", 's3');
+        try {
+            $service = DB::transaction(function () use ($data, $files, &$uploadedPaths) {
+                $service = Service::create($data);
 
-                $service->images()->create([
-                    'image_name' => $filename,
-                    'path' => $path
-                ]);
+                foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $path = $file->store("service-cards-imgs/{$service->id}", 's3');
+
+                    if (!$path) {
+                        throw new RuntimeException('Service image was not uploaded.');
+                    }
+
+                    $uploadedPaths[] = $path;
+
+                    $service->images()->create([
+                        'image_name' => $filename,
+                        'path' => $path
+                    ]);
+                }
+
+                return $service;
+            });
+        } catch (Throwable $e) {
+            foreach ($uploadedPaths as $path) {
+                Storage::disk('s3')->delete($path);
             }
+
+            throw $e;
+        }
+
         $service->load(['images']);
 
         return (new ServiceResource($service))

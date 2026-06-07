@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ServiceVisibilityTest extends TestCase
@@ -67,5 +69,63 @@ class ServiceVisibilityTest extends TestCase
             ->getJson('/api/services')
             ->assertOk()
             ->assertJsonCount(2, 'data');
+    }
+
+    public function test_service_create_uploads_images_to_service_cards_folder(): void
+    {
+        Storage::fake('s3');
+
+        $user = User::factory()->create(['role' => 'admin']);
+        $token = $user->createToken('services-test')->plainTextToken;
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->post('/api/services', [
+                'name' => 'Cleaning',
+                'description' => 'Cleaning shown to clients.',
+                'price' => 40,
+                'visible' => true,
+                'fixed_price' => true,
+                'images' => [
+                    UploadedFile::fake()->image('cleaning.jpg'),
+                ],
+            ]);
+
+        $response->assertCreated();
+
+        $serviceId = $response->json('data.id');
+        $files = Storage::disk('s3')->files("service-cards-imgs/{$serviceId}");
+
+        $this->assertCount(1, $files);
+        $this->assertStringStartsWith(
+            "service-cards-imgs/{$serviceId}/",
+            Service::query()->findOrFail($serviceId)->images()->firstOrFail()->path
+        );
+    }
+
+    public function test_service_image_uploader_uses_service_cards_folder(): void
+    {
+        Storage::fake('s3');
+
+        $service = Service::query()->create([
+            'name' => 'Transfer',
+            'description' => 'Transfer shown to clients.',
+            'price' => 70,
+            'visible' => true,
+            'fixed_price' => false,
+        ]);
+
+        $this->post('/api/image-uploader', [
+            'object_id' => $service->id,
+            'object_type' => 'service',
+            'image' => UploadedFile::fake()->image('transfer.jpg'),
+        ])->assertCreated();
+
+        $files = Storage::disk('s3')->files("service-cards-imgs/{$service->id}");
+
+        $this->assertCount(1, $files);
+        $this->assertStringStartsWith(
+            "service-cards-imgs/{$service->id}/",
+            $service->images()->firstOrFail()->path
+        );
     }
 }

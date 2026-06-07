@@ -20,6 +20,7 @@ use App\Http\Resources\{
 };
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use RuntimeException;
 
 use Illuminate\Support\Facades\{
     DB,
@@ -44,6 +45,10 @@ class ImageController extends Controller
 
         $newPath = $file->store($dir, 's3');
         $newName = $file->getClientOriginalName();
+
+        if (!$newPath) {
+            throw new RuntimeException('Image was not uploaded.');
+        }
 
         $oldPath = $img->path;
 
@@ -85,6 +90,10 @@ class ImageController extends Controller
         $file = $request->file('image');
         $filename = $file->getClientOriginalName();
         $path = $file->store($dir, 's3');
+
+        if (!$path) {
+            throw new RuntimeException('Image was not uploaded.');
+        }
 
         try {
             DB::transaction(function () use ($obj, $filename, $path) {
@@ -131,7 +140,7 @@ class ImageController extends Controller
     {
         return match ($obj_type) {
             'apartment' => ["apart-imgs/{$obj_id}", Apartment::findOrFail($obj_id)],
-            'service'   => ["service-imgs/{$obj_id}", Service::findOrFail($obj_id)],
+            'service'   => ["service-cards-imgs/{$obj_id}", Service::findOrFail($obj_id)],
         };
     }
 
