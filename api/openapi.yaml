@@ -1,14 +1,22 @@
 openapi: 3.0.3
 info:
   title: Rent Etalans API
-  version: 1.1.0
+  version: 1.2.0
 servers:
   - url: http://localhost:8000/api
 security: []
+tags:
+  - name: Auth
+  - name: Users
+  - name: Services
+  - name: Apartments
+  - name: Payments
+  - name: Images
+  - name: Stripe
 paths:
   /auth/login:
     post:
-      summary: Login admin or client user
+      summary: Login user by name and password
       tags:
         - Auth
       requestBody:
@@ -28,7 +36,7 @@ paths:
                   format: password
       responses:
         "200":
-          description: Authenticated user and bearer token
+          description: Bearer token and safe user payload
           content:
             application/json:
               schema:
@@ -40,9 +48,10 @@ paths:
                   token:
                     type: string
                   user:
-                    $ref: "#/components/schemas/AuthUser"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+                    $ref: "#/components/schemas/User"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
   /users/me:
     get:
       summary: Get current authenticated user
@@ -56,12 +65,105 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/AuthUser"
+                $ref: "#/components/schemas/UserResource"
         "401":
           $ref: "#/components/responses/Unauthorized"
+
+  /user:
+    get:
+      summary: Get raw current Sanctum user
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Raw authenticated user model
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RawUser"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /users:
+    get:
+      summary: List admin-manageable users
+      description: Requires an authenticated superadmin. Superadmin users are excluded from the collection.
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin and client users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCollection"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      summary: Create admin or client user
+      description: Requires an authenticated superadmin. Creating a superadmin is not allowed here.
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateInput"
+      responses:
+        "201":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResource"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /users/{userId}:
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    patch:
+      summary: Update admin or client user
+      description: Requires an authenticated superadmin. Superadmin users cannot be edited here.
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateInput"
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResource"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
   /services/visible:
     get:
       summary: List services visible to clients
@@ -74,16 +176,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServiceCollection"
+
   /services:
     get:
-      summary: List all services for admin panel
+      summary: List all services
+      description: Requires authentication. Returns visible and hidden services.
       tags:
         - Services
       security:
         - bearerAuth: []
       responses:
         "200":
-          description: All services, including hidden services
+          description: All services
           content:
             application/json:
               schema:
@@ -101,56 +205,22 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: object
-              required:
-                - name
-                - price
-                - description
-                - fixed_price
-                - images
-              properties:
-                name:
-                  type: string
-                  maxLength: 30
-                price:
-                  type: number
-                  minimum: 0
-                description:
-                  type: string
-                  maxLength: 500
-                visible:
-                  type: boolean
-                  default: true
-                fixed_price:
-                  type: boolean
-                  description: True when the service price is fixed, false when it depends on stay duration.
-                images:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
+              $ref: "#/components/schemas/ServiceCreateInput"
       responses:
         "201":
           description: Created service
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Service"
+                $ref: "#/components/schemas/ServiceResource"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "422":
           $ref: "#/components/responses/ValidationError"
+
   /services/{serviceId}:
     parameters:
-      - name: serviceId
-        in: path
-        required: true
-        schema:
-          type: integer
-          minimum: 1
+      - $ref: "#/components/parameters/ServiceId"
     get:
       summary: Show service
       tags:
@@ -163,16 +233,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Service"
+                $ref: "#/components/schemas/ServiceResource"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-    patch:
-      summary: Update service
+    put:
+      summary: Replace service fields
       tags:
         - Services
       security:
@@ -189,10 +256,32 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/Service"
+                $ref: "#/components/schemas/ServiceResource"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    patch:
+      summary: Update service fields
+      tags:
+        - Services
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUpdateInput"
+      responses:
+        "200":
+          description: Updated service
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceResource"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "404":
@@ -212,15 +301,405 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
+
+  /apartments:
+    get:
+      summary: List apartments
+      tags:
+        - Apartments
+      responses:
+        "200":
+          description: Paginated apartments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApartmentPaginatedCollection"
+    post:
+      summary: Create apartment
+      tags:
+        - Apartments
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ApartmentCreateInput"
+      responses:
+        "201":
+          description: Created apartment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApartmentResource"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /apartments/{apartmentId}:
+    parameters:
+      - $ref: "#/components/parameters/ApartmentId"
+    get:
+      summary: Show apartment
+      tags:
+        - Apartments
+      responses:
+        "200":
+          description: Apartment details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApartmentResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Replace apartment fields
+      tags:
+        - Apartments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApartmentUpdateInput"
+      responses:
+        "200":
+          description: Updated apartment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApartmentResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    patch:
+      summary: Update apartment fields
+      tags:
+        - Apartments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApartmentUpdateInput"
+      responses:
+        "200":
+          description: Updated apartment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApartmentResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      summary: Delete apartment
+      tags:
+        - Apartments
+      responses:
+        "204":
+          description: Apartment deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /payments/dashboard:
+    get:
+      summary: Get payment dashboard metrics
+      tags:
+        - Payments
+      responses:
+        "200":
+          description: Revenue, order counts, chart series, and top services
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+
+  /payments:
+    get:
+      summary: List payments
+      tags:
+        - Payments
+      parameters:
+        - name: reserve_id
+          in: query
+          required: false
+          description: Partial reserve id search. Payments are included when their reserve_id contains this string.
+          schema:
+            type: string
+            maxLength: 20
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: desc
+      responses:
+        "200":
+          description: Paginated payments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentPaginatedCollection"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    post:
+      summary: Create payment
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentCreateInput"
+      responses:
+        "201":
+          description: Created payment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentWithServices"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /payments/{paymentId}:
+    parameters:
+      - $ref: "#/components/parameters/PaymentId"
+    get:
+      summary: Show payment
+      tags:
+        - Payments
+      responses:
+        "200":
+          description: Payment details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentWithServices"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      summary: Delete payment
+      tags:
+        - Payments
+      responses:
+        "204":
+          description: Payment deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /image-uploader:
+    post:
+      summary: Add image to apartment or service
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ImageCreateInput"
+      responses:
+        "201":
+          description: Parent resource with images
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ApartmentResource"
+                  - $ref: "#/components/schemas/ServiceResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /image-uploader/{imageId}:
+    parameters:
+      - $ref: "#/components/parameters/ImageId"
+    put:
+      summary: Replace image file
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ImageUpdateInput"
+      responses:
+        "200":
+          description: Parent resource with updated image
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ApartmentResource"
+                  - $ref: "#/components/schemas/ServiceResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    patch:
+      summary: Replace image file
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ImageUpdateInput"
+      responses:
+        "200":
+          description: Parent resource with updated image
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ApartmentResource"
+                  - $ref: "#/components/schemas/ServiceResource"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      summary: Delete image from apartment or service
+      tags:
+        - Images
+      parameters:
+        - name: object_id
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - name: object_type
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ImageObjectType"
+      responses:
+        "204":
+          description: Image deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /create-checkout-session:
+    post:
+      summary: Create Stripe checkout session
+      tags:
+        - Stripe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckoutCreateInput"
+      responses:
+        "200":
+          description: Stripe checkout URL
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - url
+                properties:
+                  url:
+                    type: string
+                    nullable: true
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /validate-purchase:
+    post:
+      summary: Validate Stripe checkout session payment status
+      tags:
+        - Stripe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - session_id
+              properties:
+                session_id:
+                  type: string
+      responses:
+        "200":
+          description: Payment is valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PurchaseValidation"
+        "400":
+          description: Invalid Stripe session or unpaid session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PurchaseValidation"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: Sanctum
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    ServiceId:
+      name: serviceId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    ApartmentId:
+      name: apartmentId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    PaymentId:
+      name: paymentId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    ImageId:
+      name: imageId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
   responses:
     Unauthorized:
       description: Token is missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: Authenticated user is not allowed to access this resource
       content:
         application/json:
           schema:
@@ -238,7 +717,38 @@ components:
           schema:
             $ref: "#/components/schemas/ValidationError"
   schemas:
-    AuthUser:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        res:
+          type: string
+          description: Debug message returned by the current exception renderer for JSON requests.
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+
+    UserRole:
+      type: string
+      enum:
+        - superadmin
+        - admin
+        - client
+    ManageableUserRole:
+      type: string
+      enum:
+        - admin
+        - client
+    User:
       type: object
       required:
         - id
@@ -247,17 +757,103 @@ components:
         - role
       properties:
         id:
-          type: integer
+          type: string
         name:
           type: string
         tg_nickname:
           type: string
         role:
+          $ref: "#/components/schemas/UserRole"
+    RawUser:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          properties:
+            created_at:
+              type: string
+              format: date-time
+              nullable: true
+            updated_at:
+              type: string
+              format: date-time
+              nullable: true
+    UserResource:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: "#/components/schemas/User"
+    UserCollection:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    UserCreateInput:
+      type: object
+      required:
+        - name
+        - tg_nickname
+        - role
+        - password
+      properties:
+        name:
           type: string
-          enum:
-            - superadmin
-            - admin
-            - client
+          maxLength: 255
+        tg_nickname:
+          type: string
+          maxLength: 255
+        role:
+          $ref: "#/components/schemas/ManageableUserRole"
+        password:
+          type: string
+          minLength: 8
+    UserUpdateInput:
+      type: object
+      required:
+        - name
+        - tg_nickname
+        - role
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        tg_nickname:
+          type: string
+          maxLength: 255
+        role:
+          $ref: "#/components/schemas/ManageableUserRole"
+        password:
+          type: string
+          nullable: true
+          minLength: 8
+
+    ImageObjectType:
+      type: string
+      enum:
+        - apartment
+        - service
+    Image:
+      type: object
+      required:
+        - id
+        - filename
+        - path
+        - url
+      properties:
+        id:
+          type: integer
+        filename:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+
     Service:
       type: object
       required:
@@ -277,7 +873,6 @@ components:
           type: string
         visible:
           type: boolean
-          description: True when clients can see and buy this service.
         fixed_price:
           type: boolean
           description: True for fixed service price, false when price depends on stay duration.
@@ -286,24 +881,14 @@ components:
         images:
           type: array
           items:
-            $ref: "#/components/schemas/ServiceImage"
-    ServiceImage:
+            $ref: "#/components/schemas/Image"
+    ServiceResource:
       type: object
       required:
-        - id
-        - filename
-        - path
-        - url
+        - data
       properties:
-        id:
-          type: integer
-        filename:
-          type: string
-        path:
-          type: string
-        url:
-          type: string
-          format: uri
+        data:
+          $ref: "#/components/schemas/Service"
     ServiceCollection:
       type: object
       required:
@@ -313,8 +898,14 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Service"
-    ServiceUpdateInput:
+    ServiceCreateInput:
       type: object
+      required:
+        - name
+        - price
+        - description
+        - fixed_price
+        - images
       properties:
         name:
           type: string
@@ -327,21 +918,493 @@ components:
           maxLength: 500
         visible:
           type: boolean
+          default: true
         fixed_price:
           type: boolean
-    Error:
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
+    ServiceUpdateInput:
       type: object
       properties:
-        message:
+        name:
           type: string
-    ValidationError:
+          maxLength: 30
+        price:
+          type: number
+          minimum: 0
+        visible:
+          type: boolean
+        fixed_price:
+          type: boolean
+        description:
+          type: string
+          maxLength: 500
+
+    PaymentService:
+      type: object
+      description: Raw service model loaded through Payment::services().
+      required:
+        - id
+        - name
+        - description
+        - visible
+        - fixed_price
+        - price
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        visible:
+          type: boolean
+        fixed_price:
+          type: boolean
+        price:
+          type: number
+        pivot:
+          $ref: "#/components/schemas/PaymentServicePivot"
+    PaymentServicePivot:
       type: object
       properties:
-        message:
+        payment_id:
+          type: integer
+          nullable: true
+        service_id:
+          type: integer
+          nullable: true
+
+    Apartment:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - description
+        - nb_beds
+        - nb_chambers
+        - apart_link
+        - images
+      properties:
+        id:
+          type: integer
+        name:
           type: string
-        errors:
+        price:
+          type: number
+        description:
+          type: string
+          nullable: true
+        nb_beds:
+          type: number
+        nb_chambers:
+          type: number
+        apart_link:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/Image"
+    ApartmentResource:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: "#/components/schemas/Apartment"
+    ApartmentCreateInput:
+      type: object
+      required:
+        - name
+        - price
+        - nb_beds
+        - nb_chambers
+        - apart_link
+        - images
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        price:
+          type: number
+          minimum: 0
+        description:
+          type: string
+          nullable: true
+        nb_beds:
+          type: number
+          minimum: 0
+        nb_chambers:
+          type: number
+          minimum: 0
+        apart_link:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
+    ApartmentUpdateInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        price:
+          type: number
+          minimum: 0
+        description:
+          type: string
+        nb_beds:
+          type: number
+          minimum: 0
+        nb_chambers:
+          type: number
+          minimum: 0
+        apart_link:
+          type: string
+
+    Payment:
+      type: object
+      required:
+        - id
+        - client_number
+        - days_number
+        - email
+        - reserve_id
+        - total_price
+      properties:
+        id:
+          type: integer
+        apart_id:
+          type: integer
+          nullable: true
+        client_number:
+          type: integer
+        days_number:
+          type: integer
+        email:
+          type: string
+          maxLength: 80
+        reserve_id:
+          type: string
+          maxLength: 20
+        total_price:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentService"
+    PaymentWithServices:
+      allOf:
+        - $ref: "#/components/schemas/Payment"
+        - type: object
+          required:
+            - services
+          properties:
+            services:
+              type: array
+              items:
+                $ref: "#/components/schemas/PaymentService"
+    PaymentCreateInput:
+      type: object
+      required:
+        - client_number
+        - days_number
+        - email
+        - reserve_id
+        - total_price
+        - service_ids
+      properties:
+        apart_id:
+          type: integer
+          nullable: true
+          minimum: 0
+        client_number:
+          type: integer
+        days_number:
+          type: integer
+          minimum: 1
+          maximum: 365
+        email:
+          type: string
+          maxLength: 80
+        reserve_id:
+          type: string
+          maxLength: 20
+        total_price:
+          type: number
+          minimum: 0
+        service_ids:
+          type: array
+          items:
+            type: integer
+
+    ImageCreateInput:
+      type: object
+      required:
+        - image
+        - object_id
+        - object_type
+      properties:
+        image:
+          type: string
+          format: binary
+        object_id:
+          type: integer
+          minimum: 1
+        object_type:
+          $ref: "#/components/schemas/ImageObjectType"
+    ImageUpdateInput:
+      type: object
+      required:
+        - new_image
+        - object_id
+        - object_type
+      properties:
+        new_image:
+          type: string
+          format: binary
+        object_id:
+          type: integer
+          minimum: 1
+        object_type:
+          $ref: "#/components/schemas/ImageObjectType"
+
+    CheckoutCreateInput:
+      type: object
+      required:
+        - email
+        - client_number
+        - days_number
+        - reserve_id
+        - service_ids
+      properties:
+        email:
+          type: string
+          maxLength: 80
+        client_number:
+          type: integer
+        days_number:
+          type: integer
+          minimum: 1
+          maximum: 365
+        reserve_id:
+          type: string
+          maxLength: 20
+        service_ids:
+          type: array
+          items:
+            type: integer
+    PurchaseValidation:
+      type: object
+      required:
+        - valid
+      properties:
+        valid:
+          type: boolean
+        error:
+          type: string
+
+    Dashboard:
+      type: object
+      required:
+        - revenue
+        - orders
+        - series
+        - top_services
+      properties:
+        revenue:
+          $ref: "#/components/schemas/DashboardMetric"
+        orders:
+          $ref: "#/components/schemas/DashboardMetric"
+        series:
           type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
+          required:
+            - week
+            - month
+            - year
+          properties:
+            week:
+              type: array
+              items:
+                $ref: "#/components/schemas/DashboardPoint"
+            month:
+              type: array
+              items:
+                $ref: "#/components/schemas/DashboardPoint"
+            year:
+              type: array
+              items:
+                $ref: "#/components/schemas/DashboardPoint"
+        top_services:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopService"
+    DashboardMetric:
+      type: object
+      required:
+        - week
+        - month
+        - year
+      properties:
+        week:
+          type: number
+        month:
+          type: number
+        year:
+          type: number
+    DashboardPoint:
+      type: object
+      required:
+        - label
+        - revenue
+      properties:
+        label:
+          type: string
+        revenue:
+          type: number
+    TopService:
+      type: object
+      required:
+        - name
+        - count
+        - revenue
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+        revenue:
+          type: number
+
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type: string
+          nullable: true
+        last:
+          type: string
+          nullable: true
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        from:
+          type: integer
+          nullable: true
+        last_page:
+          type: integer
+        links:
+          type: array
+          items:
+            type: object
+        path:
+          type: string
+        per_page:
+          type: integer
+        to:
+          type: integer
+          nullable: true
+        total:
+          type: integer
+    ApartmentPaginatedCollection:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Apartment"
+        links:
+          $ref: "#/components/schemas/PaginationLinks"
+        meta:
+          $ref: "#/components/schemas/PaginationMeta"
+    PaymentPaginatedCollection:
+      type: object
+      required:
+        - current_page
+        - data
+        - first_page_url
+        - from
+        - last_page
+        - last_page_url
+        - links
+        - next_page_url
+        - path
+        - per_page
+        - prev_page_url
+        - to
+        - total
+      properties:
+        current_page:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PaymentWithServices"
+        first_page_url:
+          type: string
+          nullable: true
+        from:
+          type: integer
+          nullable: true
+        last_page:
+          type: integer
+        last_page_url:
+          type: string
+          nullable: true
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/RawPaginationLink"
+        next_page_url:
+          type: string
+          nullable: true
+        path:
+          type: string
+        per_page:
+          type: integer
+        prev_page_url:
+          type: string
+          nullable: true
+        to:
+          type: integer
+          nullable: true
+        total:
+          type: integer
+    RawPaginationLink:
+      type: object
+      required:
+        - url
+        - label
+        - active
+      properties:
+        url:
+          type: string
+          nullable: true
+        label:
+          type: string
+        active:
+          type: boolean
