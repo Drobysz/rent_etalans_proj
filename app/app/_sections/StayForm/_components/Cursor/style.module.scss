@@ -1,0 +1,6 @@
+@reference "tailwindcss";
+
+.cursor {
+    @apply absolute z-10 h-full rounded-full 
+        bg-white shadow-xl;
+}

@@ -1,0 +1,17 @@
+@reference "tailwindcss";
+
+.stayform_section {
+    @apply flex flex-col items-center gap-5;
+}
+
+.title {
+    @apply text-neutral-500 text-center text-5xl 
+        text-shadow-2xs font-extralight;
+}
+
+.form {
+    @apply rounded-full
+        flex w-fit justify-center 
+        border-2 border-gray-400 duration-300 
+        transition-shadow relative overflow-hidden;
+}

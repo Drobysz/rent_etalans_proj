@@ -1,0 +1,81 @@
+@reference "tailwindcss";
+
+.space {
+    @apply italic
+        w-fit transition-all py-3
+        border-r-gray-600 relative;
+}
+
+.sect_active,
+.space:hover {
+    @apply rounded-full bg-gray-200/70;
+}
+
+.sect_active .body,
+.space:hover .body {
+    @apply border-r-transparent;
+}
+
+.space:last-of-type .body {
+    @apply border-r-0 pr-5;
+}
+
+.space:first-child .body {
+    @apply pl-5;
+}
+
+.space:has(+ .is_focused) .body,
+.space:has(+ .space:hover) .body {
+    @apply border-r-transparent;
+
+}
+
+.body {
+    @apply flex flex-col gap-1.5
+        transition-colors duration-300
+        w-fit px-5 border-r;
+}
+
+.label {
+    @apply font-bold duration-300 transition-all
+        z-20 px-2;
+}
+
+.light {
+    @apply text-amber-500;
+}
+
+.input_space {
+    @apply flex flex-col gap-0.5 z-20;
+}
+
+.input {
+    @apply py-0.5 outline-0 border-b 
+        border-transparent px-1 duration-300 
+        transition-all text-xs w-50;
+}
+
+.underline_load {
+    animation: load 0.5s ease forwards;
+}
+
+.underline_load_back {
+    animation: load_back 0.5s ease forwards;
+}
+
+.underline {
+	width: 0%;
+	@apply block h-0.5
+		cursor-pointer duration-300
+		transition-all rounded-full;
+}
+
+@keyframes load{
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+@keyframes load_back {
+    from { width: 100%; }
+    to { width: 0%; }
+}
