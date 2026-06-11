@@ -1,0 +1,5 @@
+@reference "tailwindcss";
+
+.dev_title {
+    @apply text-gray-500 flex gap-1;
+}

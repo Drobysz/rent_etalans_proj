@@ -1,0 +1,12 @@
+@reference "tailwindcss";
+
+.header {
+    @apply flex justify-center py-2
+        z-30;
+}
+
+.wrapper {
+    @apply px-2 py-2.5 rounded-3xl
+        bg-neutral-100/30 backdrop-blur-lg
+        border border-zinc-200;
+}

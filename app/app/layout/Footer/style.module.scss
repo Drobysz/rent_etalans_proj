@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+
+.footer {
+    @apply bg-gray-100 rounded-t-xl
+        flex items-center justify-between
+        py-2 px-2.5 text-xl;
+}
+
+.sm_list {
+    @apply text-neutral-500;
+}
+
+@media (max-width: 760px) {
+    .footer {
+        @apply flex-col items-center justify-center
+            py-3;
+    }
+
+    .dev_title {
+        @apply order-3;
+    }
+
+    .hand_writing_title {
+        @apply order-2;
+    }
+
+    .sm_list {
+        @apply order-1;
+    }
+}

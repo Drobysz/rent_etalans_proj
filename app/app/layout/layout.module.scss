@@ -1,0 +1,33 @@
+@reference "tailwindcss";
+
+.wrapper {
+    display: grid;
+    grid-template-columns: auto minmax(270px, 1270px) auto;
+    grid-template-areas: 
+        "header header header"
+        ". main ."
+        "footer footer footer"
+}
+
+.main {
+    @apply min-h-screen;
+    grid-area: main;
+}
+
+.header {
+    @apply sticky top-0;
+    grid-area: header;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+@media (max-width: 1080px) {
+    .wrapper {
+        grid-template-areas: 
+            "header"
+            "main"
+            "footer"
+    }
+}
