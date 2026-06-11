@@ -1,0 +1,53 @@
+@reference "tailwindcss";
+
+.body {
+    @apply bg-gray-50 relative 
+        w-fit h-auto rounded-xl 
+        p-6 border active:scale-97
+        transition-all duration-300
+        ease-in-out;
+}
+
+.title {
+    @apply text-xl font-bold;
+}
+
+.desc {
+    @apply text-neutral-500 text-sm max-w-70 pt-2
+        min-w-20;
+}
+
+.read_btn {
+    @apply  inline-block pl-2 
+        duration-200 transition-transform rounded-2xl
+        relative;
+}
+
+.read_btn:hover {
+    @apply hover:underline hover:scale-110 border
+        border-zinc-400 bg-neutral-200/50 py-0.5
+        px-1.5;
+}
+
+.read_btn div {
+    @apply top-0 left-0 h-full w-full blur-lg -z-10;
+}
+
+.img {
+    @apply h-60 max-w-full object-cover 
+        rounded-xl;
+}
+
+.bottom {
+    @apply flex justify-end items-center 
+        gap-3 pt-8;
+}
+
+.price {
+    @apply text-xl font-bold cursor-pointer;
+}
+
+.btn {
+    @apply px-4 py-2 rounded-xl 
+        text-xs font-bold cursor-pointer;
+}
