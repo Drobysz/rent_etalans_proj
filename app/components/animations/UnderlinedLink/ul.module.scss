@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.underline {
+	width: 0%;
+	@apply block h-px
+		cursor-pointer duration-300
+		transition-all;
+}
+
+.underline_link {
+	@apply relative w-fit;
+}
+
+.underline_link:hover .underline{
+	animation: load 0.5s ease forwards;
+}
+
+
+@keyframes load{
+  to { width: 90%; }
+}

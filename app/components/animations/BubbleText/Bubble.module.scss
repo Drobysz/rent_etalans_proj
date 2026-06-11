@@ -1,0 +1,34 @@
+@reference "tailwindcss";
+
+.hoverText {
+  transition:
+    0.35s font-weight,
+    0.35s color;
+}
+
+.hoverText:hover {
+  font-weight: 900;
+  @apply text-yellow-300/90;
+}
+
+/* To the right */
+.hoverText:hover + .hoverText {
+  font-weight: 500;
+ @apply text-amber-400/85;
+}
+
+.hoverText:hover + .hoverText + .hoverText {
+  font-weight: 300;
+ @apply text-amber-600/70;
+}
+
+/* To the left */
+.hoverText:has(+ .hoverText:hover) {
+  font-weight: 500;
+  @apply text-amber-400/85;
+}
+
+.hoverText:has(+ .hoverText + .hoverText:hover) {
+  font-weight: 300;
+ @apply text-amber-600/70;
+}
