@@ -1,0 +1,92 @@
+"use client";
+
+import { GlobalContext } from "@/app/context/global.context";
+import ThreeDCard from "@/components/3dCard/3dCard";
+import { Service } from "@/types"
+import { useContext } from "react";
+import s from "./style.module.scss";
+import { cn } from "@/lib/utils";
+import { motion, Transition } from "framer-motion";
+
+export const ServiceCard = ({
+    id,
+    name,
+    description,
+    price,
+    images
+}: Service)=> {
+    const { 
+        servParams, setServParams,
+    } = useContext(GlobalContext);
+    
+    const services = servParams.services_ids;
+    const isChosen = services.includes(id);
+    const img_url = images[0].url;
+    const customShadow = "shadow-[0_12px_40px_-8px_rgb(245,158,11,0.85)]";
+
+    const variants = {
+        start: {
+            opacity: 0,
+            y: 10
+        },
+
+        end: {
+            opacity: 1,
+            y: 0
+        }
+    };
+
+    const transition: Transition = {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+    }
+
+    const handleClick = ()=> {
+        if (isChosen) {
+            setServParams({
+                ...servParams,
+                services_ids: [
+                    ...services.filter(servId=> servId != id)
+                ]
+            });
+        } else {
+            setServParams({
+                ...servParams,
+                services_ids: [
+                   ...services, id
+                ]
+            });
+        }
+    }
+
+    return (
+        <motion.div
+            initial="start"
+            whileInView="end"
+
+            variants={variants}
+            transition={transition}
+        >
+            <ThreeDCard 
+                title={name}
+                desc={description}
+                price={price}
+                img_url={img_url}
+                btnAction={handleClick}
+                btnSign={isChosen ? "Supprimer" : "Ajouter"}
+                isChosen={isChosen}
+                btnStyle={cn(
+                    s.default_btn,
+                    isChosen && s.remove
+                )}
+                className={cn(
+                    "cursor-pointer",
+                    isChosen 
+                        ? `border border-amber-400 ${customShadow}` 
+                        : "border-black/10"
+                )}
+            />
+        </motion.div>
+    )
+}
