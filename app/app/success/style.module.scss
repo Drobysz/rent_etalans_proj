@@ -1,0 +1,10 @@
+@reference "tailwindcss";
+
+.space {
+    @apply h-[60%] flex justify-center 
+        items-center;
+}
+
+.title {
+    @apply text-green-600 text-2xl;
+}

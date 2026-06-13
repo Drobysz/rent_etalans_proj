@@ -1,0 +1,18 @@
+@reference "tailwindcss";
+
+.serv_list {
+    @apply flex flex-col px-3 py-2
+        bg-gray-100 rounded-2xl
+        w-full;
+}
+
+.serv_block {
+    @apply px-2 py-2 flex
+        justify-between items-center
+        border-b border-b-gray-400
+        gap-8;
+}
+
+.serv_block:last-of-type {
+    @apply border-b-transparent;
+}

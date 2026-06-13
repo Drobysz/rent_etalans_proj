@@ -1,0 +1,26 @@
+@reference "tailwindcss";
+
+.res_block {
+    @apply w-[80%] flex flex-col 
+        gap-6 border-b border-b-gray-700
+        p-3 hover:bg-gray-50;
+}
+
+.title_block {
+    @apply flex justify-between items-center;
+}
+
+.res_block:last-of-type {
+    @apply border-b-transparent;
+}
+
+.cross {
+    @apply text-gray-500 duration-200 transition-all 
+        hover:scale-110 cursor-pointer p-1;
+}
+
+@media (max-width: 450px) {
+    .res_block {
+        @apply w-full;
+    }
+}

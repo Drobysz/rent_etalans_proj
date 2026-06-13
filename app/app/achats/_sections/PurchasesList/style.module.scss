@@ -1,0 +1,9 @@
+@reference "tailwindcss";
+
+.res_list {
+    @apply flex flex-col items-center;
+}
+
+.res_block {
+    @apply w-full;
+}

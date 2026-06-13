@@ -1,0 +1,20 @@
+@reference "tailwindcss";
+
+.body {
+    @apply shadow-xl shadow-gray-900/40 rounded-3xl
+        px-5 py-4 flex flex-col
+        gap-3 border border-neutral-500/50
+        bg-gray-50;
+}
+
+.body div {
+    @apply flex flex-col;
+}
+
+.body div span:first-of-type {
+    @apply font-bold text-neutral-600;
+}
+
+.body div span:last-of-type {
+    @apply text-neutral-500 text-sm px-1;
+}

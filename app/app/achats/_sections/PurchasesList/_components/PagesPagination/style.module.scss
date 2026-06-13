@@ -1,0 +1,39 @@
+@reference "tailwindcss";
+
+.switcher {
+    @apply rounded-lg py-1
+        border duration-200
+        ease-in transition-all;
+}
+
+.switcher_active {
+    @apply border-gray-400 text-gray-600
+        hover:opacity-80 active:scale-98
+        cursor-pointer;
+}
+
+.switcher_inactive {
+    @apply border-gray-200 text-gray-400
+        pointer-events-none;
+}
+
+.page_sel {
+    @apply relative h-10.5 w-10 rounded-lg
+        border transition-transform
+        duration-200 ease-in hover:scale-102;
+}
+
+.page_sel_active {
+    @apply border-amber-600 text-amber-600
+        shadow-2xl shadow-amber-400 pointer-events-none;
+}
+
+.page_sel_inactive {
+    @apply border-gray-400 text-gray-700
+        cursor-pointer;
+}
+
+.page_sel span {
+    @apply absolute left-1/2 top-1/2
+        -translate-1/2;
+}

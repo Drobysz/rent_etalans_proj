@@ -1,0 +1,41 @@
+@reference "tailwindcss";
+
+
+.body {
+    @apply flex justify-between items-center;
+}
+
+.reserve_code_title {
+    @apply text-neutral-600 font-black;
+}
+
+.reserve_code {
+    @apply text-amber-700/65;
+}
+
+.total {
+    @apply flex gap-1;
+}
+
+.total span:first-of-type {
+    @apply font-bold text-neutral-600;
+}
+
+.total span:last-of-type {
+    @apply text-amber-700/65;
+}
+
+.res_block:last-of-type {
+    @apply border-b-transparent;
+}
+
+.cross {
+    @apply text-gray-500 duration-200 transition-all 
+        hover:scale-110 cursor-pointer p-1;
+}
+
+@media (max-width: 450px) {
+    .res_block {
+        @apply w-full;
+    }
+}

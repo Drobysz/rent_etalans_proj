@@ -1,0 +1,26 @@
+@reference "tailwindcss";
+
+.email {
+    @apply font-bold text-neutral-500;
+}
+
+.date {
+    @apply italic text-xs text-neutral-400;
+}
+
+.res_serv {
+   @apply text-neutral-500 font-bold;
+}
+
+.res_serv::after {
+    @apply text-gray-700;
+    content: " ◦ ";
+}
+
+.res_serv:last-of-type::after {
+    content: "";
+}
+
+.service_list {
+    @apply flex gap-1.5 items-center overflow-x-auto;
+}

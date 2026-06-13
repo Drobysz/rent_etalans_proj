@@ -1,0 +1,14 @@
+@reference "tailwindcss";
+
+.section {
+    @apply flex justify-center items-center 
+        h-screen flex-col gap-4
+        text-red-700;
+}
+
+.title {
+    @apply text-6xl
+        max-[1060px]:text-5xl
+        max-[780px]:text-3xl
+        max-[520px]:text-2xl;
+}
