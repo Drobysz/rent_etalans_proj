@@ -13,6 +13,7 @@ export const ServiceCard = ({
     name,
     description,
     price,
+    fixed_price,
     images
 }: Service)=> {
     const { 
@@ -76,6 +77,7 @@ export const ServiceCard = ({
                 btnAction={handleClick}
                 btnSign={isChosen ? "Supprimer" : "Ajouter"}
                 isChosen={isChosen}
+                IsFixedPrice={fixed_price}
                 btnStyle={cn(
                     s.default_btn,
                     isChosen && s.remove

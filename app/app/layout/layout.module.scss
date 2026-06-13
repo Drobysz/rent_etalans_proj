@@ -2,7 +2,7 @@
 
 .wrapper {
     display: grid;
-    grid-template-columns: auto minmax(270px, 1270px) auto;
+    grid-template-columns: auto minmax(270px, 1440px) auto;
     grid-template-areas: 
         "header header header"
         ". main ."
@@ -23,11 +23,11 @@
     grid-area: footer;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1270px) {
     .wrapper {
         grid-template-areas: 
-            "header"
-            "main"
-            "footer"
+            "header header header"
+            "main main main"
+            "footer footer footer"
     }
 }

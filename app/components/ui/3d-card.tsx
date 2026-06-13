@@ -81,7 +81,7 @@ export const CardBody = ({
 }) => {
   return (
     <div 
-      className={cn("h-96 w-96 transform-3d *:transform-3d", className)}
+      className={cn("min-w-26 transform-3d *:transform-3d", className)}
       onClick={onClick}
     >
       {children}

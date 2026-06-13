@@ -9,7 +9,7 @@ import { MouseEvent, useState } from "react";
 export default function ThreeDCard({
   title, desc, btnStyle,
   btnSign, price, img_url,
-  className, isChosen,
+  className, isChosen, IsFixedPrice,
   btnAction
 }: {
   title: string;
@@ -19,6 +19,7 @@ export default function ThreeDCard({
   price?: number;
   img_url: string;
   isChosen: boolean;
+  IsFixedPrice: boolean;
   className?: string;
   btnAction?: () => void;
 }) {
@@ -62,7 +63,12 @@ export default function ThreeDCard({
             <>
               {descConceal ? descShort : desc}
               <button 
-                className={s.read_btn}
+                className={cn(
+                  s.read_btn,
+                  descConceal 
+                    ? "hover:border-amber-600/50 hover:bg-amber-400/10" 
+                    : "hover:border-red-600/50 hover:bg-red-400/10"
+                )}
                 onClick={handleReadBtnClick}
               >
                 <span className={cn(
@@ -79,28 +85,18 @@ export default function ThreeDCard({
         </CardItem>
         <CardItem 
           translateZ="100" 
-          className="w-full pt-4 h-60"
+          className="w-full pt-4"
         >
           <Image
             src={img_url}
-            height="300"
-            width="300"
+            height={400}
+            width={400}
             className={cn(s.img, "group-hover/card:shadow-xl")}
             alt="thumbnail"
           />
         </CardItem>
         {btnSign &&
           <div className={s.bottom}>
-            <CardItem
-              translateZ={20}
-              as="button"
-              className={cn(s.price, "text-gold")}
-            >
-              <div className="flex items-start">
-                {`${price}`}
-                <span className="text-sm">€</span>
-              </div>
-            </CardItem>
             <CardItem
               translateZ={20}
               as="button"
@@ -113,6 +109,24 @@ export default function ThreeDCard({
             >
               {btnSign}
             </CardItem>
+            <CardItem
+              translateZ={20}
+              as="button"
+              className={cn(s.price, "text-gold")}
+            >
+              <div className="flex items-start">
+                {`${price}`}
+                <span className={s.currency}>
+                  €
+                  {!IsFixedPrice &&
+                    <span className="text-xs">
+                      /par jour
+                    </span>
+                  }
+                </span>
+              </div>
+            </CardItem>
+            
           </div>
         }
       </CardBody>

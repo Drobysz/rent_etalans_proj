@@ -1,8 +1,6 @@
 "use client";
 
-import { getServices } from "@/queries";
 import s from "./style.module.scss";
-import useSWR from "swr";
 import { Loading } from "./loading";
 import { Service } from "@/types";
 import { ServiceCard } from "./ServiceCard";
@@ -10,16 +8,13 @@ import { useContext } from "react";
 import { GlobalContext } from "@/app/context/global.context";
 
 export const Cards = ()=> {
-    const {
-        data:services,
-        isLoading,
-        error
-    } = useSWR(
-        'services',
-        getServices
-    );
+    const { 
+        isServiceLoading: isLoading,
+        serviceError: error,
+        services,
+        setMouseText
+    } = useContext(GlobalContext);
     
-    const { setMouseText } = useContext(GlobalContext);
     const MOUSE_GUIDE_TEXT = "Cliquez sur la carte pour choisir l'option";
 
     const handleMouseEnter = ()=> {

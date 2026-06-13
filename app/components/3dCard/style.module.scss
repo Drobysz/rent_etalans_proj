@@ -24,27 +24,40 @@
 }
 
 .read_btn:hover {
-    @apply hover:underline hover:scale-110 border
-        border-zinc-400 bg-neutral-200/50 py-0.5
+    @apply scale-110 border py-0.5
         px-1.5;
 }
 
+.read_btn:hover span {
+    @apply underline;
+}
+
 .read_btn div {
-    @apply top-0 left-0 h-full w-full blur-lg -z-10;
+    @apply top-0 left-0 h-full 
+        w-full blur-lg -z-10;
 }
 
 .img {
-    @apply h-60 max-w-full object-cover 
+    @apply h-60 w-full object-cover 
         rounded-xl;
 }
 
 .bottom {
-    @apply flex justify-end items-center 
+    @apply flex items-center 
         gap-3 pt-8;
 }
 
 .price {
     @apply text-xl font-bold cursor-pointer;
+}
+
+.currency {
+    @apply text-sm pt-0.5 flex 
+        items-center;
+}
+
+.currency span {
+    @apply text-xs;
 }
 
 .btn {
