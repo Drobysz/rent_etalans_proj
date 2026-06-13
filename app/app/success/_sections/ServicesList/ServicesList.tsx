@@ -7,26 +7,44 @@ import { cn } from "@/lib/utils";
 import { b612_bold } from "@/fonts/fonts";
 import { motion } from "framer-motion";
 import { Service } from "@/types";
+import {
+    DownloadInvoiceButton,
+    DownloadStripeInvoiceButton
+} from "../../_components";
+import type { InvoiceServiceItem } from "@/utils/createInvoicePdf";
 
 export const ServicesList = ({
     services,
     daysCount,
-    visitorsCount
+    visitorsCount,
+    email,
+    reserveId,
+    sessionId,
+    totalPrice
 }: {
     services: Service[];
     daysCount: number;
     visitorsCount: number;
+    email: string;
+    reserveId: string;
+    sessionId: string;
+    totalPrice: number;
 })=> {
     const FINAL_MULTIPLIER = daysCount * visitorsCount;
-    const TOTAL_PRICE = services
-        .map(svc=> svc.fixed_price 
-            ? svc.price
-            : svc.price * FINAL_MULTIPLIER
-        )
-        .reduce((acc, p)=> acc + p, 0);
+    const invoiceServices: InvoiceServiceItem[] = services.map((svc) => {
+        const quantity = svc.fixed_price ? 1 : FINAL_MULTIPLIER;
+
+        return {
+            id: svc.id,
+            title: svc.name,
+            quantity,
+            unitPrice: svc.price,
+            amount: svc.price * quantity,
+        };
+    });
 
     return (
-        <section className="flex flex-col gap-1">
+        <section className={s.body}>
             <motion.ul
                 className={s.serv_list}
                 initial="start"
@@ -66,10 +84,21 @@ export const ServicesList = ({
                         Total:
                     </span>
                     <span className="text-lg font-bold text-gray-700">
-                        {`${TOTAL_PRICE}€`}
+                        {`${totalPrice}€`}
                     </span>
                 </li>
             </motion.ul>
+            <div className={s.actions}>
+                <DownloadStripeInvoiceButton sessionId={sessionId} />
+                <DownloadInvoiceButton
+                    email={email}
+                    reserveId={reserveId}
+                    daysNumber={daysCount}
+                    visitorsNumber={visitorsCount}
+                    totalPrice={totalPrice}
+                    services={invoiceServices}
+                />
+            </div>
         </section>
     )
 }

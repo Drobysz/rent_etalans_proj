@@ -1,4 +1,19 @@
-export async function validatePayment (session_id: string) {
+export type ValidatedPaymentData = {
+    email: string;
+    reserve_id: string;
+    client_number: number;
+    days_number: number;
+    total_price: number;
+    service_ids: number[];
+};
+
+export type ValidatePaymentResult = {
+    valid: boolean;
+    payment_status?: string;
+    payment?: ValidatedPaymentData;
+};
+
+export async function validatePayment (session_id: string): Promise<ValidatePaymentResult> {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
@@ -22,9 +37,12 @@ export async function validatePayment (session_id: string) {
 
         const payload = await res.json();
         console.log("Payload:", payload)
-        const valid = payload.valid ?? false;
 
-        return valid;
+        return {
+            valid: payload.valid ?? false,
+            payment_status: payload.payment_status,
+            payment: payload.payment,
+        };
 
     } catch (error){
         if (error instanceof DOMException && error.name === "AbortError") {

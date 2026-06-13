@@ -46,6 +46,10 @@ Route::post(
     '/validate-purchase',
     [StripeController::class, 'validatePurchase']
 );
+Route::post(
+    '/stripe/invoice-pdf',
+    [StripeController::class, 'getStripeInvoicePdf']
+);
 
 // Fallback for undefined routes
 Route::fallback(function () {

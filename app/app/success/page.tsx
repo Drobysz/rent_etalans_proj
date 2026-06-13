@@ -1,6 +1,6 @@
-"use server";
-
-import { createPayment, getServices, validatePayment } from "@/queries"
+import { createPayment } from "@/queries/createPayment";
+import { getServices } from "@/queries/services";
+import { validatePayment } from "@/queries/validatePayment";
 import { redirect } from "next/navigation";
 import s from "./style.module.scss";
 import {
@@ -11,44 +11,47 @@ import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 import { Service } from "@/types";
 
+type SuccessSearchParams = {
+    session_id?: string;
+};
+
 export default async function SuccessPage ({
     searchParams
 }: {
-    searchParams: Promise<{ 
-        session_id: string;
-        email: string;
-        reserve_id: string;
-        days_number: number;
-        client_number: number;
-        service_ids: string;
-        total_price: number;
-    }>
+    searchParams: Promise<SuccessSearchParams>
 }) {
     const {
         session_id,
-        email,
-        reserve_id,
-        days_number,
-        client_number,
-        total_price,
-        service_ids
     } = await searchParams;
 
-    const isValid = await validatePayment(session_id);
-    const serviceIds = JSON.parse(service_ids).map(Number);
-
-    if (isValid) {
-        await createPayment(
-            email,
-            reserve_id,
-            days_number,
-            client_number,
-            total_price,
-            serviceIds,
-        );
-    } else {
+    if (!session_id) {
         redirect('/cancel');
     }
+
+    const validation = await validatePayment(session_id);
+
+    if (!validation.valid || !validation.payment) {
+        redirect('/cancel');
+    }
+
+    const {
+        email,
+        reserve_id,
+        client_number: clientNumber,
+        days_number: daysNumber,
+        service_ids: serviceIds,
+        total_price: totalPrice,
+    } = validation.payment;
+
+    await createPayment(
+        email,
+        reserve_id,
+        clientNumber,
+        daysNumber,
+        totalPrice,
+        serviceIds,
+        session_id,
+    );
 
     const services = await getServices();
     
@@ -71,17 +74,21 @@ export default async function SuccessPage ({
                         Your payment was successfully processed
                     </h1>
 
-                    <div className="flex justify-between px-3 items-center">
+                    <div className="flex flex-col gap-4 px-3 md:flex-row md:items-start md:justify-between">
                         <PaymentInfo 
                             email={email}
-                            duration={days_number}
-                            visitors_count={client_number}
+                            duration={daysNumber}
+                            visitors_count={clientNumber}
                             reserve_id={reserve_id}
                         />
                         <ServicesList 
                             services={filteredServices}
-                            daysCount={days_number}
-                            visitorsCount={client_number}
+                            daysCount={daysNumber}
+                            visitorsCount={clientNumber}
+                            email={email}
+                            reserveId={reserve_id}
+                            sessionId={session_id}
+                            totalPrice={totalPrice}
                         />
                     </div>
                 </section>

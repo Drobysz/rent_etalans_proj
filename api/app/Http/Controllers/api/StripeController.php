@@ -53,7 +53,57 @@ class StripeController extends Controller
             return response()->json(['valid' => false], 400);
         }
 
-        return response()->json(['valid' => true]);
+        $metadata = $session->metadata;
+
+        return response()->json([
+            'valid' => true,
+            'payment_status' => $session->payment_status,
+            'payment' => [
+                'email' => $session->customer_details?->email ?? $session->customer_email,
+                'reserve_id' => $metadata->reserve_id ?? null,
+                'client_number' => (int) ($metadata->client_number ?? 0),
+                'days_number' => (int) ($metadata->days_number ?? 0),
+                'service_ids' => array_values(array_filter(
+                    array_map('intval', explode(',', $metadata->service_ids ?? ''))
+                )),
+                'total_price' => ((float) ($session->amount_total ?? 0)) / 100,
+            ],
+        ]);
+    }
+
+    public function getStripeInvoicePdf(Request $request)
+    {
+        $validated = $request->validate([
+            'session_id' => ['required', 'string'],
+        ]);
+
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        try {
+            $session = $stripe->checkout->sessions->retrieve(
+                $validated['session_id'],
+                [
+                    'expand' => ['invoice'],
+                ]
+            );
+        } catch (InvalidRequestException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+
+        if (!$session->invoice) {
+            return response()->json([
+                'message' => 'Invoice is not created yet',
+            ], 404);
+        }
+
+        $invoice = $session->invoice;
+
+        return response()->json([
+            'invoice_pdf' => $invoice->invoice_pdf,
+            'hosted_invoice_url' => $invoice->hosted_invoice_url,
+        ]);
     }
 
     private function getTotalPrice (
@@ -130,10 +180,6 @@ class StripeController extends Controller
             $client_number,
         );
         $stripe = new StripeClient(config('services.stripe.secret'));
-        $services_stringified = json_encode($service_ids);
-
-        $url_params="?session_id={CHECKOUT_SESSION_ID}&total_price={$totalPrice}&email={$email}&reserve_id={$reserve_id}&client_number={$client_number}&days_number={$days_number}&service_ids={$services_stringified}";
-
         $checkout_session = $stripe->checkout->sessions->create(
             [
                 'customer_email'   => $email,
@@ -141,14 +187,16 @@ class StripeController extends Controller
                 'mode'             => 'payment',
                 'invoice_creation' => ['enabled' => true],
 
-                'success_url' => config('services.frontend.url') . "/success{$url_params}",
+                'success_url' => config('services.frontend.url') . "/success?session_id={CHECKOUT_SESSION_ID}",
                 'cancel_url'  => config('services.frontend.url') . '/cancel',
 
                 'metadata' => [
+                    'email'         => $email,
                     'service_ids'   => implode(',', $service_ids),
                     'reserve_id'    => $reserve_id,
                     'client_number' => (string) $client_number,
-                    'days_number'   => (string) $days_number
+                    'days_number'   => (string) $days_number,
+                    'total_price'   => (string) $totalPrice,
                 ],
             ],
             [
