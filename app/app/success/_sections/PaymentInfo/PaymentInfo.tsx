@@ -10,8 +10,8 @@ export const PaymentInfo = ({
     const blocks = [
         { label: "Email", content: email },
         { label: "Code de reservation", content: reserve_id },
-        { label: "Duration", content: `${duration} jour${duration > 1 && "s"}` },
-        { label: "Nombre de visiteurs", content: `${visitors_count} personne${visitors_count > 1 && "s"}` },
+        { label: "Duration", content: `${duration} jour${duration > 1 ? "s" : ""}` },
+        { label: "Nombre de visiteurs", content: `${visitors_count} personne${visitors_count > 1 ? "s" : ""}` },
     ];
 
     return (

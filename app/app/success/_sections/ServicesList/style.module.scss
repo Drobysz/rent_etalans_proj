@@ -1,8 +1,12 @@
 @reference "tailwindcss";
 
+.body {
+    @apply flex flex-col gap-3 w-full max-w-xl;
+}
+
 .serv_list {
     @apply flex flex-col px-3 py-2
-        bg-gray-100 rounded-2xl
+        bg-gray-100 rounded-lg
         w-full;
 }
 
@@ -15,4 +19,50 @@
 
 .serv_block:last-of-type {
     @apply border-b-transparent;
+}
+
+.actions {
+    @apply flex flex-wrap justify-end gap-2;
+}
+
+.actions button {
+    @apply rounded-lg border border-gray-300
+        bg-white px-3 py-2 text-sm text-gray-700
+        transition-colors duration-150
+        hover:bg-gray-50 disabled:cursor-wait
+        disabled:opacity-70;
+}
+
+@media (max-width: 1024px) {
+    .body {
+        @apply max-w-lg;
+    }
+}
+
+@media (max-width: 768px) {
+    .body {
+        @apply max-w-full;
+    }
+
+    .serv_block {
+        @apply gap-4;
+    }
+}
+
+@media (max-width: 480px) {
+    .serv_list {
+        @apply px-2;
+    }
+
+    .serv_block {
+        @apply flex-col items-start gap-1;
+    }
+
+    .actions {
+        @apply w-full flex-col;
+    }
+
+    .actions button {
+        @apply w-full;
+    }
 }

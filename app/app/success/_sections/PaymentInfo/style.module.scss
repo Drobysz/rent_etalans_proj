@@ -1,10 +1,10 @@
 @reference "tailwindcss";
 
 .body {
-    @apply shadow-xl shadow-gray-900/40 rounded-3xl
+    @apply shadow-md shadow-gray-900/10 rounded-lg
         px-5 py-4 flex flex-col
         gap-3 border border-neutral-500/50
-        bg-gray-50;
+        bg-gray-50 min-w-72;
 }
 
 .body div {
@@ -16,5 +16,23 @@
 }
 
 .body div span:last-of-type {
-    @apply text-neutral-500 text-sm px-1;
+    @apply text-neutral-500 text-sm px-1 break-words;
+}
+
+@media (max-width: 1024px) {
+    .body {
+        @apply min-w-64;
+    }
+}
+
+@media (max-width: 768px) {
+    .body {
+        @apply w-full min-w-0;
+    }
+}
+
+@media (max-width: 480px) {
+    .body {
+        @apply px-4 py-3 gap-2;
+    }
 }
