@@ -4,6 +4,8 @@ import {
   Header,
   Footer,
   MouseGuide,
+  Basket,
+  NotificationBar
 } from "./layout/index";
 import "./globals.css";
 import { GlobalContextProvider } from "./context/global.context";
@@ -30,6 +32,8 @@ export default function RootLayout({
             </main>
             <Footer className={s.footer} />
             <MouseGuide />
+            <Basket />
+            <NotificationBar />
           </div>
         </GlobalContextProvider>
       </body>

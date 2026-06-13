@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+
+.btn_expand {
+    @apply flex flex-col border
+        bg-gray-900 py-0.5 px-1 rounded-xl
+        duration-200 transition-all active:scale-95
+        cursor-pointer;
+}
+
+.btn_expand:hover {
+    @apply opacity-85;
+}
+
+.btn_expand_conealed {
+    @apply text-white bg-gray-900;
+}
+
+.btn_expand_opened {
+    @apply text-gray-900 bg-white border-gray-900;
+}
+
+.arrow {
+    @apply duration-200 transition-all 
+        ease-in origin-center;
+}

@@ -1,0 +1,20 @@
+@reference "tailwindcss";
+
+.notification {
+    @apply fixed bottom-4 left-4 z-50 
+        rounded-xl px-4 py-3 flex flex-col
+        gap-3 max-h-80 h-fit w-fit overflow-y-scroll;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

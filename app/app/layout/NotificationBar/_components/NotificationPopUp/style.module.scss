@@ -1,0 +1,13 @@
+@reference "tailwindcss";
+
+.notif_popup {
+    @apply rounded-2xl px-4 py-3
+        w-fit max-w-full border-2
+        items-center gap-1;
+}
+
+.cross {
+    @apply p-1 duration-200
+        transition-colors ease-in
+        hover:opacity-50 active:scale-95;
+}

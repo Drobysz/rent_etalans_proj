@@ -1,0 +1,16 @@
+@reference "tailwindcss";
+
+.btn_shop {
+    @apply px-3 py-2 h-full rounded-full
+        flex items-center gap-2
+        text-white duration-300 transition-all;
+}
+
+.btn_active {
+    @apply bg-green-500 cursor-pointer
+        hover:opacity-85 active:rotate-1 active:scale-98;
+}
+
+.btn_deactivated {
+    @apply bg-gray-500 cursor-not-allowed;
+}
