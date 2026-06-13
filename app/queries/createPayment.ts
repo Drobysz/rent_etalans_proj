@@ -1,10 +1,15 @@
+import "server-only";
+
+import { sendTelegramPurchaseNotification } from "@/api/telegramBotApi";
+
 export const createPayment = async (
     email: string,
     reserve_id: string,
     client_number: number,
     days_number: number,
     total_price: number,
-    service_ids: number[]
+    service_ids: number[],
+    session_id?: string,
 )=> {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
@@ -33,6 +38,19 @@ export const createPayment = async (
             console.error(res.statusText)
             throw new Error(`Failed to create invoice: ${res.status} ${res.statusText}`);
         }
+
+        await sendTelegramPurchaseNotification({
+            email,
+            reserveId: reserve_id,
+            visitorsCount: client_number,
+            daysCount: days_number,
+            totalPrice: total_price,
+            serviceIds: service_ids,
+            paymentStatus: "paid",
+            sessionId: session_id,
+        }).catch((error) => {
+            console.error(error);
+        });
 
         return res.ok;
 

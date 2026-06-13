@@ -3,7 +3,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { AppNotification, Coords, GlobalContextInterface } from "./global.interface";
 import { ServicesOrderParams } from "@/types";
-import { getServices } from "@/queries";
+import { getServices } from "@/queries/services";
 import useSWR from "swr";
 
 export const initialServParams: ServicesOrderParams = {
