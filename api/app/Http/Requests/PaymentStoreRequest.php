@@ -28,6 +28,7 @@ class PaymentStoreRequest extends FormRequest
             'client_number' => ['required', 'numeric', 'digits_between:1,20'],
             'days_number'   => ['required', 'numeric', 'digits_between:1,365'],
             'email'         => ['required', 'string', 'max:80'],
+            // 'reserve_id'    => ['required', 'string', 'max:20', 'unique,payments'],
             'reserve_id'    => ['required', 'string', 'max:20'],
             'total_price'   => ['required', 'numeric', 'min:0'],
 

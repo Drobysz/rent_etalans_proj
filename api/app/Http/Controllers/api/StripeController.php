@@ -56,8 +56,35 @@ class StripeController extends Controller
         return response()->json(['valid' => true]);
     }
 
+    private function getTotalPrice (
+        array $service_ids,
+        int $daysNumber,
+        int $clientNumber,
+    ) {
+        $services = Service::query()
+            ->whereIn('id', $service_ids)
+            ->get();
+        
+        $totalPrice = 0;
+
+        foreach($services as $service) {
+            $price = (float) $service->price;
+            $isFixedPrice = $service->fixed_price;
+            $totalMultiplier = $daysNumber * $clientNumber;
+
+            $finalPrice = $isFixedPrice 
+                ? $price 
+                : $price * $totalMultiplier;
+
+            $totalPrice += $finalPrice;
+        }
+        return $totalPrice;
+    }
+
     private function getServiceInvoiceItems (
-        array $service_ids
+        array $service_ids,
+        int $daysNumber,
+        int $clientNumber,
     ) {
         $services = Service::query()
             ->whereIn('id', $service_ids)
@@ -66,9 +93,11 @@ class StripeController extends Controller
 
         foreach ($services as $service) {
             $price = (float) $service->price;
+            $isFixedPrice = $service->fixed_price;
+            $totalMultiplier = $daysNumber * $clientNumber;
 
             $lineItems[] = [
-                'quantity' => 1,
+                'quantity' => $isFixedPrice ? 1 : $totalMultiplier,
                 'price_data' => [
                     'currency' => 'eur',
                     'unit_amount' => (int) round($price * 100),
@@ -90,8 +119,20 @@ class StripeController extends Controller
         int $client_number,
         int $days_number
     ){
-        $lineItems = $this->getServiceInvoiceItems($service_ids);
+        $lineItems = $this->getServiceInvoiceItems(
+            $service_ids,
+            $days_number,
+            $client_number,
+        );
+        $totalPrice = $this->getTotalPrice(
+            $service_ids,
+            $days_number,
+            $client_number,
+        );
         $stripe = new StripeClient(config('services.stripe.secret'));
+        $services_stringified = json_encode($service_ids);
+
+        $url_params="?session_id={CHECKOUT_SESSION_ID}&total_price={$totalPrice}&email={$email}&reserve_id={$reserve_id}&client_number={$client_number}&days_number={$days_number}&service_ids={$services_stringified}";
 
         $checkout_session = $stripe->checkout->sessions->create(
             [
@@ -100,8 +141,8 @@ class StripeController extends Controller
                 'mode'             => 'payment',
                 'invoice_creation' => ['enabled' => true],
 
-                'success_url' => env('APP_FRONT_URL') . "/success?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url'  => env('APP_FRONT_URL') . '/cancel',
+                'success_url' => config('services.frontend.url') . "/success{$url_params}",
+                'cancel_url'  => config('services.frontend.url') . '/cancel',
 
                 'metadata' => [
                     'service_ids'   => implode(',', $service_ids),
