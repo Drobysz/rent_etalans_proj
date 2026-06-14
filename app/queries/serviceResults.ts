@@ -1,9 +1,18 @@
 export async function getServiceResult(reserve_id: string, page: number) {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const params = new URLSearchParams({
+        page: String(page),
+    });
+    const normalizedReserveId = reserve_id.trim();
+
+    if (normalizedReserveId) {
+        params.set("reserve_id", normalizedReserveId);
+    }
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments?page=${page}&reserve_id=${reserve_id}`, {
+        const res = await fetch(`${apiUrl}/payments?${params.toString()}`, {
             method: "GET",
             headers: {
                 "Accept": "application/json"

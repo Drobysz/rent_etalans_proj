@@ -17,6 +17,7 @@ services:
     build:
       context: ./app
       args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
         NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/au_calme_campagne_etalans}
         NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
     env_file:
@@ -32,6 +33,10 @@ services:
   admin_panel:
     build:
       context: ./admin_panel
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+    env_file:
+      - ./admin_panel/.env
     depends_on:
       - api
     restart: unless-stopped
@@ -39,6 +44,8 @@ services:
   api:
     build:
       context: ./api
+    env_file:
+      - ./api/.env
     depends_on:
       mysql:
         condition: service_healthy
@@ -47,6 +54,8 @@ services:
   telegram_bot:
     build:
       context: ./telegram_bot
+    env_file:
+      - ./telegram_bot/.env
     volumes:
       - telegram_bot_data:/data
     restart: unless-stopped

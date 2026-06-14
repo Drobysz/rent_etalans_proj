@@ -18,29 +18,58 @@ export const PurchasesList = ({
     searchValue
 }: {
     searchValue: string;
-})=> {;
+})=> {
     const t = useTranslations("achats");
     const [purchases, setPurchases] = useState<Payment[]>([]);
     const [isPending, setIsPending] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [lastPage, setLastPage] = useState(0);
 
     useEffect(()=> {
+        setCurrentPage(1);
+    }, [searchValue]);
+
+    useEffect(()=> {
+        let ignore = false;
+
         const fetchResult = async ()=> {
             setIsPending(true);
+            setHasLoaded(false);
 
-            const res = await getServiceResult(searchValue, currentPage);
-            const items = res.data ?? [];
+            try {
+                const res = await getServiceResult(searchValue, currentPage);
+                const items = res.data ?? [];
 
-            setPurchases(items);
-            setCurrentPage(res.current_page);
-            setLastPage(res.last_page);
+                if (!ignore) {
+                    setPurchases(items);
+                    setCurrentPage(res.current_page);
+                    setLastPage(res.last_page);
+                }
+            } catch (error) {
+                console.error(error);
 
-            setIsPending(false);
+                if (!ignore) {
+                    setPurchases([]);
+                    setLastPage(0);
+                }
+            } finally {
+                if (!ignore) {
+                    setIsPending(false);
+                    setHasLoaded(true);
+                }
+            }
         }
 
         fetchResult();
+
+        return ()=> {
+            ignore = true;
+        };
     }, [searchValue, currentPage]);
+
+    const showEmpty = hasLoaded && !isPending && purchases.length === 0;
+    const showPagination = hasLoaded && !isPending && purchases.length > 0;
 
     return (
         <div className="flex flex-col gap-3">
@@ -62,18 +91,20 @@ export const PurchasesList = ({
                     )
                 }
                 {isPending && <Loading />}
-                {purchases.length == 0 &&
+                {showEmpty &&
                     <h2 className="text-center text-2xl text-gray-400">
                         {t("empty")}
                     </h2>
                 }
             </motion.ul>
 
-            <PagesPagination 
-                page={currentPage}
-                setPage={setCurrentPage}
-                page_nb={lastPage}
-            />
+            {showPagination && 
+                <PagesPagination 
+                    page={currentPage}
+                    setPage={setCurrentPage}
+                    page_nb={lastPage}
+                />
+            }
         </div>
     )
 }
