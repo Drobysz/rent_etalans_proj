@@ -1,3 +1,5 @@
+import { getBackendApiUrl } from "@/lib/api";
+
 export type ValidatedPaymentData = {
     email: string;
     reserve_id: string;
@@ -14,12 +16,11 @@ export type ValidatePaymentResult = {
 };
 
 export async function validatePayment (session_id: string): Promise<ValidatePaymentResult> {
-    const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
     try {
-        const res = await fetch(`${apiUrl}/validate-purchase`, {
+        const res = await fetch(getBackendApiUrl("/validate-purchase"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { sendTelegramPurchaseNotification } from "@/api/telegramBotApi";
+import { getBackendApiUrl } from "@/lib/api";
 
 export const createPayment = async (
     email: string,
@@ -12,12 +13,11 @@ export const createPayment = async (
     service_names: string[],
     session_id: string,
 )=> {
-    const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
     try {
-        const res = await fetch(`${apiUrl}/payments`, {
+        const res = await fetch(getBackendApiUrl("/payments"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

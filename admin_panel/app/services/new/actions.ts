@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/auth/sessions";
+import { getBackendApiUrl } from "@/lib/api";
 import { serviceFormSchema, type ServiceFormActionState } from "../_sections/ServiceForm/ServiceForm.schema";
 
 export type CreateServiceActionState = ServiceFormActionState;
@@ -43,7 +44,7 @@ export async function createServiceAction(
     };
   }
 
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = getBackendApiUrl("/services");
 
   if (!apiUrl) {
     return {
@@ -68,7 +69,7 @@ export async function createServiceAction(
   images.forEach((image) => payload.append("images[]", image));
 
   try {
-    const response = await fetch(`${apiUrl}/services`, {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import type { User } from "@/interfaces";
+import { getBackendApiUrl } from "@/lib/api";
 import { loginFormSchema } from "./FormSchemes";
 import { createSession, deleteSession } from "./sessions";
 
@@ -42,7 +43,7 @@ export async function loginAction(
     };
   }
 
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = getBackendApiUrl("/auth/login");
 
   if (!apiUrl) {
     return { message: "API_URL is not configured." };
@@ -51,7 +52,7 @@ export async function loginAction(
   let payload: LoginResponse;
 
   try {
-    const response = await fetch(`${apiUrl}/auth/login`, {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         Accept: "application/json",

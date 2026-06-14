@@ -2,10 +2,11 @@
 
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/auth/sessions";
+import { getBackendApiUrl } from "@/lib/api";
 
 export async function deleteServiceAction(formData: FormData) {
   const serviceId = String(formData.get("serviceId") ?? "");
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = getBackendApiUrl(`/services/${serviceId}`);
 
   if (!serviceId || !apiUrl) {
     redirect("/services?notification=service-delete-failed");
@@ -14,7 +15,7 @@ export async function deleteServiceAction(formData: FormData) {
   const session = await requireAdmin();
 
   try {
-    const response = await fetch(`${apiUrl}/services/${serviceId}`, {
+    const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/auth/sessions";
+import { getBackendApiBaseUrl, getBackendApiUrl } from "@/lib/api";
 import { serviceFormSchema, type ServiceFormActionState } from "../../_sections/ServiceForm/ServiceForm.schema";
 
 function getSelectedImage(formData: FormData) {
@@ -106,7 +107,7 @@ export async function updateServiceAction(
     };
   }
 
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = getBackendApiBaseUrl();
 
   if (!apiUrl) {
     return {
@@ -122,7 +123,7 @@ export async function updateServiceAction(
   const session = await requireAdmin();
 
   try {
-    const response = await fetch(`${apiUrl}/services/${serviceId}`, {
+    const response = await fetch(getBackendApiUrl(`/services/${serviceId}`), {
       method: "PATCH",
       headers: {
         Accept: "application/json",

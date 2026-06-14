@@ -1,8 +1,8 @@
-export const getStripeInvoicePdf = async (sessionId: string) => {
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
+export const getStripeInvoicePdf = async (sessionId: string) => {
   const res = await fetch(
-    `${apiUrl}/stripe/invoice-pdf`,
+    getBackendApiUrl("/stripe/invoice-pdf"),
     {
       method: "POST",
       headers: {

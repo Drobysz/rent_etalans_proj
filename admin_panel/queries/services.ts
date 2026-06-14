@@ -1,8 +1,7 @@
 import { getSession } from "@/auth/sessions";
 import type { Service } from "@/interfaces";
 import type { AppNotification } from "@/interfaces";
-
-const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
 export const mockServices: Service[] = [
   {
@@ -110,7 +109,9 @@ export type ServicesQueryResult = {
 };
 
 export async function getServices(): Promise<ServicesQueryResult> {
-  if (!API_URL) {
+  const apiUrl = getBackendApiUrl("/services");
+
+  if (!apiUrl) {
     return {
       services: mockServices,
       notification: {
@@ -135,7 +136,7 @@ export async function getServices(): Promise<ServicesQueryResult> {
   }
 
   try {
-    const response = await fetch(`${API_URL}/services`, {
+    const response = await fetch(apiUrl, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${session.accessToken}`,
@@ -171,7 +172,9 @@ export async function getServices(): Promise<ServicesQueryResult> {
 }
 
 export async function getService(serviceId: string): Promise<Service | null> {
-  if (!API_URL) {
+  const apiUrl = getBackendApiUrl(`/services/${serviceId}`);
+
+  if (!apiUrl) {
     return mockServices.find((service) => service.id === serviceId) ?? null;
   }
 
@@ -182,7 +185,7 @@ export async function getService(serviceId: string): Promise<Service | null> {
   }
 
   try {
-    const response = await fetch(`${API_URL}/services/${serviceId}`, {
+    const response = await fetch(apiUrl, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${session.accessToken}`,

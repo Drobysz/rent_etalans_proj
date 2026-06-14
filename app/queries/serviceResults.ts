@@ -1,7 +1,8 @@
+import { getBackendApiUrl } from "@/lib/api";
+
 export async function getServiceResult(reserve_id: string, page: number) {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const params = new URLSearchParams({
         page: String(page),
     });
@@ -12,7 +13,7 @@ export async function getServiceResult(reserve_id: string, page: number) {
     }
 
     try {
-        const res = await fetch(`${apiUrl}/payments?${params.toString()}`, {
+        const res = await fetch(getBackendApiUrl(`/payments?${params.toString()}`), {
             method: "GET",
             headers: {
                 "Accept": "application/json"

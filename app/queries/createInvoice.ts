@@ -1,3 +1,5 @@
+import { getBackendApiUrl } from "@/lib/api";
+
 export const createInvoice = async (
     email: string,
     reserve_id: string,
@@ -5,12 +7,11 @@ export const createInvoice = async (
     days_number: number,
     service_ids: number[]
 )=> {
-    const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
     try {
-        const res = await fetch(`${apiUrl}/create-checkout-session`, {
+        const res = await fetch(getBackendApiUrl("/create-checkout-session"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

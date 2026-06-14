@@ -1,6 +1,5 @@
 import type { Order } from "@/interfaces";
-
-const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
 export const mockOrders: Order[] = [
   {
@@ -150,8 +149,9 @@ const paginateOrders = (
 
 export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> {
   const page = Math.max(1, query.page ?? 1);
+  const apiUrl = getBackendApiUrl("/payments");
 
-  if (!API_URL) {
+  if (!apiUrl) {
     return paginateOrders(
       sortOrders(filterOrders(mockOrders, query.reserveId), query.sort),
       page,
@@ -168,8 +168,7 @@ export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> 
     }
     params.set("page", String(page));
 
-    const path = params.size ? `/payments?${params.toString()}` : "/payments";
-    const response = await fetch(`${API_URL}${path}`, {
+    const response = await fetch(`${apiUrl}?${params.toString()}`, {
       headers: { Accept: "application/json" },
       cache: "no-store",
     });

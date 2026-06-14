@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/auth/sessions";
 import type { User, UserRole } from "@/interfaces";
+import { getBackendApiUrl } from "@/lib/api";
 import { mapUser } from "@/queries/users";
-
-const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
 type ApiUser = {
   id: string | number;
@@ -58,8 +57,9 @@ export async function saveUserAction(
   }
 
   const session = await getSession();
+  const apiUrl = getBackendApiUrl(`/users${isEditing ? `/${id}` : ""}`);
 
-  if (!API_URL || !session?.accessToken || session.role !== "superadmin") {
+  if (!apiUrl || !session?.accessToken || session.role !== "superadmin") {
     return { message: "Superadmin session is required." };
   }
 
@@ -74,7 +74,7 @@ export async function saveUserAction(
   }
 
   try {
-    const response = await fetch(`${API_URL}/users${isEditing ? `/${id}` : ""}`, {
+    const response = await fetch(apiUrl, {
       method: isEditing ? "PATCH" : "POST",
       headers: {
         Accept: "application/json",

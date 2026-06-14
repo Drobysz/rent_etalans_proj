@@ -1,7 +1,6 @@
 import { getSession } from "@/auth/sessions";
 import type { User, UserRole } from "@/interfaces";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? process.env.API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
 type ApiUser = {
   id: string | number;
@@ -17,13 +16,14 @@ export const mockUsers: User[] = [
 
 export async function getUsers(): Promise<User[]> {
   const session = await getSession();
+  const apiUrl = getBackendApiUrl("/users");
 
-  if (!API_URL || !session?.accessToken) {
+  if (!apiUrl || !session?.accessToken) {
     return mockUsers;
   }
 
   try {
-    const response = await fetch(`${API_URL}/users`, {
+    const response = await fetch(apiUrl, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${session.accessToken}`,

@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? process.env.API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
 export type StripeInvoicePdfResponse = {
   invoice_pdf: string | null;
@@ -8,11 +8,13 @@ export type StripeInvoicePdfResponse = {
 export async function getStripeInvoicePdf(
   sessionId: string,
 ): Promise<StripeInvoicePdfResponse> {
-  if (!API_URL) {
+  const apiUrl = getBackendApiUrl("/stripe/invoice-pdf");
+
+  if (!apiUrl) {
     throw new Error("API_URL is not configured.");
   }
 
-  const response = await fetch(`${API_URL}/stripe/invoice-pdf`, {
+  const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       Accept: "application/json",

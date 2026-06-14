@@ -1,6 +1,5 @@
 import type { DashboardData } from "@/interfaces";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? process.env.API_URL;
+import { getBackendApiUrl } from "@/lib/api";
 
 type ApiDashboard = {
   revenue?: {
@@ -67,12 +66,14 @@ export const mockDashboard: DashboardData = {
 };
 
 export async function getDashboard(): Promise<DashboardData> {
-  if (!API_URL) {
+  const apiUrl = getBackendApiUrl("/payments/dashboard");
+
+  if (!apiUrl) {
     return mockDashboard;
   }
 
   try {
-    const response = await fetch(`${API_URL}/payments/dashboard`, {
+    const response = await fetch(apiUrl, {
       headers: { Accept: "application/json" },
       cache: "no-store",
     });
