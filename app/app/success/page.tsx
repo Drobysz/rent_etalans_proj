@@ -43,6 +43,14 @@ export default async function SuccessPage ({
         total_price: totalPrice,
     } = validation.payment;
 
+    const services = await getServices();
+
+    const filteredServices = services?.filter(
+        (s: Service) => serviceIds.includes(s.id)
+    ) ?? [];
+
+    const serviceNames = filteredServices.map((service: Service) => service.name);
+
     await createPayment(
         email,
         reserve_id,
@@ -50,14 +58,9 @@ export default async function SuccessPage ({
         daysNumber,
         totalPrice,
         serviceIds,
+        serviceNames,
         session_id,
     );
-
-    const services = await getServices();
-    
-    const filteredServices = services?.filter(
-        (s: Service) => serviceIds.includes(s.id)
-    ) ?? [];
 
     return (
         <Suspense

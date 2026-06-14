@@ -99,21 +99,22 @@ export const createInvoicePdf = (data: InvoicePdfData) => {
   const finalY = (doc as jsPDF & { lastAutoTable?: { finalY: number } })
     .lastAutoTable?.finalY ?? 130;
 
-  doc.setFont("helvetica", "normal");
-  doc.text("Subtotal", pageWidth - 70, finalY + 14);
-  doc.text(formatEuro(data.totalPrice), pageWidth - 30, finalY + 14, {
-    align: "right",
-  });
+  const totalLabelX = pageWidth - 95;
+  const totalValueX = pageWidth - 20;
+  const totalRows = [
+    { label: "Subtotal", value: data.totalPrice, bold: false },
+    { label: "Total", value: data.totalPrice, bold: true },
+    { label: "Amount paid", value: data.totalPrice, bold: true },
+  ];
 
-  doc.setFont("helvetica", "bold");
-  doc.text("Total", pageWidth - 70, finalY + 24);
-  doc.text(formatEuro(data.totalPrice), pageWidth - 30, finalY + 24, {
-    align: "right",
-  });
+  totalRows.forEach((row, index) => {
+    const y = finalY + 16 + index * 12;
 
-  doc.text("Amount paid", pageWidth - 70, finalY + 34);
-  doc.text(formatEuro(data.totalPrice), pageWidth - 30, finalY + 34, {
-    align: "right",
+    doc.setFont("helvetica", row.bold ? "bold" : "normal");
+    doc.text(row.label, totalLabelX, y);
+    doc.text(formatEuro(row.value), totalValueX, y, {
+      align: "right",
+    });
   });
 
   doc.setFont("helvetica", "normal");

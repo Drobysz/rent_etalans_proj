@@ -9,13 +9,15 @@ export const createPayment = async (
     days_number: number,
     total_price: number,
     service_ids: number[],
-    session_id?: string,
+    service_names: string[],
+    session_id: string,
 )=> {
+    const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments`, {
+        const res = await fetch(`${apiUrl}/payments`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -27,30 +29,34 @@ export const createPayment = async (
                 client_number: client_number,
                 days_number: days_number,
                 service_ids: service_ids,
-                total_price: total_price
+                total_price: total_price,
+                session_id: session_id,
             }),
             signal: controller.signal,
         });
-
-        console.log(res)
 
         if (!res.ok) {
             console.error(res.statusText)
             throw new Error(`Failed to create invoice: ${res.status} ${res.statusText}`);
         }
 
-        await sendTelegramPurchaseNotification({
-            email,
-            reserveId: reserve_id,
-            visitorsCount: client_number,
-            daysCount: days_number,
-            totalPrice: total_price,
-            serviceIds: service_ids,
-            paymentStatus: "paid",
-            sessionId: session_id,
-        }).catch((error) => {
-            console.error(error);
-        });
+        const payload = await res.json();
+        const isExisted = payload.existed; 
+
+        if (!isExisted) {
+            await sendTelegramPurchaseNotification({
+                email,
+                reserveId: reserve_id,
+                visitorsCount: client_number,
+                daysCount: days_number,
+                totalPrice: total_price,
+                serviceNames: service_names,
+                paymentStatus: "paid",
+                sessionId: session_id,
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
 
         return res.ok;
 

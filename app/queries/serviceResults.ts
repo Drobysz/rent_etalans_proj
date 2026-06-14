@@ -17,7 +17,6 @@ export async function getServiceResult(reserve_id: string, page: number) {
         }
 
         const payload = await res.json();
-        console.log("Payload:", payload)
 
         return payload;
 

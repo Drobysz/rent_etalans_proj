@@ -14,11 +14,12 @@ export type ValidatePaymentResult = {
 };
 
 export async function validatePayment (session_id: string): Promise<ValidatePaymentResult> {
+    const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/validate-purchase`, {
+        const res = await fetch(`${apiUrl}/validate-purchase`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -36,7 +37,6 @@ export async function validatePayment (session_id: string): Promise<ValidatePaym
         }
 
         const payload = await res.json();
-        console.log("Payload:", payload)
 
         return {
             valid: payload.valid ?? false,
