@@ -1,4 +1,4 @@
-const BACKEND_PROXY_BASE = "/api/";
+const BACKEND_PROXY_BASE = "/rent_api";
 
 function normalizePath(path: string) {
   return path.startsWith("/") ? path : `/${path}`;
