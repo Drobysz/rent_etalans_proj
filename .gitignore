@@ -1,8 +1,13 @@
 db_init/backup.sql
 dump.rdb
-docker-compose.yaml
 secrets
 redis.conf
 conf
 nginx.conf
 .vscode
+.DS_Store
+**/.DS_Store
+telegram_bot/__pycache__/
+telegram_bot/*.pyc
+telegram_bot/chats.sqlite3
+telegram_bot/manage_bot_venv/
