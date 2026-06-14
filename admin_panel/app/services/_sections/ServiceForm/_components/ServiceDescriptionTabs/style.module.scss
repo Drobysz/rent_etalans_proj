@@ -1,0 +1,73 @@
+@reference "tailwindcss";
+
+.fieldset {
+  @apply grid gap-2;
+  border: 0;
+  color: var(--admin-text);
+  font-weight: 500;
+}
+
+.fieldset legend {
+  @apply mb-1 text-[14px];
+}
+
+.tabs {
+  @apply flex flex-wrap gap-2;
+}
+
+.tab,
+.tabActive {
+  @apply h-9 px-3 text-[14px];
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  color: var(--admin-text-muted);
+  font-weight: 500;
+  transition:
+    border-color 140ms var(--admin-ease),
+    color 140ms var(--admin-ease),
+    background-color 140ms var(--admin-ease);
+}
+
+.tab:hover,
+.tabActive {
+  border-color: var(--admin-border-strong);
+  background: var(--admin-surface-subtle);
+  color: var(--admin-text);
+}
+
+.panel,
+.panelActive {
+  @apply gap-1.5 text-[14px];
+}
+
+.panel {
+  @apply hidden;
+}
+
+.panelActive {
+  @apply grid;
+}
+
+.panel textarea,
+.panelActive textarea {
+  @apply min-h-[132px] w-full resize-y p-2.5 text-[14px];
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.panel textarea:focus,
+.panelActive textarea:focus {
+  border-color: var(--admin-border-strong);
+}
+
+.panel strong,
+.panelActive strong {
+  @apply text-[14px];
+  color: var(--admin-danger);
+  font-weight: 500;
+}

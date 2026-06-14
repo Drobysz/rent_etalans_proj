@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useCallback, useEffect, useRef } from "react";
 import { Tabprops } from "../../../../NavBar.interface";
 import styles from "./Tab.module.scss";

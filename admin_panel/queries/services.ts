@@ -9,6 +9,11 @@ export const mockServices: Service[] = [
     id: "svc-cleaning",
     name: "Mid-stay cleaning",
     description: "Cleaning visit for active stays, including linen refresh.",
+    descriptions: [
+      { locale: "en", description: "Cleaning visit for active stays, including linen refresh." },
+      { locale: "fr", description: "Passage de ménage pendant le séjour, avec linge rafraîchi." },
+      { locale: "de", description: "Reinigung während des Aufenthalts, inklusive frischer Wäsche." },
+    ],
     price: 49,
     status: "active",
     updatedAt: "2026-06-03T09:40:00.000Z",
@@ -20,6 +25,11 @@ export const mockServices: Service[] = [
     id: "svc-transfer",
     name: "Airport transfer",
     description: "Scheduled private transfer between airport and apartment.",
+    descriptions: [
+      { locale: "en", description: "Scheduled private transfer between airport and apartment." },
+      { locale: "fr", description: "Transfert privé planifié entre l'aéroport et l'appartement." },
+      { locale: "de", description: "Geplanter privater Transfer zwischen Flughafen und Apartment." },
+    ],
     price: 72,
     status: "active",
     updatedAt: "2026-06-02T14:15:00.000Z",
@@ -31,6 +41,11 @@ export const mockServices: Service[] = [
     id: "svc-breakfast",
     name: "Breakfast delivery",
     description: "Morning delivery from partner bakery for the full stay.",
+    descriptions: [
+      { locale: "en", description: "Morning delivery from partner bakery for the full stay." },
+      { locale: "fr", description: "Livraison matinale depuis la boulangerie partenaire pour tout le séjour." },
+      { locale: "de", description: "Morgendliche Lieferung von der Partnerbäckerei für den gesamten Aufenthalt." },
+    ],
     price: 18,
     status: "draft",
     updatedAt: "2026-05-28T07:30:00.000Z",
@@ -44,6 +59,10 @@ type ApiService = {
   id: number | string;
   name: string;
   description: string;
+  descriptions?: Array<{
+    locale: "en" | "fr" | "de";
+    description: string;
+  }>;
   price: number | string;
   visible?: boolean | number | string;
   fixed_price?: boolean | number | string;
@@ -70,6 +89,7 @@ function mapService(service: ApiService): Service {
     id: String(service.id),
     name: service.name,
     description: service.description,
+    descriptions: service.descriptions ?? [],
     price: Number(service.price),
     status: visible ? "active" : "draft",
     updatedAt: new Date().toISOString(),

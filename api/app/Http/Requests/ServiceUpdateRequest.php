@@ -26,7 +26,10 @@ class ServiceUpdateRequest extends FormRequest
             'price'       => ['sometimes', 'numeric', 'min:0'],
             'visible'     => ['sometimes', 'boolean'],
             'fixed_price' => ['sometimes', 'boolean'],
-            'description' => ['sometimes', 'string', 'max:500']
+            'descriptions' => ['sometimes', 'array'],
+            'descriptions.en' => ['required_with:descriptions', 'string', 'max:500'],
+            'descriptions.fr' => ['required_with:descriptions', 'string', 'max:500'],
+            'descriptions.de' => ['required_with:descriptions', 'string', 'max:500'],
         ];
     }
 }

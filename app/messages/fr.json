@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "title": "Services supplémentaires",
+    "description": "Services supplémentaires pour la location d'une chambre à Etalans"
+  },
+  "home": {
+    "stayFormTitle": "Saisissez les détails de votre séjour",
+    "servicesTitle": "Profitez de services qui rendront votre séjour encore plus agréable"
+  },
+  "stayForm": {
+    "mouseGuide": "Utilisez les flèches (bas) et (haut) pour faire défiler les champs",
+    "email": {
+      "label": "Email",
+      "placeholder": "Pour envoyer la facture"
+    },
+    "airbnbCode": {
+      "label": "Code de réservation Airbnb",
+      "placeholder": "Trips -> Your trip -> Details"
+    },
+    "daysCount": {
+      "label": "Nombre de jours",
+      "placeholder": "Indiquez la durée du séjour"
+    },
+    "visitorsCount": {
+      "label": "Nombre de visiteurs",
+      "placeholder": "Indiquez le nombre de visiteurs"
+    }
+  },
+  "services": {
+    "mouseGuide": "Cliquez sur la carte pour choisir l'option",
+    "fetchError": "Impossible de charger les services",
+    "empty": "Aucun service",
+    "add": "Ajouter",
+    "remove": "Supprimer",
+    "readMore": "Lire plus",
+    "readLess": "Lire moins",
+    "perDay": "/par jour"
+  },
+  "basket": {
+    "empty": "Le panier est vide",
+    "fetchError": "Impossible de charger les services",
+    "daysShort": "j",
+    "visitorsShort": "vis",
+    "total": "Total :",
+    "buy": "Acheter",
+    "noItems": "Aucun service",
+    "invoiceSuccess": "La facture a bien été générée",
+    "invoiceError": "Impossible de créer la page de paiement"
+  },
+  "achats": {
+    "title": "Retrouvez vos achats de services",
+    "searchPlaceholder": "Écrivez votre code de réservation (Airbnb/Booking)",
+    "empty": "Aucun achat trouvé",
+    "reservationCode": "Code de réservation :",
+    "total": "Total :"
+  },
+  "success": {
+    "title": "Votre paiement a bien été traité",
+    "confirmationCode": "Code de confirmation",
+    "email": "Email",
+    "reservationCode": "Code de réservation",
+    "duration": "Durée",
+    "durationValue": "{count, plural, one {# jour} other {# jours}}",
+    "visitors": "Visiteurs",
+    "visitorsValue": "{count, plural, one {# personne} other {# personnes}}",
+    "total": "Total :",
+    "daysShort": "j",
+    "visitorsShort": "vis",
+    "downloadCustomInvoice": "Télécharger la facture personnalisée",
+    "downloadStripeInvoice": "Télécharger la facture Stripe",
+    "loading": "Chargement..."
+  },
+  "cancel": {
+    "title": "Le paiement a échoué. Redirection..."
+  },
+  "footer": {
+    "developedBy": "Développé par",
+    "holidayLine": "Vos vacances à Etalans"
+  },
+  "navigation": {
+    "services": "Services",
+    "purchases": "Retrouvez vos achats"
+  }
+}

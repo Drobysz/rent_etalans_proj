@@ -1,3 +1,4 @@
+export * from "./ServiceDescriptionTabs/ServiceDescriptionTabs";
 export * from "./ServiceFormActions/ServiceFormActions";
 export * from "./ServiceFormHeader/ServiceFormHeader";
 export * from "./ServiceImageField/ServiceImageField";

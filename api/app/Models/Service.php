@@ -9,7 +9,6 @@ class Service extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
-        'description',
         'price',
         'visible',
         'fixed_price',
@@ -33,5 +32,10 @@ class Service extends Model
     public function images()
     {
         return $this->hasMany(ServiceImage::class, 'service_id');
+    }
+
+    public function descriptions()
+    {
+        return $this->hasMany(ServiceDescription::class, 'service_id');
     }
 }

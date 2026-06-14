@@ -81,7 +81,11 @@ class ServiceVisibilityTest extends TestCase
         $response = $this->withHeader('Authorization', "Bearer {$token}")
             ->post('/api/services', [
                 'name' => 'Cleaning',
-                'description' => 'Cleaning shown to clients.',
+                'descriptions' => [
+                    'en' => 'Cleaning shown to clients.',
+                    'fr' => 'Ménage visible pour les clients.',
+                    'de' => 'Reinigung, die Kunden angezeigt wird.',
+                ],
                 'price' => 40,
                 'visible' => true,
                 'fixed_price' => true,

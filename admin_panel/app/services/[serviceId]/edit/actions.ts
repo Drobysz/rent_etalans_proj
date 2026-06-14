@@ -74,7 +74,11 @@ export async function updateServiceAction(
   const parsed = serviceFormSchema.safeParse({
     name: formData.get("name"),
     price: formData.get("price"),
-    description: formData.get("description"),
+    descriptions: {
+      en: formData.get("descriptions[en]"),
+      fr: formData.get("descriptions[fr]"),
+      de: formData.get("descriptions[de]"),
+    },
     visible: formData.get("visible"),
     fixed_price: formData.get("fixed_price"),
   });
@@ -85,12 +89,17 @@ export async function updateServiceAction(
 
   if (!parsed.success) {
     const flattened = parsed.error.flatten().fieldErrors;
+    const formatted = parsed.error.format();
 
     return {
       fieldErrors: {
         name: flattened.name?.[0],
         price: flattened.price?.[0],
-        description: flattened.description?.[0],
+        descriptions: {
+          en: formatted.descriptions?.en?._errors[0],
+          fr: formatted.descriptions?.fr?._errors[0],
+          de: formatted.descriptions?.de?._errors[0],
+        },
         visible: flattened.visible?.[0],
         fixed_price: flattened.fixed_price?.[0],
       },

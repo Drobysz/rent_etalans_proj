@@ -1,0 +1,32 @@
+@reference "tailwindcss";
+
+.body {
+    @apply fixed top-1/2 right-0 items-center h-fit
+        bg-neutral-100 text-zinc-500 duration-200
+        transition-transform ease-in z-30 w-14
+        border border-zinc-300;
+} 
+
+.lang_list {
+    @apply flex flex-col gap-1
+        absolute bg-neutral-100 border
+        rounded-t-2xl overflow-hidden w-full
+        border-zinc-300 border-b-0;
+}
+
+.lang_sel {
+    @apply py-1 duration-200
+        transition-all ease-in
+        hover:bg-neutral-200
+        cursor-pointer px-3
+        flex gap-1 justify-center;
+}
+
+.lang_sel:first-child {
+    @apply pt-2;
+}
+
+.lang_btn {
+    @apply py-2 px-2 cursor-pointer
+        flex gap-1 justify-center;
+}

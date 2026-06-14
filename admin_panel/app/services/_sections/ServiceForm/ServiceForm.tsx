@@ -3,9 +3,9 @@
 import { useActionState } from "react";
 import {
   ServiceFormActions,
+  ServiceDescriptionTabs,
   ServiceFormHeader,
   ServiceImageField,
-  ServiceTextareaField,
   ServiceTextField,
   ServiceToggleField,
 } from "./_components";
@@ -46,13 +46,15 @@ export function ServiceForm({
           defaultValue={service?.price}
           error={state.fieldErrors?.price}
         />
-        <ServiceTextareaField
-          label="Description"
-          name="description"
+        <ServiceDescriptionTabs
           maxLength={500}
           rows={6}
-          defaultValue={service?.description}
-          error={state.fieldErrors?.description}
+          defaultValues={{
+            en: service?.descriptions.find((description) => description.locale === "en")?.description,
+            fr: service?.descriptions.find((description) => description.locale === "fr")?.description,
+            de: service?.descriptions.find((description) => description.locale === "de")?.description,
+          }}
+          errors={state.fieldErrors?.descriptions}
         />
         <div className={styles.statusGrid}>
           <ServiceToggleField

@@ -23,20 +23,20 @@ class ServiceController extends Controller
     public function index()
     {
         return ServiceResource::collection(
-            Service::with('images')->latest('id')->get()
+            Service::with(['images', 'descriptions'])->latest('id')->get()
         );
     }
 
     public function show(Service $service)
     {
-        $service->load(['images']);
+        $service->load(['images', 'descriptions']);
         return new ServiceResource($service);
     }
 
     public function showAllVisible()
     {
         return ServiceResource::collection(
-            Service::with('images')
+            Service::with(['images', 'descriptions'])
                 ->where('visible', true)
                 ->latest('id')
                 ->get()
@@ -48,11 +48,15 @@ class ServiceController extends Controller
         $data = $request->validated();
         $files = $request->file('images', []);
         $uploadedPaths = [];
+        $descriptions = $data['descriptions'];
         unset($data['images']);
+        unset($data['descriptions']);
 
         try {
-            $service = DB::transaction(function () use ($data, $files, &$uploadedPaths) {
+            $service = DB::transaction(function () use ($data, $files, $descriptions, &$uploadedPaths) {
                 $service = Service::create($data);
+
+                $this->syncDescriptions($service, $descriptions);
 
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
@@ -80,7 +84,7 @@ class ServiceController extends Controller
             throw $e;
         }
 
-        $service->load(['images']);
+        $service->load(['images', 'descriptions']);
 
         return (new ServiceResource($service))
             ->response()
@@ -89,8 +93,19 @@ class ServiceController extends Controller
 
     public function update(Service $service, ServiceUpdateRequest $request)
     {
-        $service->update($request->validated());
-        $service->load(['images']);
+        $data = $request->validated();
+        $descriptions = $data['descriptions'] ?? null;
+        unset($data['descriptions']);
+
+        DB::transaction(function () use ($service, $data, $descriptions) {
+            $service->update($data);
+
+            if ($descriptions !== null) {
+                $this->syncDescriptions($service, $descriptions);
+            }
+        });
+
+        $service->load(['images', 'descriptions']);
 
         return new ServiceResource($service);
     }
@@ -101,5 +116,18 @@ class ServiceController extends Controller
         $service->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * @param array<string, string> $descriptions
+     */
+    private function syncDescriptions(Service $service, array $descriptions): void
+    {
+        foreach (['en', 'fr', 'de'] as $locale) {
+            $service->descriptions()->updateOrCreate(
+                ['locale' => $locale],
+                ['description' => $descriptions[$locale]]
+            );
+        }
     }
 }

@@ -24,7 +24,10 @@ class ServiceStoreRequest extends FormRequest
         return [
             'name'        => ['required', 'string', 'max:30'],
             'price'       => ['required', 'numeric', 'min:0'],
-            'description' => ['required', 'string', 'max:500'],
+            'descriptions' => ['required', 'array'],
+            'descriptions.en' => ['required', 'string', 'max:500'],
+            'descriptions.fr' => ['required', 'string', 'max:500'],
+            'descriptions.de' => ['required', 'string', 'max:500'],
             'images'      => ['required', 'array'],
             'visible'     => ['sometimes', 'boolean'],
             'fixed_price' => ['required', 'boolean'],

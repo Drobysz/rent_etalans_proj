@@ -5,6 +5,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import s from "./style.module.scss";
 import { cn } from "@/lib/utils";
 import { MouseEvent, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ThreeDCard({
   title, desc, btnStyle,
@@ -23,6 +24,7 @@ export default function ThreeDCard({
   className?: string;
   btnAction?: () => void;
 }) {
+  const t = useTranslations("services");
   const [descConceal, setDescConceal] = useState(true);
 
   const isLong = desc.length > 60;
@@ -76,7 +78,7 @@ export default function ThreeDCard({
                   "z-20",
                   descConceal ? "text-yellow-600" : "text-red-700"
                 )}>
-                  {`Lire ${descConceal ? "plus" : "moins"}`}
+                  {descConceal ? t("readMore") : t("readLess")}
                 </span>
                 <div />
               </button>
@@ -121,7 +123,7 @@ export default function ThreeDCard({
                   €
                   {!IsFixedPrice &&
                     <span className="text-xs">
-                      /par jour
+                      {t("perDay")}
                     </span>
                   }
                 </span>

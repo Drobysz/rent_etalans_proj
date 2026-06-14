@@ -5,10 +5,18 @@ export type ServiceImage = {
   url: string;
 };
 
+export type ServiceDescriptionLocale = "en" | "fr" | "de";
+
+export type ServiceDescription = {
+  locale: ServiceDescriptionLocale;
+  description: string;
+};
+
 export type Service = {
   id: string;
   name: string;
   description: string;
+  descriptions: ServiceDescription[];
   price: number;
   status: "active" | "draft";
   updatedAt: string;

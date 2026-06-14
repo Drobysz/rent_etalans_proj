@@ -15,10 +15,31 @@ class ServiceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $descriptions = $this->whenLoaded('descriptions', function () {
+            return $this->descriptions
+                ->sortBy('locale')
+                ->map(function ($description) {
+                    return [
+                        'locale' => $description->locale,
+                        'description' => $description->description,
+                    ];
+                })
+                ->values();
+        });
+
+        $fallbackDescription = $this->whenLoaded('descriptions', function () {
+            return optional(
+                $this->descriptions->firstWhere('locale', 'fr')
+                    ?? $this->descriptions->firstWhere('locale', 'en')
+                    ?? $this->descriptions->first()
+            )->description;
+        }, $this->description ?? null);
+
         return [
             'id'          => $this->id,
             'name'        => $this->name,
-            'description' => $this->description,
+            'description' => $fallbackDescription,
+            'descriptions' => $descriptions,
             'visible'     => $this->visible,
             'fixed_price' => $this->fixed_price,
             'price'       => $this->price,

@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "title": "Zusatzleistungen",
+    "description": "Zusatzleistungen für Ihre Zimmermiete in Etalans"
+  },
+  "home": {
+    "stayFormTitle": "Geben Sie Ihre Aufenthaltsdetails ein",
+    "servicesTitle": "Wählen Sie Services, die Ihren Aufenthalt noch angenehmer machen"
+  },
+  "stayForm": {
+    "mouseGuide": "Verwenden Sie die Pfeiltasten (unten) und (oben), um durch die Formularfelder zu wechseln",
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "Zum Versenden der Rechnung"
+    },
+    "airbnbCode": {
+      "label": "Airbnb-Reservierungscode",
+      "placeholder": "Trips -> Your trip -> Details"
+    },
+    "daysCount": {
+      "label": "Anzahl der Tage",
+      "placeholder": "Geben Sie die Aufenthaltsdauer ein"
+    },
+    "visitorsCount": {
+      "label": "Anzahl der Gäste",
+      "placeholder": "Geben Sie die Anzahl der Gäste ein"
+    }
+  },
+  "services": {
+    "mouseGuide": "Klicken Sie auf eine Karte, um die Option auszuwählen",
+    "fetchError": "Services konnten nicht geladen werden",
+    "empty": "Keine Services",
+    "add": "Hinzufügen",
+    "remove": "Entfernen",
+    "readMore": "Mehr lesen",
+    "readLess": "Weniger lesen",
+    "perDay": "/pro Tag"
+  },
+  "basket": {
+    "empty": "Ihr Warenkorb ist leer",
+    "fetchError": "Services konnten nicht geladen werden",
+    "daysShort": "T",
+    "visitorsShort": "Gäste",
+    "total": "Gesamt:",
+    "buy": "Kaufen",
+    "noItems": "Keine Services",
+    "invoiceSuccess": "Die Rechnung wurde erfolgreich erstellt",
+    "invoiceError": "Die Checkout-Seite konnte nicht erstellt werden"
+  },
+  "achats": {
+    "title": "Finden Sie Ihre Servicekäufe",
+    "searchPlaceholder": "Geben Sie Ihren Reservierungscode ein (Airbnb/Booking)",
+    "empty": "Keine Käufe gefunden",
+    "reservationCode": "Reservierungscode:",
+    "total": "Gesamt:"
+  },
+  "success": {
+    "title": "Ihre Zahlung wurde erfolgreich verarbeitet",
+    "confirmationCode": "Bestätigungscode",
+    "email": "E-Mail",
+    "reservationCode": "Reservierungscode",
+    "duration": "Dauer",
+    "durationValue": "{count, plural, one {# Tag} other {# Tage}}",
+    "visitors": "Gäste",
+    "visitorsValue": "{count, plural, one {# Gast} other {# Gäste}}",
+    "total": "Gesamt:",
+    "daysShort": "T",
+    "visitorsShort": "Gäste",
+    "downloadCustomInvoice": "Eigene Rechnung herunterladen",
+    "downloadStripeInvoice": "Stripe-Rechnung herunterladen",
+    "loading": "Lädt..."
+  },
+  "cancel": {
+    "title": "Zahlung fehlgeschlagen. Weiterleitung..."
+  },
+  "footer": {
+    "developedBy": "Entwickelt von",
+    "holidayLine": "Ihre Ferien in Etalans"
+  },
+  "navigation": {
+    "services": "Services",
+    "purchases": "Ihre Käufe"
+  }
+}
