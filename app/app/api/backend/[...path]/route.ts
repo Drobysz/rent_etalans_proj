@@ -67,7 +67,7 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
   if (!targetUrl) {
     return NextResponse.json(
       { message: "API_URL is not configured." },
-      { status: 500 },
+      { status: 503 },
     );
   }
 
@@ -75,12 +75,23 @@ async function proxyRequest(request: NextRequest, context: RouteContext) {
     ? undefined
     : await request.arrayBuffer();
 
-  const response = await fetch(targetUrl, {
-    method: request.method,
-    headers: getForwardHeaders(request),
-    body,
-    cache: "no-store",
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(targetUrl, {
+      method: request.method,
+      headers: getForwardHeaders(request),
+      body,
+      cache: "no-store",
+    });
+  } catch (error) {
+    console.error("Backend API proxy request failed", error);
+
+    return NextResponse.json(
+      { message: "Backend API is unavailable." },
+      { status: 502 },
+    );
+  }
 
   return new NextResponse(response.body, {
     status: response.status,
