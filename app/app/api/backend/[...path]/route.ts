@@ -20,7 +20,7 @@ type RouteContext = {
 };
 
 function getApiUrl(path: string[], search: string) {
-  const apiUrl = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.API_URL;
 
   if (!apiUrl) {
     return null;
@@ -98,4 +98,3 @@ export const DELETE = proxyRequest;
 export function OPTIONS() {
   return new NextResponse(null, { status: 204 });
 }
-

@@ -17,12 +17,13 @@ services:
     build:
       context: ./app
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+        API_URL: ${API_URL:-http://rent_api:8000/api}
         NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/au_calme_campagne_etalans}
         NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
     env_file:
       - ./app/.env
     environment:
+      API_URL: ${API_URL:-http://rent_api:8000/api}
       NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/au_calme_campagne_etalans}
       NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
     depends_on:
@@ -33,10 +34,10 @@ services:
   admin_panel:
     build:
       context: ./admin_panel
-      args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
     env_file:
       - ./admin_panel/.env
+    environment:
+      API_URL: ${API_URL:-http://rent_api:8000/api}
     depends_on:
       - api
     restart: unless-stopped
@@ -46,6 +47,10 @@ services:
       context: ./api
     env_file:
       - ./api/.env
+    networks:
+      default:
+        aliases:
+          - rent_api
     depends_on:
       mysql:
         condition: service_healthy
