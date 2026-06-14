@@ -1,6 +1,6 @@
 import type { Order } from "@/interfaces";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
 export const mockOrders: Order[] = [
   {
@@ -85,6 +85,7 @@ export const mockOrders: Order[] = [
 
 type ApiPayment = {
   id: number | string;
+  session_id?: string | null;
   email: string;
   client_number?: number | string;
   total_price?: number | string;
@@ -96,11 +97,65 @@ type ApiPayment = {
 export type OrdersQuery = {
   reserveId?: string;
   sort?: "asc" | "desc";
+  page?: number;
 };
 
-export async function getOrders(query: OrdersQuery = {}): Promise<Order[]> {
+export type OrdersPagination = {
+  currentPage: number;
+  lastPage: number;
+  perPage: number;
+  total: number;
+  from: number | null;
+  to: number | null;
+};
+
+export type OrdersResult = {
+  orders: Order[];
+  pagination: OrdersPagination;
+};
+
+const makePagination = (
+  total: number,
+  currentPage = 1,
+  perPage = 7,
+): OrdersPagination => {
+  const lastPage = Math.max(1, Math.ceil(total / perPage));
+  const safePage = Math.min(Math.max(currentPage, 1), lastPage);
+  const from = total === 0 ? null : (safePage - 1) * perPage + 1;
+  const to = total === 0 ? null : Math.min(safePage * perPage, total);
+
+  return {
+    currentPage: safePage,
+    lastPage,
+    perPage,
+    total,
+    from,
+    to,
+  };
+};
+
+const paginateOrders = (
+  orders: Order[],
+  page = 1,
+  perPage = 7,
+): OrdersResult => {
+  const pagination = makePagination(orders.length, page, perPage);
+  const start = (pagination.currentPage - 1) * perPage;
+
+  return {
+    orders: orders.slice(start, start + perPage),
+    pagination,
+  };
+};
+
+export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> {
+  const page = Math.max(1, query.page ?? 1);
+
   if (!API_URL) {
-    return sortOrders(filterOrders(mockOrders, query.reserveId), query.sort);
+    return paginateOrders(
+      sortOrders(filterOrders(mockOrders, query.reserveId), query.sort),
+      page,
+    );
   }
 
   try {
@@ -111,6 +166,7 @@ export async function getOrders(query: OrdersQuery = {}): Promise<Order[]> {
     if (query.sort) {
       params.set("sort", query.sort);
     }
+    params.set("page", String(page));
 
     const path = params.size ? `/payments?${params.toString()}` : "/payments";
     const response = await fetch(`${API_URL}${path}`, {
@@ -119,13 +175,21 @@ export async function getOrders(query: OrdersQuery = {}): Promise<Order[]> {
     });
 
     if (!response.ok) {
-      return sortOrders(mockOrders);
+      return paginateOrders(sortOrders(mockOrders, query.sort), page);
     }
 
-    const payload = (await response.json()) as { data?: ApiPayment[] };
+    const payload = (await response.json()) as {
+      data?: ApiPayment[];
+      current_page?: number;
+      last_page?: number;
+      per_page?: number;
+      total?: number;
+      from?: number | null;
+      to?: number | null;
+    };
     const payments = payload.data ?? [];
 
-    return sortOrders(
+    const orders = sortOrders(
       payments.map((payment) => ({
         id: String(payment.id),
         reserveId: payment.reserve_id ?? "unknown",
@@ -145,16 +209,33 @@ export async function getOrders(query: OrdersQuery = {}): Promise<Order[]> {
           paymentMethod: "Card",
           receiptEmail: payment.email,
           createdAt: payment.created_at ?? new Date().toISOString(),
+          sessionId: payment.session_id ?? undefined,
           metadata: {
             reserveId: payment.reserve_id ?? "unknown",
+            stripeSessionId: payment.session_id ?? "",
             source: "api",
           },
         },
       })),
       query.sort,
     );
+
+    return {
+      orders,
+      pagination: {
+        currentPage: Number(payload.current_page ?? page),
+        lastPage: Number(payload.last_page ?? 1),
+        perPage: Number(payload.per_page ?? (orders.length || 7)),
+        total: Number(payload.total ?? orders.length),
+        from: payload.from ?? null,
+        to: payload.to ?? null,
+      },
+    };
   } catch {
-    return sortOrders(filterOrders(mockOrders, query.reserveId), query.sort);
+    return paginateOrders(
+      sortOrders(filterOrders(mockOrders, query.reserveId), query.sort),
+      page,
+    );
   }
 }
 

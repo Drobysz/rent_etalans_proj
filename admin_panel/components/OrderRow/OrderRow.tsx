@@ -1,4 +1,5 @@
 import { formatDateTime, formatMoney } from "@/helpers";
+import { StripeReceiptButton } from "./StripeReceiptButton";
 import styles from "./style.module.scss";
 import type { OrderRowProps } from "./OrderRow.props";
 
@@ -18,9 +19,12 @@ export function OrderRow({ order, onViewPayment }: OrderRowProps) {
       <td>{formatMoney(order.total)}</td>
       <td>{formatDateTime(order.createdAt)}</td>
       <td className={styles.actions}>
-        <button className={styles.paymentButton} type="button" onClick={() => onViewPayment(order)}>
-          View payment
-        </button>
+        <div className={styles.actionGroup}>
+          <button className={styles.paymentButton} type="button" onClick={() => onViewPayment(order)}>
+            View payment
+          </button>
+          <StripeReceiptButton sessionId={order.payment.sessionId} />
+        </div>
       </td>
     </tr>
   );

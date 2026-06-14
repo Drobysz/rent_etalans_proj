@@ -61,23 +61,121 @@
 }
 
 .barTrack {
-  @apply flex items-end min-h-[220px] overflow-hidden;
+  @apply flex items-end min-h-[220px] overflow-hidden relative;
   border-radius: var(--admin-radius-sm);
   background: var(--admin-surface-subtle);
 }
 
-.bar {
-  @apply w-full bg-green-500;
+.barTrack::after {
+  @apply absolute inset-0 opacity-0;
+  background: rgb(17 24 39 / 18%);
+  content: "";
+  pointer-events: none;
+  transition: opacity 180ms var(--admin-ease);
 }
 
-.barGroup span {
+.barTrack:hover::after,
+.barTrack:focus::after,
+.barTrack:focus-visible::after {
+  @apply opacity-100;
+}
+
+.barTrack:focus-visible {
+  outline: 2px solid var(--admin-focus);
+  outline-offset: 2px;
+}
+
+.bar {
+  @apply w-full bg-green-500 relative overflow-hidden;
+  transition: filter 180ms var(--admin-ease);
+}
+
+.barTrack:hover .bar,
+.barTrack:focus .bar,
+.barTrack:focus-visible .bar {
+  filter: saturate(1.08);
+}
+
+.amount {
+  @apply absolute inset-x-2 z-10 text-center text-[13px] opacity-0;
+  color: #ffffff;
+  font-weight: 600;
+  top: 50%;
+  text-shadow: 0 1px 2px rgb(17 24 39 / 30%);
+  transform: translateY(calc(-50% + 4px));
+  transition:
+    opacity 180ms var(--admin-ease),
+    transform 180ms var(--admin-ease);
+}
+
+.barTrack:hover .amount,
+.barTrack:focus .amount,
+.barTrack:focus-visible .amount {
+  @apply opacity-100;
+  transform: translateY(-50%);
+}
+
+.liquidWave {
+  @apply absolute left-[-50%] top-[-14px] h-7 w-[200%] opacity-0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 180ms var(--admin-ease),
+    transform 180ms var(--admin-ease);
+}
+
+.liquidWave::before,
+.liquidWave::after {
+  @apply absolute inset-0;
+  background:
+    radial-gradient(
+      36px 16px at 18px 18px,
+      rgb(34 197 94) 68%,
+      transparent 71%
+    );
+  background-size: 72px 28px;
+  content: "";
+}
+
+.liquidWave::after {
+  @apply opacity-60;
+  background-position: 36px 2px;
+}
+
+.barTrack:hover .liquidWave,
+.barTrack:focus .liquidWave,
+.barTrack:focus-visible .liquidWave {
+  @apply opacity-100;
+  animation: liquidWave 1400ms linear infinite;
+  transform: translateY(0);
+}
+
+.chartLabel {
   @apply overflow-hidden text-[12px] text-center text-ellipsis
     whitespace-nowrap;
   color: var(--admin-text-muted);
 }
 
+@keyframes liquidWave {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(72px, 0, 0);
+  }
+}
+
 @media (max-width: 560px) {
   .header {
     @apply items-start flex-col;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barTrack:hover .liquidWave,
+  .barTrack:focus .liquidWave,
+  .barTrack:focus-visible .liquidWave {
+    animation: none;
   }
 }

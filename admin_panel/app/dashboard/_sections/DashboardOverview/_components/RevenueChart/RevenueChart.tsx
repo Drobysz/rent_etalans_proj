@@ -39,23 +39,33 @@ export function RevenueChart({ series }: RevenueChartProps) {
         className={cn(styles.chart, range !== "month" && styles.scrollableChart)}
         aria-label={`${range} revenue chart`}
       >
-        {points.map((point) => (
-          <div className={styles.barGroup} key={point.label}>
-            <div className={styles.barTrack}>
+        {points.map((point) => {
+          const revenue = formatMoney(point.revenue);
+
+          return (
+            <div className={styles.barGroup} key={point.label}>
               <div
-                className={styles.bar}
-                style={{
-                  height: `${Math.max(
-                    (point.revenue / maxRevenue) * 100,
-                    point.revenue > 0 ? 8 : 0,
-                  )}%`,
-                }}
-                title={formatMoney(point.revenue)}
-              />
+                className={styles.barTrack}
+                tabIndex={0}
+                aria-label={`${point.label}: ${revenue}`}
+              >
+                <span className={styles.amount}>{revenue}</span>
+                <div
+                  className={styles.bar}
+                  style={{
+                    height: `${Math.max(
+                      (point.revenue / maxRevenue) * 100,
+                      point.revenue > 0 ? 8 : 0,
+                    )}%`,
+                  }}
+                >
+                  <span className={styles.liquidWave} />
+                </div>
+              </div>
+              <span className={styles.chartLabel}>{point.label}</span>
             </div>
-            <span>{point.label}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </article>
   );

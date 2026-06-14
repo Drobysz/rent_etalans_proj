@@ -35,6 +35,7 @@ export type PaymentInfo = {
   paymentMethod: string;
   receiptEmail: string;
   createdAt: string;
+  sessionId?: string;
   metadata: Record<string, string>;
 };
 

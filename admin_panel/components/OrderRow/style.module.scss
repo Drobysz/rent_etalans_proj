@@ -35,9 +35,14 @@
   @apply text-right;
 }
 
-.paymentButton {
+.actionGroup {
+  @apply inline-flex items-center justify-end gap-2;
+}
+
+.paymentButton,
+.stripeButton {
   @apply inline-flex h-8 items-center justify-center
-    px-3 text-[14px];
+    whitespace-nowrap px-3 text-[14px];
   border: 1px solid var(--admin-border);
   font-weight: 500;
   border-radius: var(--admin-radius-sm);
@@ -48,7 +53,29 @@
     background-color 140ms var(--admin-ease);
 }
 
-.paymentButton:hover {
+.paymentButton:hover,
+.stripeButton:hover:not(:disabled) {
   background: var(--admin-surface-subtle);
   border-color: var(--admin-border-strong);
+}
+
+.stripeButton {
+  color: var(--admin-primary);
+}
+
+.stripeButton:disabled {
+  color: var(--admin-text-muted);
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+@media (max-width: 980px) {
+  .actionGroup {
+    @apply flex-col items-stretch;
+  }
+
+  .paymentButton,
+  .stripeButton {
+    @apply w-full min-w-32;
+  }
 }
