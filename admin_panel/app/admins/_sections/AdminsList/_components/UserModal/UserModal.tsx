@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { saveUserAction, type UserFormState } from "../../../../actions";
@@ -13,6 +13,7 @@ const initialState: UserFormState = {};
 export function UserModal({ mode, open, user, onClose }: UserModalProps) {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(saveUserAction, initialState);
+  const [showPassword, setShowPassword] = useState(false);
   const isEditing = mode === "edit";
 
   useEffect(() => {
@@ -94,12 +95,35 @@ export function UserModal({ mode, open, user, onClose }: UserModalProps) {
 
               <label className={styles.field}>
                 <span>Password</span>
-                <input
-                  name="password"
-                  type="password"
-                  autoComplete={isEditing ? "new-password" : "new-password"}
-                  placeholder={isEditing ? "Leave empty to keep current" : ""}
-                />
+                <div className={styles.passwordField}>
+                  <input
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete={isEditing ? "new-password" : "new-password"}
+                    placeholder={isEditing ? "Leave empty to keep current" : ""}
+                  />
+                  <button
+                    className={styles.passwordToggle}
+                    type="button"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-pressed={showPassword}
+                    onClick={() => setShowPassword((visible) => !visible)}
+                  >
+                    {showPassword ? (
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 3l18 18" />
+                        <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                        <path d="M9.9 5.1A8.8 8.8 0 0 1 12 4.9c5 0 8.5 4.2 9.6 6.1a1.9 1.9 0 0 1 0 2c-.4.7-1 1.5-1.8 2.3" />
+                        <path d="M6.6 6.7A15.5 15.5 0 0 0 2.4 11a1.9 1.9 0 0 0 0 2c1.1 1.9 4.6 6.1 9.6 6.1a8.9 8.9 0 0 0 4.8-1.5" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2.4 11a1.9 1.9 0 0 0 0 2c1.1 1.9 4.6 6.1 9.6 6.1s8.5-4.2 9.6-6.1a1.9 1.9 0 0 0 0-2C20.5 9.1 17 4.9 12 4.9S3.5 9.1 2.4 11Z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
                 {state.fieldErrors?.password ? <strong>{state.fieldErrors.password}</strong> : null}
               </label>
 

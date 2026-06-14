@@ -23,6 +23,44 @@
   border-color: var(--admin-border-strong);
 }
 
+.passwordField {
+  @apply relative;
+}
+
+.passwordField input {
+  @apply w-full pr-10;
+}
+
+.passwordToggle {
+  @apply absolute right-1 top-1/2 inline-flex h-7 w-7
+    items-center justify-center;
+  border-radius: var(--admin-radius-sm);
+  color: var(--admin-text-muted);
+  transform: translateY(-50%);
+  transition:
+    background-color 140ms var(--admin-ease),
+    color 140ms var(--admin-ease);
+}
+
+.passwordToggle:hover {
+  background: var(--admin-surface-subtle);
+  color: var(--admin-text);
+}
+
+.passwordToggle:focus-visible {
+  outline: 2px solid var(--admin-border-strong);
+  outline-offset: 1px;
+}
+
+.passwordToggle svg {
+  @apply h-4 w-4;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
 .field strong,
 .error {
   @apply text-[14px];
