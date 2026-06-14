@@ -16,6 +16,14 @@ services:
   app:
     build:
       context: ./app
+      args:
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/au_calme_campagne_etalans}
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
+    env_file:
+      - ./app/.env
+    environment:
+      NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-/au_calme_campagne_etalans}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-}
     depends_on:
       - api
       - telegram_bot
