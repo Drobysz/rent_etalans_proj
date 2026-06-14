@@ -1,7 +1,7 @@
 import { createPayment } from "@/queries/createPayment";
 import { getServices } from "@/queries/services";
 import { validatePayment } from "@/queries/validatePayment";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/navigation";
 import s from "./style.module.scss";
 import {
     ServicesList,
@@ -30,13 +30,13 @@ export default async function SuccessPage ({
     const t = await getTranslations({ locale, namespace: "success" });
 
     if (!session_id) {
-        redirect(`/${locale}/cancel`);
+        return redirect({ href: "/cancel", locale });
     }
 
     const validation = await validatePayment(session_id);
 
     if (!validation.valid || !validation.payment) {
-        redirect(`/${locale}/cancel`);
+        return redirect({ href: "/cancel", locale });
     }
 
     const {

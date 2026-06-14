@@ -16,16 +16,6 @@ services:
   app:
     build:
       context: ./app
-      args:
-        NEXT_PUBLIC_API_URL: ${APP_NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
-        API_URL: ${APP_API_URL:-http://api:8000/api}
-        TELEGRAM_BOT_NOTIFY_URL: ${TELEGRAM_BOT_NOTIFY_URL:-http://telegram_bot:8765/notify-purchase}
-        TELEGRAM_NOTIFY_SECRET: ${TELEGRAM_NOTIFY_SECRET:-}
-    environment:
-      NEXT_PUBLIC_API_URL: ${APP_NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
-      API_URL: ${APP_API_URL:-http://api:8000/api}
-      TELEGRAM_BOT_NOTIFY_URL: ${TELEGRAM_BOT_NOTIFY_URL:-http://telegram_bot:8765/notify-purchase}
-      TELEGRAM_NOTIFY_SECRET: ${TELEGRAM_NOTIFY_SECRET:-}
     depends_on:
       - api
       - telegram_bot
@@ -34,13 +24,6 @@ services:
   admin_panel:
     build:
       context: ./admin_panel
-      args:
-        NEXT_PUBLIC_API_URL: ${ADMIN_NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
-        API_URL: ${ADMIN_API_URL:-http://api:8000/api}
-    environment:
-      NEXT_PUBLIC_API_URL: ${ADMIN_NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
-      API_URL: ${ADMIN_API_URL:-http://api:8000/api}
-      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:-change-me-in-production}
     depends_on:
       - api
     restart: unless-stopped
@@ -48,19 +31,6 @@ services:
   api:
     build:
       context: ./api
-    environment:
-      APP_ENV: ${APP_ENV:-production}
-      APP_DEBUG: ${APP_DEBUG:-false}
-      APP_KEY: ${APP_KEY:-}
-      APP_URL: ${APP_URL:-http://localhost:8000}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: ${DB_DATABASE:-rent_etalans}
-      DB_USERNAME: ${DB_USERNAME:-rent_etalans}
-      DB_PASSWORD: ${DB_PASSWORD:-rent_etalans}
-      STRIPE_SECRET: ${STRIPE_SECRET:-}
     depends_on:
       mysql:
         condition: service_healthy
@@ -69,12 +39,6 @@ services:
   telegram_bot:
     build:
       context: ./telegram_bot
-    environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
-      TELEGRAM_NOTIFY_SECRET: ${TELEGRAM_NOTIFY_SECRET:-}
-      TELEGRAM_BOT_HOST: 0.0.0.0
-      TELEGRAM_BOT_PORT: 8765
-      TELEGRAM_BOT_DB_PATH: /data/chats.sqlite3
     volumes:
       - telegram_bot_data:/data
     restart: unless-stopped
