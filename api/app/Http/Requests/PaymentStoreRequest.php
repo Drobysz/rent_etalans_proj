@@ -25,6 +25,7 @@ class PaymentStoreRequest extends FormRequest
             'apart_id'      => ['nullable', 'integer', 'min:0'],
             // 'checkin'     => ['required', 'date'],
             // 'checkout'    => ['required', 'date', 'after:checkin'],
+            'session_id'    => ['required', 'string', 'min:0'],
             'client_number' => ['required', 'numeric', 'digits_between:1,20'],
             'days_number'   => ['required', 'numeric', 'digits_between:1,365'],
             'email'         => ['required', 'string', 'max:80'],

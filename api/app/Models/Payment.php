@@ -10,11 +10,12 @@ class Payment extends Model
         'apart_id',
         // 'checkin',
         // 'checkout','
+        'session_id',
         'client_number',
         'days_number',
         'email',
         'reserve_id',
-        'total_price'
+        'total_price',
     ];
 
     public function apartment()

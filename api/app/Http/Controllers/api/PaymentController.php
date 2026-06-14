@@ -68,6 +68,16 @@ class PaymentController extends Controller
     public function store(PaymentStoreRequest $request)
     {
         $data = $request->validated();
+
+        $existingPayment = Payment::where('session_id', $data['session_id'])->first();
+
+        if ($existingPayment) {
+            return response()->json([
+               $existingPayment->load(['services']),
+                'existed' => true,
+            ]);
+        }
+
         $serviceIds = $data['service_ids'] ?? [];
         unset($data['service_ids']);
 
@@ -82,8 +92,10 @@ class PaymentController extends Controller
             return $payment;
         });
 
-        return response()->json(
-            $payment->load(['services']),
+        return response()->json([
+                $payment->load(['services']),
+                'existed' => false,
+            ],
             201
         );
     }
