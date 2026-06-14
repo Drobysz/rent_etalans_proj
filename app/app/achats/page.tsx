@@ -5,14 +5,15 @@ import {
     SearchBar,
     PurchasesList
 } from "./_sections";
+import s from "./style.module.scss";
 
 export default function AchatsPage() {
     const [searchValue, setSearchValue] = useState("");
 
     return (
-        <div className="pt-10 pb-20 flex flex-col gap-10">
-            <div className="flex flex-col gap-2 items-center">
-                <h1 className="font-extrabold text-center text-amber-500 text-2xl">
+        <div className={s.page}>
+            <div className={s.heading}>
+                <h1 className={s.title}>
                     Retrouvez vos achats de services
                 </h1>
                 <SearchBar 

@@ -23,3 +23,9 @@
     @apply duration-200 transition-all 
         ease-in origin-center;
 }
+
+@media (max-width: 480px) {
+    .btn_expand {
+        @apply min-h-11 min-w-11 items-center justify-center;
+    }
+}

@@ -19,8 +19,20 @@
         hover:scale-110 cursor-pointer p-1;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 1024px) {
     .res_block {
-        @apply w-full;
+        @apply w-[90%];
+    }
+}
+
+@media (max-width: 768px) {
+    .res_block {
+        @apply w-full gap-4;
+    }
+}
+
+@media (max-width: 480px) {
+    .res_block {
+        @apply p-2 gap-3;
     }
 }

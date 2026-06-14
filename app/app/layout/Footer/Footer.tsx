@@ -29,7 +29,7 @@ export const Footer = ({
             )}>
                 Vos vacances à Etalans
             </p>
-            <div className="w-50">
+            <div className={s.sm_bar_space}>
                 <SMbar
                     className={s.sm_list}
                     SMList={smLinks}

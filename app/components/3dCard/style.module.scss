@@ -5,7 +5,12 @@
         w-fit h-auto rounded-xl 
         p-6 border active:scale-97
         transition-all duration-300
-        ease-in-out;
+        ease-in-out;;
+}
+
+
+.body_chosen {
+    @apply bg-amber-50;
 }
 
 .title {
@@ -19,7 +24,7 @@
 
 .read_btn {
     @apply  inline-block pl-2 
-        duration-200 transition-transform rounded-2xl
+        duration-200 transition-transform rounded-xl
         relative;
 }
 
@@ -63,4 +68,46 @@
 .btn {
     @apply px-4 py-2 rounded-xl 
         text-xs font-bold cursor-pointer;
+}
+
+@media (max-width: 1024px) {
+    .body {
+        @apply p-5;
+    }
+
+    .img {
+        @apply h-56;
+    }
+}
+
+@media (max-width: 768px) {
+    .body {
+        @apply p-3;
+    }
+
+    .desc {
+        @apply max-w-full;
+    }
+
+    .img {
+        @apply h-40;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        @apply text-lg;
+    }
+
+    .img {
+        @apply h-34;
+    }
+
+    .bottom {
+        @apply flex-col items-stretch gap-2 pt-5;
+    }
+
+    .price {
+        @apply text-lg;
+    }
 }

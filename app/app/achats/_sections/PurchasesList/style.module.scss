@@ -7,3 +7,21 @@
 .res_block {
     @apply w-full;
 }
+
+@media (max-width: 1024px) {
+    .res_list {
+        @apply px-4;
+    }
+}
+
+@media (max-width: 768px) {
+    .res_list {
+        @apply px-3;
+    }
+}
+
+@media (max-width: 480px) {
+    .res_list {
+        @apply px-2;
+    }
+}

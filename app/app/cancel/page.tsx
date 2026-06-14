@@ -9,7 +9,7 @@ export default function FailedPaymentPage () {
     const router = useRouter();
 
     useEffect(() => {
-        const failedTime = setTimeout(() => router.push("/"), 5000);
+        const failedTime = setTimeout(() => router.push("/"), 2000);
 
         return () => clearTimeout(failedTime);
     }, [router]);

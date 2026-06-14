@@ -19,6 +19,8 @@ export const StayForm = ()=> {
     const [position, setPosition] = useState<CursorPosition>({
         left: 0,
         width: 0,
+        top: 0,
+        height: 0,
     });
 
     const isActive = currFormId !== null;

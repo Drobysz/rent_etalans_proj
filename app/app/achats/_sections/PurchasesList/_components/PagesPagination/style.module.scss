@@ -37,3 +37,34 @@
     @apply absolute left-1/2 top-1/2
         -translate-1/2;
 }
+
+.ellipsis {
+    @apply min-w-6 flex items-center
+        justify-center;
+}
+
+@media (max-width: 1024px) {
+    .page_sel {
+        @apply h-10 w-10;
+    }
+}
+
+@media (max-width: 768px) {
+    .switcher {
+        @apply py-1;
+    }
+
+    .page_sel {
+        @apply h-9 w-9;
+    }
+}
+
+@media (max-width: 480px) {
+    .switcher {
+        @apply px-0.5;
+    }
+
+    .page_sel {
+        @apply h-8 w-8 text-sm;
+    }
+}

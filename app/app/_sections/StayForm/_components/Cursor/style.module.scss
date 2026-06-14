@@ -1,6 +1,12 @@
 @reference "tailwindcss";
 
 .cursor {
-    @apply absolute z-10 h-full rounded-full 
+    @apply absolute z-10 rounded-full
         bg-white shadow-xl;
+}
+
+@media (max-width: 945px) {
+    .cursor {
+        @apply rounded-none;
+    }
 }

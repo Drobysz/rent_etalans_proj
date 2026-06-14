@@ -1,12 +1,13 @@
 import { inter_extrabold } from "@/fonts/fonts";
 import { cn } from "@/lib/utils";
 import { Cards } from "./_components";
+import s from "./style.module.scss";
 
 export const Services = ()=> {
     return (
-        <section>
+        <section className={s.section}>
             <h2 className={cn(
-                "text-gold text-center text-3xl",
+                s.title,
                 inter_extrabold.className
             )}>
                 Profitez de services qui rendront votre séjour encore plus agréable

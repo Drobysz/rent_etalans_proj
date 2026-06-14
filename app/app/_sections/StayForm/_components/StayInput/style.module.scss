@@ -79,3 +79,50 @@
     from { width: 100%; }
     to { width: 0%; }
 }
+
+@media (max-width: 1024px) {
+    .body {
+        @apply px-4;
+    }
+
+    .input {
+        @apply w-44;
+    }
+}
+
+@media (max-width: 945px) {
+    .space {
+        @apply w-full py-2 rounded-3xl;
+    }
+
+    .space:first-child .body,
+    .space:last-of-type .body {
+        @apply pl-4 pr-4;
+    }
+
+    .body {
+        @apply w-full border-r-0 border-b px-4 pb-3;
+    }
+
+    .space:last-of-type .body {
+        @apply border-b-0;
+    }
+
+    .label {
+        @apply px-0 text-sm;
+    }
+
+    .input {
+        @apply w-full text-sm py-1;
+    }
+}
+
+@media (max-width: 480px) {
+    .space {
+        @apply py-1.5;
+    }
+
+    .body {
+        @apply px-3 pb-2.5;
+    }
+}

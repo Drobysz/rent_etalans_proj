@@ -10,7 +10,7 @@
 }
 
 .main {
-    @apply min-h-screen;
+    @apply min-h-screen w-full;
     grid-area: main;
 }
 
@@ -29,5 +29,21 @@
             "header header header"
             "main main main"
             "footer footer footer"
+    }
+}
+
+@media (max-width: 1024px) {
+    .wrapper {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        @apply overflow-x-hidden;
     }
 }

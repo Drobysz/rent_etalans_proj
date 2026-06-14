@@ -12,3 +12,21 @@
         max-[780px]:text-3xl
         max-[520px]:text-2xl;
 }
+
+@media (max-width: 1024px) {
+    .section {
+        @apply px-6 text-center;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        @apply gap-3;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        @apply px-4;
+    }
+}

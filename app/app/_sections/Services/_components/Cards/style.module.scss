@@ -17,7 +17,7 @@
         active:scale-90 before:absolute bg-amber-600
         before:bg-red-600 before:inset-0 before:-z-10
         before:scale-[2.5] overflow-hidden
-        before:rounded-4xl before:transition-transform
+        before:rounded-xl before:transition-transform
         before:translate-x-[-200%] before:translate-y-[-50%] before:duration-800;
 }
 
@@ -32,5 +32,37 @@
 
     .service_section div {
         @apply w-full;
+    }
+}
+
+@media (max-width: 1024px) {
+    .service_section {
+        @apply gap-x-4 gap-y-8 pt-10;
+    }
+}
+
+@media (max-width: 768px) {
+    .service_section {
+        @apply grid-cols-2 gap-x-3 gap-y-6 pt-8 min-h-0;
+    }
+
+    .error_title {
+        @apply static translate-x-0 translate-y-0 text-xl py-8;
+    }
+}
+
+@media (max-width: 480px) {
+    .service_section {
+        @apply pt-6 gap-x-2 gap-y-4;
+    }
+
+    .default_btn {
+        @apply w-full py-2;
+    }
+}
+
+@media (max-width: 459px) {
+    .service_section {
+        @apply grid-cols-1;
     }
 }

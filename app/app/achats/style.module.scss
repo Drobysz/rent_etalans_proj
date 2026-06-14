@@ -1,0 +1,43 @@
+@reference "tailwindcss";
+
+.page {
+    @apply pt-10 pb-20 flex flex-col gap-10;
+}
+
+.heading {
+    @apply flex flex-col gap-2 items-center px-4;
+}
+
+.title {
+    @apply font-extrabold text-center text-amber-500 text-2xl;
+}
+
+@media (max-width: 1024px) {
+    .page {
+        @apply gap-8;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        @apply pt-8 gap-7;
+    }
+
+    .title {
+        @apply text-xl;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        @apply pt-6 pb-16 gap-6;
+    }
+
+    .heading {
+        @apply px-3;
+    }
+
+    .title {
+        @apply text-lg;
+    }
+}

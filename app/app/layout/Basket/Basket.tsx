@@ -7,8 +7,7 @@ import {
     ServicesList
 } from "./_components";
 import { GlobalContext } from "@/app/context/global.context";
-import { motion } from "framer-motion";
-import { variantsOpacityAppearence } from "@/framer_templates/variants";
+import { motion, Variants } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 export const Basket = ()=> {
@@ -19,6 +18,23 @@ export const Basket = ()=> {
     const [isOpened, setIsOpened] = useState(false);
     const isNotEmpty = servParams.services_ids.length > 0;
 
+    const variants: Variants = {
+        start: {
+            opacity: 0,
+            y: 20,
+            scale: 0.98,
+        },
+        end: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+            duration: 0.25,
+            ease: [0.22, 1, 0.36, 1],
+            },
+        },
+        }
+
     return (
         <motion.div
             hidden={isHidden}
@@ -26,7 +42,16 @@ export const Basket = ()=> {
             layout
             initial="start"
             whileInView="end"
-            variants={variantsOpacityAppearence}
+            variants={variants}
+            transition={{
+                height: {
+                    duration: 0.3,
+                    ease: [0.22, 1, 0.36, 1],
+                },
+                opacity: {
+                    duration: 0.15,
+                },
+            }}
         >
             {isOpened && isNotEmpty && <ServicesList />}
             {isOpened &&!isNotEmpty &&

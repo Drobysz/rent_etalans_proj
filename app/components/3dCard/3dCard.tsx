@@ -39,7 +39,8 @@ export default function ThreeDCard({
         className={cn(
           s.body,
           className,
-          "group/card"
+          "group/card",
+          isChosen && s.body_chosen,
         )}
         onClick={btnAction}
       >

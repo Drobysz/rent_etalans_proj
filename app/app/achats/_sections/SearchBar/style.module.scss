@@ -2,8 +2,26 @@
 
 .searchbar {
     @apply rounded-full px-3 py-2.5
-        w-140 border border-gray-300 
+        w-140 max-w-full border border-gray-300
         text-center placeholder-gray-400
         placeholder:text-sm focus:outline-gray-400
         bg-gray-50 text-gray-600;
+}
+
+@media (max-width: 1024px) {
+    .searchbar {
+        @apply w-120;
+    }
+}
+
+@media (max-width: 768px) {
+    .searchbar {
+        @apply w-[calc(100vw-2rem)] text-sm;
+    }
+}
+
+@media (max-width: 480px) {
+    .searchbar {
+        @apply py-2 text-left pl-10 placeholder:text-xs;
+    }
 }

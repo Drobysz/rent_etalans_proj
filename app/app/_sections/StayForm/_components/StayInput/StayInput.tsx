@@ -39,19 +39,40 @@ export const StayInput = ({
         }));
     };
 
+    const updateCursorPosition = useCallback(()=> {
+        if (!ref.current) return;
+
+        const {
+            offsetLeft: left,
+            offsetTop: top,
+            offsetWidth: width,
+            offsetHeight: height,
+        } = ref.current;
+        const isVerticalLayout = window.matchMedia("(max-width: 945px)").matches;
+        const verticalTopOffset = isVerticalLayout ? -4 : 0;
+        const verticalHeightOffset = isVerticalLayout ? 4 : 0;
+
+        setPosition({
+            left,
+            width,
+            top: top + verticalTopOffset,
+            height: height + verticalHeightOffset,
+        });
+    }, [setPosition]);
+
     useEffect(()=> {
-        const handleFormPosChange = ()=> {
-            const { offsetLeft: left, offsetWidth: width } = ref.current;
-            const pos = { left, width };
+        if (formId !== currFormId) return;
 
-            setPosition(pos);
-        }
+        const handleResize = ()=> {
+            window.requestAnimationFrame(updateCursorPosition);
+        };
 
-        if (formId === currFormId) {
-            handleFormPosChange();
-            inputRef.current.focus();
-        }
-    }, [currFormId, formId, setPosition])
+        updateCursorPosition();
+        inputRef.current.focus();
+        window.addEventListener("resize", handleResize);
+
+        return ()=> window.removeEventListener("resize", handleResize);
+    }, [currFormId, formId, updateCursorPosition])
 
     useEffect(()=> {
         const handleInputBlur = (e: KeyboardEvent)=> {
@@ -68,6 +89,10 @@ export const StayInput = ({
         <label 
             ref={ref}
             htmlFor={inputId}
+            onPointerDown={()=> {
+                setCurrFormId(formId);
+                updateCursorPosition();
+            }}
             onMouseEnter={()=> setHover(true)}
             onMouseLeave={()=> setHover(false)}
             className={cn(

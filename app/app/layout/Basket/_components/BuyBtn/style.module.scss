@@ -14,3 +14,15 @@
 .btn_deactivated {
     @apply bg-gray-500 cursor-not-allowed;
 }
+
+@media (max-width: 768px) {
+    .btn_shop {
+        @apply justify-center;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn_shop {
+        @apply w-full min-h-11;
+    }
+}

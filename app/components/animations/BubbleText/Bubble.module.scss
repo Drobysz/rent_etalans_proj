@@ -32,3 +32,13 @@
   font-weight: 300;
  @apply text-amber-600/70;
 }
+
+@media (max-width: 768px) {
+  .hoverText:hover,
+  .hoverText:hover + .hoverText,
+  .hoverText:hover + .hoverText + .hoverText,
+  .hoverText:has(+ .hoverText:hover),
+  .hoverText:has(+ .hoverText + .hoverText:hover) {
+    font-weight: inherit;
+  }
+}

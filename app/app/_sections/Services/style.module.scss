@@ -1,0 +1,27 @@
+@reference "tailwindcss";
+
+.section {
+    @apply w-full;
+}
+
+.title {
+    @apply text-amber-500 text-center text-3xl;
+}
+
+@media (max-width: 1024px) {
+    .title {
+        @apply text-2xl px-4;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        @apply text-xl px-2;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        @apply text-lg;
+    }
+}

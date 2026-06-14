@@ -34,8 +34,32 @@
         hover:scale-110 cursor-pointer p-1;
 }
 
-@media (max-width: 450px) {
-    .res_block {
-        @apply w-full;
+@media (max-width: 1024px) {
+    .body {
+        @apply gap-4;
+    }
+}
+
+@media (max-width: 768px) {
+    .body {
+        @apply items-start;
+    }
+
+    .reserve_code_title {
+        @apply text-sm;
+    }
+
+    .total {
+        @apply text-sm;
+    }
+}
+
+@media (max-width: 480px) {
+    .body {
+        @apply flex-col gap-2;
+    }
+
+    .total {
+        @apply w-full justify-between;
     }
 }

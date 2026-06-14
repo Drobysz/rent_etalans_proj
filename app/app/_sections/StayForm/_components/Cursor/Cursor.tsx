@@ -20,6 +20,11 @@ export const Cursor = ({
                 scale: isActive ? 1 : 0.8,
                 opacity: isActive ? 1 : 0,
             }}
+            transition={{
+                type: "spring",
+                stiffness: 280,
+                damping: 26,
+            }}
             className={s.cursor}
         />
     )

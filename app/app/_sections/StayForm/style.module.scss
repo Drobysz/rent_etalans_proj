@@ -1,12 +1,12 @@
 @reference "tailwindcss";
 
 .stayform_section {
-    @apply flex flex-col items-center gap-5;
+    @apply flex flex-col items-center gap-5 px-2;
 }
 
 .title {
     @apply text-neutral-500 text-center text-5xl 
-        text-shadow-2xs font-extralight;
+        text-shadow-2xs font-extralight max-w-5xl;
 }
 
 .form {
@@ -14,4 +14,40 @@
         flex w-fit justify-center 
         border-2 border-gray-400 duration-300 
         transition-shadow relative overflow-hidden;
+}
+
+@media (max-width: 1024px) {
+    .title {
+        @apply text-4xl;
+    }
+
+    .form {
+        @apply max-w-full;
+    }
+}
+
+@media (max-width: 945px) {
+    .form {
+        @apply w-full max-w-xl flex-col rounded-3xl;
+    }
+}
+
+@media (max-width: 768px) {
+    .stayform_section {
+        @apply gap-4;
+    }
+
+    .title {
+        @apply text-3xl;
+    }
+}
+
+@media (max-width: 480px) {
+    .stayform_section {
+        @apply px-0 gap-3;
+    }
+
+    .title {
+        @apply text-2xl;
+    }
 }

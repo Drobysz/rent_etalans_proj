@@ -7,6 +7,7 @@ import { useContext } from "react";
 import s from "./style.module.scss";
 import { cn } from "@/lib/utils";
 import { motion, Transition } from "framer-motion";
+import { variantsOpacityAppearence } from "@/framer_templates/variants";;
 
 export const ServiceCard = ({
     id,
@@ -24,18 +25,6 @@ export const ServiceCard = ({
     const isChosen = services.includes(id);
     const img_url = images[0].url;
     const customShadow = "shadow-[0_12px_40px_-8px_rgb(245,158,11,0.85)]";
-
-    const variants = {
-        start: {
-            opacity: 0,
-            y: 10
-        },
-
-        end: {
-            opacity: 1,
-            y: 0
-        }
-    };
 
     const transition: Transition = {
         type: "spring",
@@ -66,7 +55,7 @@ export const ServiceCard = ({
             initial="start"
             whileInView="end"
 
-            variants={variants}
+            variants={variantsOpacityAppearence}
             transition={transition}
         >
             <ThreeDCard 

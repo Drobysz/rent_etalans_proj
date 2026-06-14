@@ -14,3 +14,19 @@
 .serv_block:last-of-type {
     @apply border-b-transparent;
 }
+
+@media (max-width: 768px) {
+    .serv_block {
+        @apply gap-4;
+    }
+}
+
+@media (max-width: 480px) {
+    .serv_list {
+        @apply max-h-60 overflow-y-auto;
+    }
+
+    .serv_block {
+        @apply flex-col items-start gap-1;
+    }
+}

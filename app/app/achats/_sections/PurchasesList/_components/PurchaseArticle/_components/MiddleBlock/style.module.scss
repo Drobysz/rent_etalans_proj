@@ -24,3 +24,25 @@
 .service_list {
     @apply flex gap-1.5 items-center overflow-x-auto;
 }
+
+@media (max-width: 1024px) {
+    .service_list {
+        @apply flex-wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .email {
+        @apply break-all;
+    }
+
+    .service_list {
+        @apply items-start gap-1;
+    }
+}
+
+@media (max-width: 480px) {
+    .res_serv {
+        @apply text-sm;
+    }
+}

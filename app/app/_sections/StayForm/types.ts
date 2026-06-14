@@ -1,6 +1,8 @@
 export interface CursorPosition {
     left: number;
     width: number;
+    top: number;
+    height: number;
 };
 
 export interface CursorProps {
