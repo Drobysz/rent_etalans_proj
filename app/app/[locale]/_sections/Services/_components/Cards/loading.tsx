@@ -12,7 +12,7 @@ export const Loading = ()=> {
             {Array(count).fill(true).map((_, i)=>
                 <div 
                     key={`serv_card_${i}`}
-                    className="flex flex-col gap-2 place-self-center"
+                    className="flex flex-col gap-2 place-self-center w-fit max-w-80"
                 >
                     <Skeleton 
                         className="rounded-lg w-80 shrink-0"

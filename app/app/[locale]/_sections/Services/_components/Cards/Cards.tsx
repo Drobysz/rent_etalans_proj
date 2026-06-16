@@ -42,7 +42,7 @@ export const Cards = ()=> {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            {isLoading && 
+            {true && 
                 <Loading/>
             }
 
