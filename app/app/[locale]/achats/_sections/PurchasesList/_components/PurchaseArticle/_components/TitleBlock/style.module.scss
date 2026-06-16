@@ -2,11 +2,11 @@
 
 
 .body {
-    @apply flex justify-between items-center;
+    @apply flex justify-between;
 }
 
 .reserve_code_title {
-    @apply text-neutral-600 font-black;
+    @apply text-neutral-600;
 }
 
 .reserve_code {
@@ -14,11 +14,11 @@
 }
 
 .total {
-    @apply flex gap-1;
+    @apply flex gap-1 items-center;
 }
 
 .total span:first-of-type {
-    @apply font-bold text-neutral-600;
+    @apply text-neutral-600;
 }
 
 .total span:last-of-type {
@@ -42,7 +42,7 @@
 
 @media (max-width: 768px) {
     .body {
-        @apply items-start;
+        @apply items-center;
     }
 
     .reserve_code_title {
@@ -54,12 +54,24 @@
     }
 }
 
-@media (max-width: 480px) {
-    .body {
-        @apply flex-col gap-2;
+@media (max-width: 560px) {
+    .reserve_code {
+        @apply text-[0.1rem];
     }
 
-    .total {
-        @apply w-full justify-between;
+    .total span:last-of-type {
+        @apply text-xs pt-0.5;
+    }
+
+    .reserve_code_title {
+        @apply text-xs;
+    }
+
+    .reserve_code {
+        @apply text-sm;
+    }
+
+    .cross * {
+        @apply w-4 h-4;
     }
 }

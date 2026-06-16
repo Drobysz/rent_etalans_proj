@@ -5,6 +5,7 @@ import s from "./style.module.scss";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import cn from "classnames";
 import { getPageItems } from "@/helpers";
+import { useWindowWidth } from "@/hooks";
 
 type PageItem = number | "start-ellipsis" | "end-ellipsis";
 
@@ -21,8 +22,11 @@ export const PagesPagination = ({
             behavior: "smooth",
         });
     };
+    const isLimitLong = useWindowWidth(560) as boolean;
 
-    const pageItems: PageItem[] = getPageItems(page, page_nb);
+    const pageItems: PageItem[] = getPageItems(
+        page, page_nb, isLimitLong
+    );
 
     const handleSwitcherClick = (switcher: "left" | "right")=> {
         switch (switcher) {
@@ -54,7 +58,7 @@ export const PagesPagination = ({
         <>
             {page && page_nb > 1 && (
                 <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-center gap-4">
+                    <div className="flex items-center justify-center gap-4 max-[560px]:gap-1.5">
                         <button 
                             className={cn(
                                 s.switcher,

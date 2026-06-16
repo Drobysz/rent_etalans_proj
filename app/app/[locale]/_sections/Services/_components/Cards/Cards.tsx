@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { getLocalizedServiceDescription } from "@/helpers";
 import { useLocale, useTranslations } from "next-intl";
+import { useWindowWidth } from "@/hooks";
 
 export const Cards = ()=> {
     const t = useTranslations("services");
@@ -20,13 +21,18 @@ export const Cards = ()=> {
     } = useContext(GlobalContext);
     
     const MOUSE_GUIDE_TEXT = t("mouseGuide");
+    const isCard3d = useWindowWidth(768);
 
     const handleMouseEnter = ()=> {
-        setMouseText(MOUSE_GUIDE_TEXT);
+        if (isCard3d) {
+            setMouseText(MOUSE_GUIDE_TEXT);
+        }
     };
 
     const handleMouseLeave = ()=> {
-        setMouseText("");
+        if (isCard3d) {
+            setMouseText("");
+        }
     };
 
     return (

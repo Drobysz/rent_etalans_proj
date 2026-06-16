@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export const useWindowWidth = ()=> {
+export const useWindowWidth = (triggerValue?: number)=> {
     const [width, setWidth] = useState(0);
 
     useEffect(()=> {
@@ -12,6 +12,10 @@ export const useWindowWidth = ()=> {
 
         return ()=> window.removeEventListener("resize", onResize);
     },[]);
+
+    if (triggerValue) {
+        return width > triggerValue;
+    }
 
     return width;
 };

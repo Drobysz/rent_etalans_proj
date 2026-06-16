@@ -3,11 +3,9 @@
 .body {
     @apply bg-gray-50 relative 
         w-fit h-auto rounded-xl 
-        p-6 border active:scale-97
-        transition-all duration-300
-        ease-in-out;;
+        p-6 border transition-all 
+        duration-300 ease-in-out max-w-105;
 }
-
 
 .body_chosen {
     @apply bg-amber-50;
@@ -18,12 +16,12 @@
 }
 
 .desc {
-    @apply text-neutral-500 text-sm max-w-70 pt-2
+    @apply text-neutral-500 text-sm max-w-full pt-2
         min-w-20;
 }
 
 .read_btn {
-    @apply  inline-block pl-2 
+    @apply inline-block pl-2 
         duration-200 transition-transform rounded-xl
         relative;
 }
@@ -67,7 +65,8 @@
 
 .btn {
     @apply px-4 py-2 rounded-xl 
-        text-xs font-bold cursor-pointer;
+        text-xs font-bold cursor-pointer
+        active:scale-97;
 }
 
 @media (max-width: 1024px) {
@@ -95,6 +94,10 @@
 }
 
 @media (max-width: 480px) {
+    .body {
+        @apply max-w-80;
+    }
+
     .title {
         @apply text-lg;
     }

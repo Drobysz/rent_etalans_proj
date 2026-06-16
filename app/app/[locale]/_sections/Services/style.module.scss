@@ -25,3 +25,9 @@
         @apply text-lg;
     }
 }
+
+@media (max-width: 340px) {
+    .title {
+        @apply text-sm;
+    }
+}

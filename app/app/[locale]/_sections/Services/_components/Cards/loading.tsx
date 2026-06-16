@@ -4,7 +4,7 @@ import { useWindowWidth } from "@/hooks";
 import { Skeleton } from "@mui/material";
 
 export const Loading = ()=> {
-    const width = useWindowWidth();
+    const width = useWindowWidth() as number;
     const count = width > 450 ? 6 : 3;
 
     return (

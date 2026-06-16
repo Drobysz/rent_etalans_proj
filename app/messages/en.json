@@ -47,6 +47,17 @@
     "invoiceSuccess": "Invoice was successfully generated",
     "invoiceError": "Unable to create the checkout page"
   },
+  "formErrors": {
+    "emailInvalid": "Email is invalid",
+    "emailRequired": "Email is required",
+    "reservationCodeRequired": "Reservation code is required",
+    "reservationCodeMax": "Reservation code cannot be longer than 20 characters",
+    "daysCountRequired": "Days count is required",
+    "daysCountMin": "Days count must be at least 1",
+    "visitorsCountRequired": "Visitors count is required",
+    "visitorsCountMin": "Visitors count must be at least 1",
+    "serviceRequired": "Select at least one service"
+  },
   "achats": {
     "title": "Find your service purchases",
     "searchPlaceholder": "Enter your reservation code (Airbnb/Booking)",

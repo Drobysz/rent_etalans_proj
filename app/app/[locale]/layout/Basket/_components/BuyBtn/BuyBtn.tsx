@@ -17,9 +17,11 @@ export const BuyBtn = ({
     isNotEmpty: boolean;
 })=> {
     const t = useTranslations("basket");
+    const tFormErrors = useTranslations("formErrors");
     const { 
         servParams,
-        setNotification
+        setNotification,
+        setServiceBasketErrors
     } = useContext(GlobalContext);
     const router = useRouter();
     
@@ -39,13 +41,24 @@ export const BuyBtn = ({
 
                 router.push(state.invoice_url ?? "#");
             } else {
-                setNotification({
-                    status: "error",
-                    text: t("invoiceError")
+                Object.values(state.errors ?? {}).forEach((v)=> {
+                    if (v) {
+                        setNotification({
+                            status: "error",
+                            text: tFormErrors(v)
+                        }); 
+                    }  
+                });
+
+                setServiceBasketErrors(state.errors);
+
+                scrollTo({
+                    top: 0,
+                    behavior: "smooth"
                 });
             }
         }
-    }, [setNotification, state.success, state, router]);
+    }, [setServiceBasketErrors, setNotification, state.success, state, router, t, tFormErrors]);
 
     return (
         <form action={action}>

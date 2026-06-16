@@ -13,7 +13,7 @@ export const SMBlock = ({
 }: SMobj)=> {
     const ref = useRef<HTMLDivElement>(null);
     const [hovered, setHovered] = useState(false);
-    const width = useWindowWidth();
+    const width = useWindowWidth() as number;
 
     const distance = useTransform(mouseX, (horizontalCoordindate)=> {
         const border = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };

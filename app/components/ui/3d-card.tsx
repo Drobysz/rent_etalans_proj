@@ -2,11 +2,37 @@
 
 import { cn } from "@/lib/utils";
 
-import React, { createContext, useState, useContext, useRef, useEffect } from "react";
+import React, { createContext, useState, useContext, useRef, useEffect, DetailedHTMLProps, HTMLAttributes, ReactNode, ElementType } from "react";
 
 const MouseEnterContext = createContext<
   [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
 >(undefined);
+
+interface DefaultItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  as?: "p" | "div" | "span" | "button";
+  className?: string;
+  translateZ?: string | number;
+  children: ReactNode;
+}
+
+export const DefaultItem = ({
+  as = "div",
+  className,
+  children,
+  translateZ,
+  ...props
+}: DefaultItemProps)=> {
+  const Wrapper = as as ElementType;
+
+  return (
+    <Wrapper
+      className={className}
+      {...props}
+    >
+      {children}
+    </Wrapper>
+  )
+}
 
 export const CardContainer = ({
   children,

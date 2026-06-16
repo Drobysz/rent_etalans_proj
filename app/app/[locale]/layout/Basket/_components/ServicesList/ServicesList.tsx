@@ -1,13 +1,15 @@
 "use client";
 
 import { GlobalContext } from "@/app/[locale]/context/global.context";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { CircularProgress } from "@mui/material";
 import s from "./style.module.scss";
 import { cn } from "@/lib/utils";
 import { b612_bold } from "@/fonts/fonts";
-import { Transition, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { BasketService } from "@/helpers/basket";
+import { variants, transition } from "./framerValues";
 
 export const ServicesList = ()=> {
     const t = useTranslations("basket");
@@ -23,36 +25,9 @@ export const ServicesList = ()=> {
     if (isLoading)
         return <CircularProgress size="3rem" color="inherit" />
 
-    const chosenIds = servParams.services_ids;
-    const chosenServices = services?.filter(s => chosenIds.includes(s.id))
-
-    const DAYS_COUNT = Number(servParams.days_count) ?? 0;
-    const VISITORS_COUNT = Number(servParams.visitors_count) ?? 0;
-    const FINAL_MULTIPLIER = DAYS_COUNT * VISITORS_COUNT;
-    const TOTAL_PRICE = chosenServices
-        .map(svc=> svc.fixed_price 
-            ? svc.price
-            : svc.price * FINAL_MULTIPLIER
-        )
-        .reduce((acc, p)=> acc + p, 0);
-
-    const transition: Transition = {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-    }
-
-    const variants = {
-        start: {
-            opacity: 0,
-            y: 10
-        },
-
-        end: {
-            opacity: 1,
-            y: 0
-        }
-    };
+    const chosenServices = BasketService
+        .getChosenServices(servParams, services);
+    const TOTAL_PRICE = BasketService.getTotalPrice(servParams, services);
 
     return (
         <motion.ul
@@ -77,14 +52,11 @@ export const ServicesList = ()=> {
                     <div className="flex items-center gap-2">
                         {!svc.fixed_price &&
                             <span className="text-neutral-400 text-sm">
-                                {`${DAYS_COUNT}${t("daysShort")} x ${VISITORS_COUNT}${t("visitorsShort")} `}
+                                {BasketService.getMultipliersString(t, servParams)}
                             </span>
                         }
                         <span className="text-gray-700">
-                            {`${svc.fixed_price 
-                                ? svc.price 
-                                : svc.price * FINAL_MULTIPLIER}€`
-                            }
+                            {`${BasketService.getPriceByType(svc, servParams)}€`}
                         </span>
                     </div>
                 </li>

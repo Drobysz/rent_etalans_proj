@@ -8,6 +8,11 @@
         bg-gray-50 text-gray-600;
 }
 
+.magnifier {
+    @apply absolute top-1/2 -translate-y-1/2 
+        left-3;
+}
+
 @media (max-width: 1024px) {
     .searchbar {
         @apply w-120;
@@ -23,5 +28,17 @@
 @media (max-width: 480px) {
     .searchbar {
         @apply py-2 text-left pl-10 placeholder:text-xs;
+    }
+}
+
+@media (max-width: 400px) {
+    .searchbar {
+        @apply pr-2 pl-10 py-1
+            placeholder:text-[0.65rem]
+            placeholder:pb-2 placeholder:text-center;
+    }
+
+    .magnifier {
+        @apply left-2 w-5 h-5;
     }
 }

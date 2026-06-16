@@ -4,8 +4,9 @@
     @apply bg-gray-50 border border-zinc-500 
         rounded-2xl px-2 py-2.5 
         flex flex-col gap-3
-        fixed bottom-20 right-5
-        shadow-xl max-w-[calc(100vw-2rem)];
+        fixed bottom-5 right-5
+        shadow-xl max-w-[calc(100vw-2rem)]
+        z-40;
 }
 
 .btns {
@@ -15,13 +16,13 @@
 
 @media (max-width: 1024px) {
     .body {
-        @apply right-4 bottom-16;
+        @apply right-4 bottom-8;
     }
 }
 
 @media (max-width: 768px) {
     .body {
-        @apply right-3 bottom-14;
+        @apply right-3 bottom-6;
     }
 }
 

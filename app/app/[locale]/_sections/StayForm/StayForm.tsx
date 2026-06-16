@@ -12,11 +12,14 @@ import { Cursor } from "./_components/Cursor/Cursor";
 import { BubbleText } from "@/components/animations/BubbleText/BubbleText";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { useTranslations } from "next-intl";
+import { useWindowWidth } from "@/hooks";
 
 export const StayForm = ()=> {
     const tHome = useTranslations("home");
     const t = useTranslations("stayForm");
-    const { setMouseText } = useContext(GlobalContext);
+    const tFormErrors = useTranslations("formErrors");
+    const { serviceBasketErrors, setMouseText } = useContext(GlobalContext);
+    const isMousGuideVisible = useWindowWidth(768);
 
     const [currFormId, setCurrFormId] = useState<number | null>(null);
     const [position, setPosition] = useState<CursorPosition>({
@@ -30,16 +33,28 @@ export const StayForm = ()=> {
     const MOUSE_GUIDE_TEXT = t("mouseGuide");
     const FORM_COUNT = 4;
 
+    const handleMouseEnter = ()=> {
+        if (isMousGuideVisible) {
+            setMouseText(MOUSE_GUIDE_TEXT);
+        }
+    };
+
+    const handleMouseLeave = ()=> {
+        if (isMousGuideVisible) {
+            setMouseText("");
+        }
+    };
+
     useEffect(()=> {
         const handleKeyDown = (e: KeyboardEvent)=> {
             if (currFormId === null) return;
 
             switch (e.key) {
-				case "ArrowDown":
+				case "ArrowUp":
                     setCurrFormId(Math.max(0, currFormId - 1));
 					break;
 
-				case "ArrowUp":
+				case "ArrowDown":
                     setCurrFormId(Math.min(FORM_COUNT - 1, currFormId + 1));
 					break;
 			
@@ -67,8 +82,8 @@ export const StayForm = ()=> {
                     isActive ? "bg-neutral-200 border-0" : "shadow-xl"
                 )}
 
-                onMouseEnter={()=> setMouseText(MOUSE_GUIDE_TEXT)}
-                onMouseLeave={()=> setMouseText("")}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
             >
                 {forms.map((form, idx)=> 
                     <StayInput 
@@ -90,6 +105,17 @@ export const StayForm = ()=> {
                     isActive={isActive}
                 />
             </form>
+            {serviceBasketErrors &&
+                <ul className={s.error_list}>
+                    {Object.entries(serviceBasketErrors).map(([k, v], i)=> 
+                        <li 
+                            key={`error-note-${k}-${i}`}
+                        >
+                            {`${i + 1}) ${tFormErrors(v)};`}
+                        </li>
+                    )}
+                </ul>
+            }
         </section>
     )
 }

@@ -17,6 +17,7 @@ export async function purchaseAction (_: FormState, formData: FormData) {
         const errors = z.flattenError(parsed.error).fieldErrors;
 
         return {
+            success: false,
             message: "Form was incorrectly filled",
             errors: {
                 email: errors.email?.[0],

@@ -36,7 +36,7 @@ export const SearchBar = ({
                 />
                 <Search 
                     className={cn(
-                        "absolute top-1/2 -translate-y-1/2 left-3",
+                        s.magnifier,
                         isFocused ? "text-gray-600" : "text-gray-400"
                     )}
                 />

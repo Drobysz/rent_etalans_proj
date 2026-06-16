@@ -47,6 +47,17 @@
     "invoiceSuccess": "La facture a bien été générée",
     "invoiceError": "Impossible de créer la page de paiement"
   },
+  "formErrors": {
+    "emailInvalid": "L'email est invalide",
+    "emailRequired": "L'email est obligatoire",
+    "reservationCodeRequired": "Le code de réservation est obligatoire",
+    "reservationCodeMax": "Le code de réservation ne peut pas dépasser 20 caractères",
+    "daysCountRequired": "Le nombre de jours est obligatoire",
+    "daysCountMin": "Le nombre de jours doit être au moins égal à 1",
+    "visitorsCountRequired": "Le nombre de visiteurs est obligatoire",
+    "visitorsCountMin": "Le nombre de visiteurs doit être au moins égal à 1",
+    "serviceRequired": "Sélectionnez au moins un service"
+  },
   "achats": {
     "title": "Retrouvez vos achats de services",
     "searchPlaceholder": "Écrivez votre code de réservation (Airbnb/Booking)",

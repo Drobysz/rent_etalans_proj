@@ -19,14 +19,8 @@
     }
 }
 
-@media (max-width: 1024px) {
-    .notification {
-        @apply max-w-[calc(100vw-2rem)];
-    }
-}
-
 @media (max-width: 480px) {
     .notification {
-        @apply left-3 right-3 bottom-3 w-auto px-0 py-0;
+        @apply left-3 bottom-25 px-0 py-0;
     }
 }

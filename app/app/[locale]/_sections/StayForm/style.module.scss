@@ -16,6 +16,12 @@
         transition-shadow relative overflow-hidden;
 }
 
+.error_list {
+    @apply flex gap-2 flex-wrap
+        text-red-600 items-center
+            justify-center;
+}
+
 @media (max-width: 1024px) {
     .title {
         @apply text-4xl;
@@ -40,14 +46,60 @@
     .title {
         @apply text-3xl;
     }
+
+    .form {
+        @apply max-w-lg;
+    }
+
+    .error_list {
+        @apply text-sm;
+    }
+}
+
+@media (max-width: 620px) {
+    .title {
+        @apply text-2xl;
+    }
+
+    .form {
+        @apply max-w-sm;
+    }
+
+    .error_list {
+        @apply text-xs;
+    }
 }
 
 @media (max-width: 480px) {
+    .form {
+        @apply max-w-xs;
+    }
+
     .stayform_section {
         @apply px-0 gap-3;
     }
+}
 
+@media (max-width: 400px) {
     .title {
-        @apply text-2xl;
+        @apply text-xl;
+    }
+
+    .form {
+        @apply max-w-2xs;
+    }
+
+    .error_list {
+        @apply flex-col;
+    }
+}
+
+@media (max-width: 350px) {
+    .title {
+        @apply text-lg;
+    }
+
+    .form {
+        @apply max-w-3xs;
     }
 }

@@ -59,9 +59,23 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
     .switcher {
         @apply px-0.5;
+    }
+
+    .switcher * {
+        @apply w-4 h-4;
+    }
+
+    .page_sel {
+        @apply h-8 w-8 text-sm;
+    }
+}
+
+@media (max-width: 560px) {
+    .switcher * {
+        @apply w-3 h-3;
     }
 
     .page_sel {

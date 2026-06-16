@@ -92,20 +92,22 @@
 
 @media (max-width: 945px) {
     .space {
-        @apply w-full py-2 rounded-3xl;
+        @apply w-full pt-0 pb-0 
+            rounded-none border-b 
+            border-b-gray-600;
     }
 
-    .space:first-child .body,
-    .space:last-of-type .body {
-        @apply pl-4 pr-4;
+    .space:last-of-type {
+        @apply border-b-0;
+    }
+
+    .space:hover {
+        @apply rounded-none;
     }
 
     .body {
-        @apply w-full border-r-0 border-b px-4 pb-3;
-    }
-
-    .space:last-of-type .body {
-        @apply border-b-0;
+        @apply w-full border-r-0
+            px-4 pt-3 pb-2;
     }
 
     .label {
@@ -115,14 +117,42 @@
     .input {
         @apply w-full text-sm py-1;
     }
+
+    @keyframes load{
+        from { width: 0%; }
+        to { width: 60%; }
+    }
+
+    @keyframes load_back {
+        from { width: 60%; }
+        to { width: 0%; }
+    }
 }
 
 @media (max-width: 480px) {
-    .space {
-        @apply py-1.5;
+    .body {
+        @apply px-3 pb-1.5 gap-0;
     }
 
-    .body {
-        @apply px-3 pb-2.5;
+    .label {
+        @apply text-xs;
+    }
+
+    .input {
+        @apply px-0.5 py-[0.1rem] text-xs;
+    }
+
+    .space:first-child .body {
+        @apply px-3;
+    }
+
+    @keyframes load{
+        from { width: 0%; }
+        to { width: 80%; }
+    }
+
+    @keyframes load_back {
+        from { width: 80%; }
+        to { width: 0%; }
     }
 }

@@ -47,6 +47,17 @@
     "invoiceSuccess": "Die Rechnung wurde erfolgreich erstellt",
     "invoiceError": "Die Checkout-Seite konnte nicht erstellt werden"
   },
+  "formErrors": {
+    "emailInvalid": "Die E-Mail-Adresse ist ungültig",
+    "emailRequired": "Die E-Mail-Adresse ist erforderlich",
+    "reservationCodeRequired": "Der Reservierungscode ist erforderlich",
+    "reservationCodeMax": "Der Reservierungscode darf höchstens 20 Zeichen lang sein",
+    "daysCountRequired": "Die Anzahl der Tage ist erforderlich",
+    "daysCountMin": "Die Anzahl der Tage muss mindestens 1 betragen",
+    "visitorsCountRequired": "Die Anzahl der Gäste ist erforderlich",
+    "visitorsCountMin": "Die Anzahl der Gäste muss mindestens 1 betragen",
+    "serviceRequired": "Wählen Sie mindestens einen Service aus"
+  },
   "achats": {
     "title": "Finden Sie Ihre Servicekäufe",
     "searchPlaceholder": "Geben Sie Ihren Reservierungscode ein (Airbnb/Booking)",

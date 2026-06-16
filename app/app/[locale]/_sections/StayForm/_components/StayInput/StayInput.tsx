@@ -5,6 +5,7 @@ import { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } fro
 import { StayInputProps } from "./StayInput.props";
 import s from "./style.module.scss";
 import { cn } from "@/lib/utils";
+import { b612_bold } from "@/fonts/fonts";
 
 export const StayInput = ({
     label,
@@ -28,7 +29,7 @@ export const StayInput = ({
     const isInputFocused = isSectActive && isFocused
     const isHoveredAndNotActive = !isSectActive && hover
 
-    const isHighlighted = isHoveredAndNotActive || isInputFocused;    
+    const isHighlighted = isHoveredAndNotActive || isInputFocused;
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>)=> {
         const value = e.target.value;
@@ -49,14 +50,13 @@ export const StayInput = ({
             offsetHeight: height,
         } = ref.current;
         const isVerticalLayout = window.matchMedia("(max-width: 945px)").matches;
-        const verticalTopOffset = isVerticalLayout ? -4 : 0;
-        const verticalHeightOffset = isVerticalLayout ? 4 : 0;
+        const verticalTopOffset = isVerticalLayout ? -1 : 0;
 
         setPosition({
             left,
             width,
             top: top + verticalTopOffset,
-            height: height + verticalHeightOffset,
+            height: height,
         });
     }, [setPosition]);
 
@@ -104,6 +104,7 @@ export const StayInput = ({
             <div className={s.body}>
                 <span className={cn(
                     s.label,
+                    b612_bold.className,
                     isFocused && s.light
                 )}>
                     {label}

@@ -18,7 +18,8 @@
         before:bg-red-600 before:inset-0 before:-z-10
         before:scale-[2.5] overflow-hidden
         before:rounded-xl before:transition-transform
-        before:translate-x-[-200%] before:translate-y-[-50%] before:duration-800;
+        before:translate-x-[-200%] before:translate-y-[-50%] before:duration-800
+        relative;
 }
 
 .remove {
@@ -53,7 +54,8 @@
 
 @media (max-width: 480px) {
     .service_section {
-        @apply pt-6 gap-x-2 gap-y-4;
+        @apply pt-6 gap-x-2 gap-y-4
+            px-4;
     }
 
     .default_btn {

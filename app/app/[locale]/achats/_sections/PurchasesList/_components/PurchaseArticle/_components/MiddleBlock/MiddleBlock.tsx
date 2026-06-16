@@ -3,6 +3,8 @@ import { transitionBounce } from "@/framer_templates/transitions";
 import { variantsOpacityAppearence } from "@/framer_templates/variants";
 import { Service } from "@/types";
 import s from "./style.module.scss";
+import { cn } from "@/lib/utils";
+import { b612_bold } from "@/fonts/fonts";
 
 export const MiddleBlock = ({
     email,
@@ -24,7 +26,10 @@ export const MiddleBlock = ({
             transition={transitionBounce}
         >
             <div className="flex flex-col">
-                <span className={s.email}>
+                <span className={cn(
+                    s.email,
+                    b612_bold.className
+                )}>
                     {email}
                 </span>
                 <span className={s.date}>
@@ -35,7 +40,10 @@ export const MiddleBlock = ({
             <ul className={s.service_list}>
                 {services.map((svc, i)=>
                     <li
-                        className={s.res_serv}
+                        className={cn(
+                            s.res_serv,
+                            b612_bold.className
+                        )}
                         key={`res_serv_${s.id}_${i}`}
                     >
                         {`${svc.name}`}

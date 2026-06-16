@@ -1,13 +1,18 @@
 type PageItem = number | "start-ellipsis" | "end-ellipsis";
 
-export const getPageItems = (currentPage: number, lastPage: number): PageItem[] => {
+export const getPageItems = (
+  currentPage: number, 
+  lastPage: number,
+  isLimitLong: boolean
+): PageItem[] => {
   if (lastPage <= 7) {
     return Array.from({ length: lastPage }, (_, index) => index + 1);
   }
 
   const pages = new Set<number>([1, lastPage]);
+  const range = isLimitLong ? 2 : 1;
 
-  for (let page = currentPage - 2; page <= currentPage + 2; page += 1) {
+  for (let page = currentPage - range; page <= currentPage + range; page += 1) {
     if (page > 1 && page < lastPage) {
       pages.add(page);
     }

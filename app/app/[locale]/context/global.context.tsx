@@ -5,6 +5,7 @@ import { AppNotification, Coords, GlobalContextInterface } from "./global.interf
 import { ServicesOrderParams } from "@/types";
 import { getServices } from "@/queries/services";
 import useSWR from "swr";
+import { FormError } from "../layout/Basket/_components/BuyBtn/formScheme";
 
 export const initialServParams: ServicesOrderParams = {
     email: "",
@@ -24,7 +25,8 @@ export const GlobalContext = createContext<GlobalContextInterface>({
     setServParams: ()=> {},
     setMouseGuide: ()=> {},
     setMouseText: ()=> {},
-    setNotification: () => {}
+    setNotification: () => {},
+    setServiceBasketErrors: () => {}
 });
 
 
@@ -46,6 +48,7 @@ export const GlobalContextProvider = ({
     const [mouseGuide, setMouseGuide] = useState<Coords | null>(null);
     const [mouseText, setMouseText] = useState("");
     const [notification, setNotification] = useState<AppNotification>({ status: "none", text: "" });
+    const [serviceBasketErrors, setServiceBasketErrors] = useState<FormError | undefined>();
 
     return (
         <GlobalContext.Provider
@@ -57,11 +60,13 @@ export const GlobalContextProvider = ({
                 serviceError: error,
                 isServiceLoading: isLoading,
                 notification,
+                serviceBasketErrors,
 
                 setServParams,
                 setMouseGuide,
                 setMouseText,
-                setNotification
+                setNotification,
+                setServiceBasketErrors
             }}
         >
             {children}

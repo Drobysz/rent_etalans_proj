@@ -5,7 +5,7 @@ import s from "./style.module.scss";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { transitionBounce } from "@/framer_templates/transitions";
-import { convertToUTCDateFormat } from "@/helpers";
+import { TimeService } from "@/helpers";
 import {
     TitleBlock,
     MiddleBlock
@@ -17,7 +17,7 @@ export const PurchaseArticle = ({
     payment: Payment
 })=> {
     const [isOpened, setIsOpened] = useState(false);
-    const dateStr = convertToUTCDateFormat(payment.created_at ?? "unknown");
+    const dateStr = TimeService.convertToUTCDateFormat(payment.created_at ?? "unknown");
 
     return (
         <motion.li
