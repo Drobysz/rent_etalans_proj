@@ -27,7 +27,7 @@ export const ServicesList = ()=> {
 
     const chosenServices = BasketService
         .getChosenServices(servParams, services);
-    const TOTAL_PRICE = BasketService.getTotalPrice(servParams, services);
+    const TOTAL_PRICE = BasketService.getTotalPrice(servParams, chosenServices);
 
     return (
         <motion.ul
