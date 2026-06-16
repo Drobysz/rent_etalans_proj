@@ -48,7 +48,7 @@ export default function ThreeDCard({
   };
 
   return (
-    <Container>
+    <Container className="flex justify-center">
       <Body 
         className={cn(
           s.body,
