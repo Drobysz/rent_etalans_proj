@@ -14,13 +14,10 @@ export type TelegramPurchaseNotificationParams = {
 export const sendTelegramPurchaseNotification = async (
   params: TelegramPurchaseNotificationParams,
 ) => {
-  const internalNotifyUrl = process.env.NEXT_PUBLIC_BASE_URL
-    ? `${process.env.NEXT_PUBLIC_BASE_URL.replace(/\/$/, "")}/api/bot/notify-purchase`
-    : null;
   const notifyUrl = process.env.TELEGRAM_BOT_NOTIFY_URL;
   const notifySecret = process.env.TELEGRAM_NOTIFY_SECRET;
 
-  if (!internalNotifyUrl && !notifyUrl) {
+  if (!notifyUrl) {
     console.warn("Telegram bot notify URL is not configured");
     return null;
   }
@@ -33,7 +30,7 @@ export const sendTelegramPurchaseNotification = async (
     headers["X-Notification-Secret"] = notifySecret;
   }
 
-  const res = await fetch(internalNotifyUrl ?? notifyUrl!, {
+  const res = await fetch(notifyUrl!, {
     method: "POST",
     headers,
     body: JSON.stringify(params),
