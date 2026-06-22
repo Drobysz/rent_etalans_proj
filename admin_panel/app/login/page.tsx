@@ -14,8 +14,8 @@ export default async function LoginPage() {
     <main className={styles.page}>
       <section className={styles.panel}>
         <div className={styles.header}>
-          <h1>Admin login</h1>
-          <p>Use an admin account to manage services and orders.</p>
+          <h1>Connexion admin</h1>
+          <p>Utilisez un compte admin pour gérer les services et les commandes.</p>
         </div>
         <LoginForm />
       </section>

@@ -5,9 +5,9 @@ export function OrdersListHeader({ count, sort }: OrdersListHeaderProps) {
   return (
     <div className={styles.header}>
       <div>
-        <h1 className={styles.title}>Orders</h1>
+        <h1 className={styles.title}>Commandes</h1>
         <p className={styles.count}>
-          {count} orders, {sort === "desc" ? "newest first" : "oldest first"}
+          {count} commandes, {sort === "desc" ? "plus récentes d'abord" : "plus anciennes d'abord"}
         </p>
       </div>
     </div>

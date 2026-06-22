@@ -6,15 +6,15 @@ export function TopServicesTable({ services }: TopServicesTableProps) {
   return (
     <article className={styles.panel}>
       <div className={styles.header}>
-        <h2>Top services</h2>
+        <h2>Meilleurs services</h2>
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>Service</th>
-              <th>Orders</th>
-              <th>Revenue</th>
+              <th>Commandes</th>
+              <th>Chiffre d'affaires</th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +27,7 @@ export function TopServicesTable({ services }: TopServicesTableProps) {
             ))}
             {services.length === 0 ? (
               <tr>
-                <td colSpan={3}>No service sales yet.</td>
+                <td colSpan={3}>Aucune vente de service pour le moment.</td>
               </tr>
             ) : null}
           </tbody>

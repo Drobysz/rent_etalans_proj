@@ -1,15 +1,21 @@
 import styles from "./style.module.scss";
 import type { AdminsTableProps } from "./AdminsTable.props";
 
+const roleLabels: Record<string, string> = {
+  admin: "Administrateur",
+  superadmin: "Superadmin",
+  client: "Client",
+};
+
 export function AdminsTable({ users, onEdit }: AdminsTableProps) {
   return (
     <div className={styles.tableWrap}>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Nom</th>
             <th>Telegram</th>
-            <th>Role</th>
+            <th>Rôle</th>
             <th aria-label="Actions" />
           </tr>
         </thead>
@@ -18,10 +24,10 @@ export function AdminsTable({ users, onEdit }: AdminsTableProps) {
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.tgNickname}</td>
-              <td>{user.role}</td>
+              <td>{roleLabels[user.role] ?? user.role}</td>
               <td className={styles.actions}>
                 <button className={styles.editButton} type="button" onClick={() => onEdit(user)}>
-                  Edit
+                  Modifier
                 </button>
               </td>
             </tr>

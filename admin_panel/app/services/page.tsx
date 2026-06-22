@@ -13,22 +13,22 @@ const notificationMessages: Record<string, AppNotification> = {
   "service-created": {
     id: "service-created",
     status: "success",
-    message: "Service was created.",
+    message: "Le service a été créé.",
   },
   "service-updated": {
     id: "service-updated",
     status: "success",
-    message: "Service was updated.",
+    message: "Le service a été mis à jour.",
   },
   "service-deleted": {
     id: "service-deleted",
     status: "success",
-    message: "Service was deleted.",
+    message: "Le service a été supprimé.",
   },
   "service-delete-failed": {
     id: "service-delete-failed",
     status: "error",
-    message: "Service was not deleted.",
+    message: "Le service n'a pas été supprimé.",
   },
 };
 

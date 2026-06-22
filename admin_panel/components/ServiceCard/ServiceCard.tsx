@@ -13,9 +13,9 @@ export function ServiceCard({ deleteAction, service }: ServiceCardProps) {
     <article className={styles.card}>
       <div className={styles.media}>
         {image ? (
-          <img className={styles.image} src={image.url} alt={`${service.name} image`} />
+          <img className={styles.image} src={image.url} alt={`Image de ${service.name}`} />
         ) : (
-          <span className={styles.emptyImage}>No image</span>
+          <span className={styles.emptyImage}>Aucune image</span>
         )}
       </div>
       <div className={styles.content}>
@@ -25,16 +25,16 @@ export function ServiceCard({ deleteAction, service }: ServiceCardProps) {
         </div>
         <p className={styles.description}>{service.description}</p>
         <div className={styles.meta}>
-          <span>{service.visible ? "Visible" : "Hidden"}</span>
-          <span>{service.fixedPrice ? "Fixed price" : "Per day"}</span>
-          <span>Updated {formatDateTime(service.updatedAt)}</span>
+          <span>{service.visible ? "Visible" : "Masqué"}</span>
+          <span>{service.fixedPrice ? "Prix fixe" : "Par jour"}</span>
+          <span>Mis à jour le {formatDateTime(service.updatedAt)}</span>
         </div>
       </div>
       <div className={styles.actions}>
         <Link
           className={styles.editButton}
           href={`/services/${service.id}/edit`}
-          aria-label={`Edit ${service.name}`}
+          aria-label={`Modifier ${service.name}`}
         >
           <EditIcon aria-hidden="true" />
         </Link>
@@ -43,7 +43,7 @@ export function ServiceCard({ deleteAction, service }: ServiceCardProps) {
           <button
             className={styles.deleteButton}
             type="submit"
-            aria-label={`Delete ${service.name}`}
+            aria-label={`Supprimer ${service.name}`}
           >
             <CloseIcon aria-hidden="true" />
           </button>

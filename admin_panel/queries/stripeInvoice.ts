@@ -11,7 +11,7 @@ export async function getStripeInvoicePdf(
   const apiUrl = getBackendApiUrl("/stripe/invoice-pdf");
 
   if (!apiUrl) {
-    throw new Error("API_URL is not configured.");
+    throw new Error("API_URL n'est pas configuré.");
   }
 
   const response = await fetch(apiUrl, {
@@ -26,7 +26,7 @@ export async function getStripeInvoicePdf(
   });
 
   if (!response.ok) {
-    throw new Error("Unable to load Stripe receipt.");
+    throw new Error("Impossible de charger le reçu Stripe.");
   }
 
   return response.json() as Promise<StripeInvoicePdfResponse>;

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Admin Panel",
-  description: "Rental services administration",
+  title: "Panneau d'administration",
+  description: "Administration des services de location",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={cn(geistSans.variable, geistMono.variable, "h-full antialiased")}
     >
       <body className={cn("min-h-full", "flex", "flex-col")}>{children}</body>

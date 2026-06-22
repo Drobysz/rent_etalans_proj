@@ -4,12 +4,12 @@ import type { ServiceFormHeaderProps } from "./ServiceFormHeader.props";
 
 const copy = {
   create: {
-    title: "Create service",
-    note: "Add the required service details for the catalog.",
+    title: "Créer un service",
+    note: "Ajoutez les détails requis du service pour le catalogue.",
   },
   edit: {
-    title: "Edit service",
-    note: "Update the service details shown to clients.",
+    title: "Modifier le service",
+    note: "Mettez à jour les détails du service affichés aux clients.",
   },
 };
 
@@ -21,7 +21,7 @@ export function ServiceFormHeader({ mode }: ServiceFormHeaderProps) {
         <p className={styles.note}>{copy[mode].note}</p>
       </div>
       <Link className={styles.cancelLink} href="/services">
-        Back to services
+        Retour aux services
       </Link>
     </div>
   );

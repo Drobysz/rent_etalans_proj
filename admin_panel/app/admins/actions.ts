@@ -33,23 +33,23 @@ export async function saveUserAction(
   const fieldErrors: UserFormState["fieldErrors"] = {};
 
   if (!name) {
-    fieldErrors.name = "Enter a name.";
+    fieldErrors.name = "Saisissez un nom.";
   }
 
   if (!tgNickname) {
-    fieldErrors.tgNickname = "Enter a Telegram nickname.";
+    fieldErrors.tgNickname = "Saisissez un pseudo Telegram.";
   }
 
   if (!["admin", "client"].includes(role)) {
-    fieldErrors.role = "Choose admin or client.";
+    fieldErrors.role = "Choisissez admin ou client.";
   }
 
   if (!isEditing && password.length < 8) {
-    fieldErrors.password = "Use at least 8 characters.";
+    fieldErrors.password = "Utilisez au moins 8 caractères.";
   }
 
   if (isEditing && password && password.length < 8) {
-    fieldErrors.password = "Use at least 8 characters.";
+    fieldErrors.password = "Utilisez au moins 8 caractères.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -60,7 +60,7 @@ export async function saveUserAction(
   const apiUrl = getBackendApiUrl(`/users${isEditing ? `/${id}` : ""}`);
 
   if (!apiUrl || !session?.accessToken || session.role !== "superadmin") {
-    return { message: "Superadmin session is required." };
+    return { message: "Une session superadmin est requise." };
   }
 
   const body: Record<string, string> = {
@@ -88,7 +88,7 @@ export async function saveUserAction(
     const payload = (await response.json().catch(() => null)) as { data?: ApiUser; message?: string };
 
     if (!response.ok || !payload?.data) {
-      return { message: payload?.message ?? "Unable to save user." };
+      return { message: payload?.message ?? "Impossible d'enregistrer l'utilisateur." };
     }
 
     revalidatePath("/admins");
@@ -98,6 +98,6 @@ export async function saveUserAction(
       user: mapUser(payload.data),
     };
   } catch {
-    return { message: "Unable to reach the API." };
+    return { message: "Impossible de joindre l'API." };
   }
 }

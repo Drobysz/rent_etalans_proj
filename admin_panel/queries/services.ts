@@ -6,8 +6,8 @@ import { getBackendApiUrl } from "@/lib/api";
 export const mockServices: Service[] = [
   {
     id: "svc-cleaning",
-    name: "Mid-stay cleaning",
-    description: "Cleaning visit for active stays, including linen refresh.",
+    name: "Ménage en cours de séjour",
+    description: "Passage de ménage pendant les séjours actifs, avec linge rafraîchi.",
     descriptions: [
       { locale: "en", description: "Cleaning visit for active stays, including linen refresh." },
       { locale: "fr", description: "Passage de ménage pendant le séjour, avec linge rafraîchi." },
@@ -22,8 +22,8 @@ export const mockServices: Service[] = [
   },
   {
     id: "svc-transfer",
-    name: "Airport transfer",
-    description: "Scheduled private transfer between airport and apartment.",
+    name: "Transfert aéroport",
+    description: "Transfert privé planifié entre l'aéroport et l'appartement.",
     descriptions: [
       { locale: "en", description: "Scheduled private transfer between airport and apartment." },
       { locale: "fr", description: "Transfert privé planifié entre l'aéroport et l'appartement." },
@@ -38,8 +38,8 @@ export const mockServices: Service[] = [
   },
   {
     id: "svc-breakfast",
-    name: "Breakfast delivery",
-    description: "Morning delivery from partner bakery for the full stay.",
+    name: "Livraison du petit-déjeuner",
+    description: "Livraison matinale depuis la boulangerie partenaire pour tout le séjour.",
     descriptions: [
       { locale: "en", description: "Morning delivery from partner bakery for the full stay." },
       { locale: "fr", description: "Livraison matinale depuis la boulangerie partenaire pour tout le séjour." },
@@ -117,7 +117,7 @@ export async function getServices(): Promise<ServicesQueryResult> {
       notification: {
         id: "services-api-missing",
         status: "error",
-        message: "API_URL is not configured.",
+        message: "API_URL n'est pas configuré.",
       },
     };
   }
@@ -130,7 +130,7 @@ export async function getServices(): Promise<ServicesQueryResult> {
       notification: {
         id: "services-session-missing",
         status: "error",
-        message: "Admin session is required to load services.",
+        message: "Une session admin est requise pour charger les services.",
       },
     };
   }
@@ -150,7 +150,7 @@ export async function getServices(): Promise<ServicesQueryResult> {
         notification: {
           id: `services-fetch-${response.status}`,
           status: "error",
-          message: "Unable to load services.",
+          message: "Impossible de charger les services.",
         },
       };
     }
@@ -165,7 +165,7 @@ export async function getServices(): Promise<ServicesQueryResult> {
       notification: {
         id: "services-fetch-error",
         status: "error",
-        message: "Unable to reach the API.",
+        message: "Impossible de joindre l'API.",
       },
     };
   }

@@ -10,7 +10,7 @@ export function ServicesListHeader({ count }: ServicesListHeaderProps) {
         <p className={styles.count}>{count} services</p>
       </div>
       <Link className={styles.createButton} href="/services/new">
-        Create service
+        Créer un service
       </Link>
     </div>
   );

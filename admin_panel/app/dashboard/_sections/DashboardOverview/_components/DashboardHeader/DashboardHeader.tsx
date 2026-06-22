@@ -4,8 +4,8 @@ export function DashboardHeader() {
   return (
     <div className={styles.header}>
       <div>
-        <h1 className={styles.title}>Dashboard</h1>
-        <p className={styles.description}>Revenue, order volume, and service demand.</p>
+        <h1 className={styles.title}>Tableau de bord</h1>
+        <p className={styles.description}>Chiffre d'affaires, volume de commandes et demande par service.</p>
       </div>
     </div>
   );

@@ -18,11 +18,17 @@ import styles from "./style.module.scss";
 import type { SidebarProps } from "./Sidebar.props";
 
 const navigation = [
-  { href: "/", label: "Dashboard", icon: DashboardIcon, superadminOnly: false },
+  { href: "/", label: "Tableau de bord", icon: DashboardIcon, superadminOnly: false },
   { href: "/services", label: "Services", icon: ServicesIcon, superadminOnly: false },
-  { href: "/orders", label: "Orders", icon: OrdersIcon, superadminOnly: false },
-  { href: "/admins", label: "Admins", icon: AdminsIcon, superadminOnly: true },
+  { href: "/orders", label: "Commandes", icon: OrdersIcon, superadminOnly: false },
+  { href: "/admins", label: "Administrateurs", icon: AdminsIcon, superadminOnly: true },
 ] as const;
+
+const roleLabels: Record<string, string> = {
+  admin: "Administrateur",
+  superadmin: "Superadmin",
+  client: "Client",
+};
 
 export function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
@@ -43,17 +49,17 @@ export function Sidebar({ user }: SidebarProps) {
         <button
           className={styles.menuButton}
           type="button"
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? "Développer le menu" : "Réduire le menu"}
           onClick={() => setCollapsed((value) => !value)}
         >
           {collapsed ? <MenuIcon aria-hidden="true" /> : <XIcon aria-hidden="true" />}
         </button>
-        {!collapsed || isMobile ? <span className={styles.productName}>Rent services</span> : null}
+        {!collapsed || isMobile ? <span className={styles.productName}>Services de location</span> : null}
       </div>
 
       <nav
         className={cn(styles.nav, collapsed ? styles.collapsed_nav : styles.uncollapsed_nav)}
-        aria-label="Admin navigation"
+        aria-label="Navigation admin"
       >
         {navigation
           .filter((item) => !item.superadminOnly || user.role === "superadmin")
@@ -79,12 +85,12 @@ export function Sidebar({ user }: SidebarProps) {
         {!collapsed ? (
           <div className={styles.accountText}>
             <span>{user.name}</span>
-            <span>{user.role}</span>
+            <span>{roleLabels[user.role] ?? user.role}</span>
           </div>
         ) : null}
         <form action={logoutAction}>
           <button className={styles.logoutButton} type="submit">
-            <SignOutIcon aria-hidden="true" /> {!collapsed && "Log out"}
+            <SignOutIcon aria-hidden="true" /> {!collapsed && "Déconnexion"}
           </button>
         </form>
       </div>

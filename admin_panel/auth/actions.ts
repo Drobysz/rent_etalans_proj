@@ -46,7 +46,7 @@ export async function loginAction(
   const apiUrl = getBackendApiUrl("/auth/login");
 
   if (!apiUrl) {
-    return { message: "API_URL is not configured." };
+    return { message: "API_URL n'est pas configuré." };
   }
 
   let payload: LoginResponse;
@@ -65,14 +65,14 @@ export async function loginAction(
     payload = (await response.json()) as LoginResponse;
 
     if (!response.ok) {
-      return { message: "Name or password is incorrect." };
+      return { message: "Le nom ou le mot de passe est incorrect." };
     }
   } catch {
-    return { message: "Unable to reach the API." };
+    return { message: "Impossible de joindre l'API." };
   }
 
   if (!["admin", "superadmin"].includes(payload.user.role)) {
-    return { message: "This account does not have admin access." };
+    return { message: "Ce compte ne dispose pas d'un accès admin." };
   }
 
   await createSession({

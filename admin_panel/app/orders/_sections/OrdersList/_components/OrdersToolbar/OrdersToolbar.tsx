@@ -18,7 +18,7 @@ export function OrdersToolbar({ reserveId, sort }: OrdersToolbarProps) {
       <form className={styles.searchForm} action="/orders">
         <input type="hidden" name="sort" value={sort} />
         <label className={styles.searchField}>
-          <span>Reserve ID</span>
+          <span>ID de réservation</span>
           <input
             name="reserve_id"
             type="search"
@@ -28,11 +28,11 @@ export function OrdersToolbar({ reserveId, sort }: OrdersToolbarProps) {
           />
         </label>
         <button className={styles.button} type="submit">
-          Search
+          Rechercher
         </button>
         {reserveId ? (
           <Link className={styles.secondaryButton} href={`/orders?sort=${sort}`}>
-            Clear
+            Effacer
           </Link>
         ) : null}
       </form>
@@ -45,9 +45,9 @@ export function OrdersToolbar({ reserveId, sort }: OrdersToolbarProps) {
           ? <ArrowDownIcon /> 
           : <ArrowUpIcon />
         }
-        {sort === "desc" 
-          ? "Oldest first" 
-          : "Newest first"
+        {sort === "desc"
+          ? "Plus anciennes d'abord"
+          : "Plus récentes d'abord"
         }
       </Link>
     </div>

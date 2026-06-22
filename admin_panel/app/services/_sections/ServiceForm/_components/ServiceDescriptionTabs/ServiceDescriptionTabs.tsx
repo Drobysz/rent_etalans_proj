@@ -21,7 +21,7 @@ export function ServiceDescriptionTabs({
     <fieldset className={styles.fieldset}>
       <legend>Description</legend>
 
-      <div className={styles.tabs} role="tablist" aria-label="Description language">
+      <div className={styles.tabs} role="tablist" aria-label="Langue de description">
         {serviceDescriptionLocales.map((locale) => (
           <button
             aria-selected={activeLocale === locale}

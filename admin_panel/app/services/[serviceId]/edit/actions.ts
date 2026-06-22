@@ -85,7 +85,7 @@ export async function updateServiceAction(
   });
 
   if (!serviceId) {
-    return { message: "Service id is missing." };
+    return { message: "L'identifiant du service est manquant." };
   }
 
   if (!parsed.success) {
@@ -111,11 +111,11 @@ export async function updateServiceAction(
 
   if (!apiUrl) {
     return {
-      message: "API_URL is not configured. The form data is valid.",
+      message: "API_URL n'est pas configuré. Les données du formulaire sont valides.",
       notification: {
         id: "service-update-api-missing",
         status: "error",
-        message: "Service was not updated.",
+        message: "Le service n'a pas été mis à jour.",
       },
     };
   }
@@ -136,11 +136,11 @@ export async function updateServiceAction(
 
     if (!response.ok) {
       return {
-        message: "Service was not updated. Check the form and try again.",
+        message: "Le service n'a pas été mis à jour. Vérifiez le formulaire et réessayez.",
         notification: {
           id: `service-update-${response.status}`,
           status: "error",
-          message: "Service was not updated.",
+          message: "Le service n'a pas été mis à jour.",
         },
       };
     }
@@ -156,7 +156,7 @@ export async function updateServiceAction(
       );
 
       if (!imageResponse.ok) {
-        const message = await readApiMessage(imageResponse, "Service image was not deleted.");
+        const message = await readApiMessage(imageResponse, "L'image du service n'a pas été supprimée.");
 
         return {
           message,
@@ -178,7 +178,7 @@ export async function updateServiceAction(
       );
 
       if (!imageResponse.ok) {
-        const message = await readApiMessage(imageResponse, "Service image was not uploaded.");
+        const message = await readApiMessage(imageResponse, "L'image du service n'a pas été téléversée.");
 
         return {
           message,
@@ -192,11 +192,11 @@ export async function updateServiceAction(
     }
   } catch {
     return {
-      message: "Unable to reach the API.",
+      message: "Impossible de joindre l'API.",
       notification: {
         id: "service-update-fetch-error",
         status: "error",
-        message: "Unable to reach the API.",
+        message: "Impossible de joindre l'API.",
       },
     };
   }

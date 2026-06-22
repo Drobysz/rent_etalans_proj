@@ -5,11 +5,11 @@ export function AdminsHeader({ count, onCreate }: AdminsHeaderProps) {
   return (
     <div className={styles.header}>
       <div>
-        <h1 className={styles.title}>Admins</h1>
-        <p className={styles.count}>{count} manageable users</p>
+        <h1 className={styles.title}>Administrateurs</h1>
+        <p className={styles.count}>{count} utilisateurs gérables</p>
       </div>
       <button className={styles.createButton} type="button" onClick={onCreate}>
-        Create user
+        Créer un utilisateur
       </button>
     </div>
   );

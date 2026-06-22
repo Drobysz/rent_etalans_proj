@@ -39,9 +39,9 @@ export function StripeReceiptButton({ sessionId }: StripeReceiptButtonProps) {
       type="button"
       onClick={handleClick}
       disabled={!sessionId || isLoading}
-      title={sessionId ? "Open Stripe receipt" : "Stripe receipt is unavailable"}
+      title={sessionId ? "Ouvrir le reçu Stripe" : "Le reçu Stripe est indisponible"}
     >
-      {isLoading ? "Loading" : "Stripe receipt"}
+      {isLoading ? "Chargement" : "Reçu Stripe"}
     </button>
   );
 }

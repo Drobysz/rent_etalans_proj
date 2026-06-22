@@ -8,6 +8,11 @@ import styles from "./style.module.scss";
 import type { RevenueChartProps } from "./RevenueChart.props";
 
 const ranges: DashboardRange[] = ["week", "month", "year"];
+const rangeLabels: Record<DashboardRange, string> = {
+  week: "Semaine",
+  month: "Mois",
+  year: "Année",
+};
 
 export function RevenueChart({ series }: RevenueChartProps) {
   const [range, setRange] = useState<DashboardRange>("week");
@@ -20,7 +25,7 @@ export function RevenueChart({ series }: RevenueChartProps) {
   return (
     <article className={styles.panel}>
       <div className={styles.header}>
-        <h2>Revenue chart</h2>
+        <h2>Graphique du chiffre d'affaires</h2>
         <div className={styles.tabs}>
           {ranges.map((item) => (
             <button
@@ -29,7 +34,7 @@ export function RevenueChart({ series }: RevenueChartProps) {
               type="button"
               onClick={() => setRange(item)}
             >
-              {item}
+              {rangeLabels[item]}
             </button>
           ))}
         </div>
@@ -37,7 +42,7 @@ export function RevenueChart({ series }: RevenueChartProps) {
 
       <div
         className={cn(styles.chart, range !== "month" && styles.scrollableChart)}
-        aria-label={`${range} revenue chart`}
+        aria-label={`Graphique du chiffre d'affaires - ${rangeLabels[range].toLowerCase()}`}
       >
         {points.map((point) => {
           const revenue = formatMoney(point.revenue);

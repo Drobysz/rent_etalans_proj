@@ -8,11 +8,11 @@ export function OrdersTable({ orders, onViewPayment }: OrdersTableProps) {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Order</th>
-            <th>Guest</th>
+            <th>Commande</th>
+            <th>Client</th>
             <th>Services</th>
             <th>Total</th>
-            <th>Created</th>
+            <th>Créée le</th>
             <th aria-label="Actions" />
           </tr>
         </thead>

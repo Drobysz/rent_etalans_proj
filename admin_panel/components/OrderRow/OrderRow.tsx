@@ -15,13 +15,13 @@ export function OrderRow({ order, onViewPayment }: OrderRowProps) {
         <span className={styles.strong}>{order.guestName}</span>
         <span className={styles.subtle}>{order.guestEmail}</span>
       </td>
-      <td className={styles.services}>{order.services.join(", ") || "No services"}</td>
+      <td className={styles.services}>{order.services.join(", ") || "Aucun service"}</td>
       <td>{formatMoney(order.total)}</td>
       <td>{formatDateTime(order.createdAt)}</td>
       <td className={styles.actions}>
         <div className={styles.actionGroup}>
           <button className={styles.paymentButton} type="button" onClick={() => onViewPayment(order)}>
-            View payment
+            Voir le paiement
           </button>
           <StripeReceiptButton sessionId={order.payment.sessionId} />
         </div>

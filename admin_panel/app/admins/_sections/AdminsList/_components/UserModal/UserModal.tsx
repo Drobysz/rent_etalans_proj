@@ -9,6 +9,10 @@ import styles from "./style.module.scss";
 import type { UserModalProps } from "./UserModal.props";
 
 const initialState: UserFormState = {};
+const roleLabels: Record<string, string> = {
+  admin: "Administrateur",
+  client: "Client",
+};
 
 export function UserModal({ mode, open, user, onClose }: UserModalProps) {
   const router = useRouter();
@@ -62,10 +66,10 @@ export function UserModal({ mode, open, user, onClose }: UserModalProps) {
           >
             <div className={styles.header}>
               <div>
-                <h2 id="user-modal-title">{isEditing ? "Edit user" : "Create user"}</h2>
-                <p>{isEditing ? "Update access details." : "Create admin or client access."}</p>
+                <h2 id="user-modal-title">{isEditing ? "Modifier l'utilisateur" : "Créer un utilisateur"}</h2>
+                <p>{isEditing ? "Mettez à jour les accès." : "Créez un accès admin ou client."}</p>
               </div>
-              <button className={styles.closeButton} type="button" aria-label="Close" onClick={onClose}>
+              <button className={styles.closeButton} type="button" aria-label="Fermer" onClick={onClose}>
                 <CloseIcon aria-hidden="true" />
               </button>
             </div>
@@ -73,39 +77,39 @@ export function UserModal({ mode, open, user, onClose }: UserModalProps) {
             <form className={styles.form} action={formAction}>
               <input type="hidden" name="id" value={user?.id ?? ""} />
               <label className={styles.field}>
-                <span>Name</span>
+                <span>Nom</span>
                 <input name="name" defaultValue={user?.name ?? ""} autoComplete="username" />
                 {state.fieldErrors?.name ? <strong>{state.fieldErrors.name}</strong> : null}
               </label>
 
               <label className={styles.field}>
-                <span>Telegram nickname</span>
+                <span>Pseudo Telegram</span>
                 <input name="tgNickname" defaultValue={user?.tgNickname ?? ""} autoComplete="off" />
                 {state.fieldErrors?.tgNickname ? <strong>{state.fieldErrors.tgNickname}</strong> : null}
               </label>
 
               <label className={styles.field}>
-                <span>Role</span>
+                <span>Rôle</span>
                 <select name="role" defaultValue={user?.role === "admin" ? "admin" : "client"}>
-                  <option value="admin">admin</option>
-                  <option value="client">client</option>
+                  <option value="admin">{roleLabels.admin}</option>
+                  <option value="client">{roleLabels.client}</option>
                 </select>
                 {state.fieldErrors?.role ? <strong>{state.fieldErrors.role}</strong> : null}
               </label>
 
               <label className={styles.field}>
-                <span>Password</span>
+                <span>Mot de passe</span>
                 <div className={styles.passwordField}>
                   <input
                     name="password"
                     type={showPassword ? "text" : "password"}
                     autoComplete={isEditing ? "new-password" : "new-password"}
-                    placeholder={isEditing ? "Leave empty to keep current" : ""}
+                    placeholder={isEditing ? "Laissez vide pour conserver l'actuel" : ""}
                   />
                   <button
                     className={styles.passwordToggle}
                     type="button"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                     aria-pressed={showPassword}
                     onClick={() => setShowPassword((visible) => !visible)}
                   >
@@ -131,10 +135,10 @@ export function UserModal({ mode, open, user, onClose }: UserModalProps) {
 
               <div className={styles.actions}>
                 <button className={styles.secondaryButton} type="button" onClick={onClose}>
-                  Cancel
+                  Annuler
                 </button>
                 <button className={styles.primaryButton} type="submit" disabled={pending}>
-                  {pending ? "Saving" : "Save user"}
+                  {pending ? "Enregistrement" : "Enregistrer l'utilisateur"}
                 </button>
               </div>
             </form>

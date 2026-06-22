@@ -4,12 +4,12 @@ import type { MetricGridProps } from "./MetricGrid.props";
 
 export function MetricGrid({ revenue, orders }: MetricGridProps) {
   const metrics = [
-    { label: "Revenue this week", value: formatMoney(revenue.week) },
-    { label: "Revenue this month", value: formatMoney(revenue.month) },
-    { label: "Revenue this year", value: formatMoney(revenue.year) },
-    { label: "Orders this week", value: String(orders.week) },
-    { label: "Orders this month", value: String(orders.month) },
-    { label: "Orders this year", value: String(orders.year) },
+    { label: "Chiffre d'affaires cette semaine", value: formatMoney(revenue.week) },
+    { label: "Chiffre d'affaires ce mois-ci", value: formatMoney(revenue.month) },
+    { label: "Chiffre d'affaires cette année", value: formatMoney(revenue.year) },
+    { label: "Commandes cette semaine", value: String(orders.week) },
+    { label: "Commandes ce mois-ci", value: String(orders.month) },
+    { label: "Commandes cette année", value: String(orders.year) },
   ];
 
   return (

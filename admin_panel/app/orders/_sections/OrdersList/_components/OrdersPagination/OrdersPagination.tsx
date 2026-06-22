@@ -64,9 +64,9 @@ export function OrdersPagination({
   const hasNextPage = currentPage < lastPage;
 
   return (
-    <nav className={styles.pagination} aria-label="Orders pagination">
+    <nav className={styles.pagination} aria-label="Pagination des commandes">
       <p className={styles.summary}>
-        {from ?? 0}-{to ?? 0} of {total}
+        {from ?? 0}-{to ?? 0} sur {total}
       </p>
 
       <div className={styles.controls}>
@@ -74,7 +74,7 @@ export function OrdersPagination({
           <Link
             className={styles.arrowButton}
             href={createHref(previousPage)}
-            aria-label="Previous page"
+            aria-label="Page précédente"
           >
             ‹
           </Link>
@@ -82,7 +82,7 @@ export function OrdersPagination({
           <span
             className={`${styles.arrowButton} ${styles.disabled}`}
             aria-disabled="true"
-            aria-label="Previous page"
+            aria-label="Page précédente"
           >
             ‹
           </span>
@@ -118,7 +118,7 @@ export function OrdersPagination({
           <Link
             className={styles.arrowButton}
             href={createHref(nextPage)}
-            aria-label="Next page"
+            aria-label="Page suivante"
           >
             ›
           </Link>
@@ -126,7 +126,7 @@ export function OrdersPagination({
           <span
             className={`${styles.arrowButton} ${styles.disabled}`}
             aria-disabled="true"
-            aria-label="Next page"
+            aria-label="Page suivante"
           >
             ›
           </span>

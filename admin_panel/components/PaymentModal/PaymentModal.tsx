@@ -7,6 +7,18 @@ import { formatDateTime, formatMoney } from "@/helpers";
 import styles from "./style.module.scss";
 import type { PaymentModalProps } from "./PaymentModal.props";
 
+const paymentStatusLabels: Record<string, string> = {
+  paid: "Payé",
+  pending: "En attente",
+  failed: "Échoué",
+  refunded: "Remboursé",
+};
+
+const paymentProviderLabels: Record<string, string> = {
+  stripe: "Stripe",
+  manual: "Manuel",
+};
+
 export function PaymentModal({ order, onClose }: PaymentModalProps) {
   useEffect(() => {
     if (!order) {
@@ -48,48 +60,48 @@ export function PaymentModal({ order, onClose }: PaymentModalProps) {
             <div className={styles.header}>
               <div>
                 <h2 className={styles.title} id="payment-title">
-                  Payment information
+                  Informations de paiement
                 </h2>
                 <p className={styles.subtitle}>{order.id}</p>
               </div>
-              <button className={styles.closeButton} type="button" aria-label="Close" onClick={onClose}>
+              <button className={styles.closeButton} type="button" aria-label="Fermer" onClick={onClose}>
                 <CloseIcon aria-hidden="true" />
               </button>
             </div>
 
             <dl className={styles.details}>
               <div>
-                <dt>Status</dt>
-                <dd>{order.payment.status}</dd>
+                <dt>Statut</dt>
+                <dd>{paymentStatusLabels[order.payment.status] ?? order.payment.status}</dd>
               </div>
               <div>
-                <dt>Amount</dt>
+                <dt>Montant</dt>
                 <dd>{formatMoney(order.payment.amount)}</dd>
               </div>
               <div>
-                <dt>Provider</dt>
-                <dd>{order.payment.provider}</dd>
+                <dt>Fournisseur</dt>
+                <dd>{paymentProviderLabels[order.payment.provider] ?? order.payment.provider}</dd>
               </div>
               <div>
                 <dt>Transaction</dt>
                 <dd>{order.payment.transactionId}</dd>
               </div>
               <div>
-                <dt>Payment method</dt>
+                <dt>Moyen de paiement</dt>
                 <dd>{order.payment.paymentMethod}</dd>
               </div>
               <div>
-                <dt>Receipt email</dt>
+                <dt>Email du reçu</dt>
                 <dd>{order.payment.receiptEmail}</dd>
               </div>
               <div>
-                <dt>Created</dt>
+                <dt>Créé le</dt>
                 <dd>{formatDateTime(order.payment.createdAt)}</dd>
               </div>
             </dl>
 
             <div className={styles.metadata}>
-              <h3>Metadata</h3>
+              <h3>Métadonnées</h3>
               <dl>
                 {Object.entries(order.payment.metadata).map(([key, value]) => (
                   <div key={key}>

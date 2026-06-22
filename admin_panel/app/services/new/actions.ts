@@ -39,7 +39,7 @@ export async function createServiceAction(
         },
         visible: flattened?.visible?.[0],
         fixed_price: flattened?.fixed_price?.[0],
-        images: images.length === 0 ? "Add an image." : undefined,
+        images: images.length === 0 ? "Ajoutez une image." : undefined,
       },
     };
   }
@@ -48,11 +48,11 @@ export async function createServiceAction(
 
   if (!apiUrl) {
     return {
-      message: "API_URL is not configured. The form data is valid.",
+      message: "API_URL n'est pas configuré. Les données du formulaire sont valides.",
       notification: {
         id: "service-create-api-missing",
         status: "error",
-        message: "Service was not created.",
+        message: "Le service n'a pas été créé.",
       },
     };
   }
@@ -81,21 +81,21 @@ export async function createServiceAction(
 
     if (!response.ok) {
       return {
-        message: "Service was not created. Check the form and try again.",
+        message: "Le service n'a pas été créé. Vérifiez le formulaire et réessayez.",
         notification: {
           id: `service-create-${response.status}`,
           status: "error",
-          message: "Service was not created.",
+          message: "Le service n'a pas été créé.",
         },
       };
     }
   } catch {
     return {
-      message: "Unable to reach the API.",
+      message: "Impossible de joindre l'API.",
       notification: {
         id: "service-create-fetch-error",
         status: "error",
-        message: "Unable to reach the API.",
+        message: "Impossible de joindre l'API.",
       },
     };
   }

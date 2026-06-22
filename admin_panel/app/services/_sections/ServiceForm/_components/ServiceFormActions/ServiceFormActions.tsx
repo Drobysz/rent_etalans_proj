@@ -6,13 +6,13 @@ export function ServiceFormActions({
   mode,
   pending,
 }: ServiceFormActionsProps) {
-  const submitLabel = mode === "edit" ? "Save changes" : "Create service";
-  const pendingLabel = mode === "edit" ? "Saving" : "Creating";
+  const submitLabel = mode === "edit" ? "Enregistrer les modifications" : "Créer le service";
+  const pendingLabel = mode === "edit" ? "Enregistrement" : "Création";
 
   return (
     <div className={styles.actions}>
       <Link className={styles.secondaryButton} href="/services">
-        Cancel
+        Annuler
       </Link>
       <button className={styles.submitButton} type="submit" disabled={pending}>
         {pending ? pendingLabel : submitLabel}

@@ -7,8 +7,8 @@ export const mockOrders: Order[] = [
     reserveId: "RSV-5831",
     guestName: "Lea Martin",
     guestEmail: "lea.martin@example.com",
-    apartmentName: "Rue Oberkampf Studio",
-    services: ["Mid-stay cleaning", "Breakfast delivery"],
+    apartmentName: "Studio Rue Oberkampf",
+    services: ["Ménage en cours de séjour", "Livraison du petit-déjeuner"],
     createdAt: "2026-06-05T08:20:00.000Z",
     total: 85,
     payment: {
@@ -18,7 +18,7 @@ export const mockOrders: Order[] = [
       amount: 85,
       currency: "EUR",
       transactionId: "pi_3P8xQ8Lw",
-      paymentMethod: "Visa ending 4242",
+      paymentMethod: "Visa se terminant par 4242",
       receiptEmail: "lea.martin@example.com",
       createdAt: "2026-06-05T08:21:00.000Z",
       metadata: {
@@ -33,8 +33,8 @@ export const mockOrders: Order[] = [
     reserveId: "RSV-5802",
     guestName: "Marco Bianchi",
     guestEmail: "marco.bianchi@example.com",
-    apartmentName: "Canal Saint-Martin Flat",
-    services: ["Airport transfer"],
+    apartmentName: "Appartement Canal Saint-Martin",
+    services: ["Transfert aéroport"],
     createdAt: "2026-06-04T18:05:00.000Z",
     total: 72,
     payment: {
@@ -44,7 +44,7 @@ export const mockOrders: Order[] = [
       amount: 72,
       currency: "EUR",
       transactionId: "pi_3P8rS2Jm",
-      paymentMethod: "Mastercard ending 1881",
+      paymentMethod: "Mastercard se terminant par 1881",
       receiptEmail: "marco.bianchi@example.com",
       createdAt: "2026-06-04T18:06:00.000Z",
       metadata: {
@@ -60,7 +60,7 @@ export const mockOrders: Order[] = [
     guestName: "Nora Schmidt",
     guestEmail: "nora.schmidt@example.com",
     apartmentName: "Montmartre Loft",
-    services: ["Mid-stay cleaning"],
+    services: ["Ménage en cours de séjour"],
     createdAt: "2026-06-03T10:35:00.000Z",
     total: 49,
     payment: {
@@ -70,7 +70,7 @@ export const mockOrders: Order[] = [
       amount: 49,
       currency: "EUR",
       transactionId: "manual-7784",
-      paymentMethod: "Bank transfer",
+      paymentMethod: "Virement bancaire",
       receiptEmail: "nora.schmidt@example.com",
       createdAt: "2026-06-03T10:41:00.000Z",
       metadata: {
@@ -191,10 +191,10 @@ export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> 
     const orders = sortOrders(
       payments.map((payment) => ({
         id: String(payment.id),
-        reserveId: payment.reserve_id ?? "unknown",
+        reserveId: payment.reserve_id ?? "inconnu",
         guestName: `Client ${payment.client_number ?? payment.id}`,
         guestEmail: payment.email,
-        apartmentName: "Apartment",
+        apartmentName: "Appartement",
         services: payment.services?.map((service) => service.name) ?? [],
         createdAt: payment.created_at ?? new Date().toISOString(),
         total: Number(payment.total_price ?? 0),
@@ -205,12 +205,12 @@ export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> 
           amount: Number(payment.total_price ?? 0),
           currency: "EUR",
           transactionId: payment.reserve_id ?? String(payment.id),
-          paymentMethod: "Card",
+          paymentMethod: "Carte",
           receiptEmail: payment.email,
           createdAt: payment.created_at ?? new Date().toISOString(),
           sessionId: payment.session_id ?? undefined,
           metadata: {
-            reserveId: payment.reserve_id ?? "unknown",
+            reserveId: payment.reserve_id ?? "inconnu",
             stripeSessionId: payment.session_id ?? "",
             source: "api",
           },

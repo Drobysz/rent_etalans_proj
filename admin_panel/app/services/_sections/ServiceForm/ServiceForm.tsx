@@ -31,14 +31,14 @@ export function ServiceForm({
       <form className={styles.form} action={formAction}>
         {service ? <input type="hidden" name="serviceId" value={service.id} /> : null}
         <ServiceTextField
-          label="Name"
+          label="Nom"
           name="name"
           maxLength={30}
           defaultValue={service?.name}
           error={state.fieldErrors?.name}
         />
         <ServiceTextField
-          label="Price"
+          label="Prix"
           name="price"
           type="number"
           min="0"
@@ -58,18 +58,18 @@ export function ServiceForm({
         />
         <div className={styles.statusGrid}>
           <ServiceToggleField
-            label="Visibility"
+            label="Visibilité"
             name="visible"
             defaultChecked={service?.visible ?? true}
             onLabel="Visible"
-            offLabel="Hidden"
+            offLabel="Masqué"
           />
           <ServiceToggleField
-            label="Price"
+            label="Prix"
             name="fixed_price"
             defaultChecked={service?.fixedPrice ?? false}
-            onLabel="Fixed price"
-            offLabel="Per day"
+            onLabel="Prix fixe"
+            offLabel="Par jour"
           />
         </div>
         <ServiceImageField

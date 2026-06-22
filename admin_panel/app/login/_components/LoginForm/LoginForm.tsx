@@ -13,13 +13,13 @@ export function LoginForm() {
   return (
     <form className={styles.form} action={formAction}>
       <label className={styles.field}>
-        <span>Name</span>
+        <span>Nom</span>
         <input name="name" type="text" autoComplete="username" aria-invalid={Boolean(state.fieldErrors?.name)} />
         {state.fieldErrors?.name ? <strong>{state.fieldErrors.name}</strong> : null}
       </label>
 
       <label className={styles.field}>
-        <span>Password</span>
+        <span>Mot de passe</span>
         <div className={styles.passwordField}>
           <input
             name="password"
@@ -30,7 +30,7 @@ export function LoginForm() {
           <button
             className={styles.passwordToggle}
             type="button"
-            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
             aria-pressed={showPassword}
             onClick={() => setShowPassword((visible) => !visible)}
           >
@@ -55,7 +55,7 @@ export function LoginForm() {
       {state.message ? <p className={styles.error}>{state.message}</p> : null}
 
       <button className={styles.submitButton} type="submit" disabled={pending}>
-        {pending ? "Signing in" : "Sign in"}
+        {pending ? "Connexion" : "Se connecter"}
       </button>
     </form>
   );

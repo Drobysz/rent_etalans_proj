@@ -109,7 +109,7 @@ export function ServiceImageField({
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
         >
-          Choose image
+          Choisir une image
           <input
             ref={inputRef}
             name="images"
@@ -126,7 +126,7 @@ export function ServiceImageField({
             className={styles.previewButton}
             type="button"
             onClick={() => removeExistingImage(image)}
-            aria-label={`Remove image: ${image.filename}`}
+            aria-label={`Supprimer l'image : ${image.filename}`}
           >
             <span
               className={styles.preview}
@@ -144,7 +144,7 @@ export function ServiceImageField({
             className={styles.previewButton}
             type="button"
             onClick={clearSelectedImage}
-            aria-label={`Remove selected image: ${preview.name}`}
+            aria-label={`Supprimer l'image sélectionnée : ${preview.name}`}
           >
             <span
               className={styles.preview}
