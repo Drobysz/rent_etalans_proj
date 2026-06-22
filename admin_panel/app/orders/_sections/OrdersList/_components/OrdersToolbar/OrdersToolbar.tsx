@@ -15,7 +15,7 @@ export function OrdersToolbar({ reserveId, sort }: OrdersToolbarProps) {
 
   return (
     <div className={styles.toolbar}>
-      <form className={styles.searchForm} action="/orders">
+      <form className={styles.searchForm} action="">
         <input type="hidden" name="sort" value={sort} />
         <label className={styles.searchField}>
           <span>ID de réservation</span>
