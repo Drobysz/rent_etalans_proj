@@ -6,6 +6,7 @@ import { StayInputProps } from "./StayInput.props";
 import s from "./style.module.scss";
 import { cn } from "@/lib/utils";
 import { b612_bold } from "@/fonts/fonts";
+import { useWindowWidth } from "@/hooks";
 
 export const StayInput = ({
     label,
@@ -21,10 +22,11 @@ export const StayInput = ({
 }: StayInputProps)=> {
     const { setServParams } = useContext(GlobalContext);
     const [hover, setHover] = useState(false);
-    const ref = useRef<HTMLLabelElement>(null!);
+    const ref = useRef<HTMLDivElement>(null!);
     const inputRef = useRef<HTMLInputElement>(null!);
+    const isDesktop = useWindowWidth(780) as boolean;
 
-    const inputId = `${label}-${param}`;
+    const inputId = `stay-${param}`;
 
     const isInputFocused = isSectActive && isFocused
     const isHoveredAndNotActive = !isSectActive && hover
@@ -68,11 +70,14 @@ export const StayInput = ({
         };
 
         updateCursorPosition();
-        inputRef.current.focus();
         window.addEventListener("resize", handleResize);
 
+        if (isDesktop) {
+            inputRef.current.focus();
+        }
+
         return ()=> window.removeEventListener("resize", handleResize);
-    }, [currFormId, formId, updateCursorPosition])
+    }, [currFormId, formId, isDesktop, updateCursorPosition])
 
     useEffect(()=> {
         const handleInputBlur = (e: KeyboardEvent)=> {
@@ -86,9 +91,8 @@ export const StayInput = ({
     }, [currFormId, formId])
 
     return (
-        <label 
+        <div
             ref={ref}
-            htmlFor={inputId}
             onPointerDown={()=> {
                 setCurrFormId(formId);
                 updateCursorPosition();
@@ -102,13 +106,16 @@ export const StayInput = ({
             )}
         >
             <div className={s.body}>
-                <span className={cn(
-                    s.label,
-                    b612_bold.className,
-                    isFocused && s.light
-                )}>
+                <label
+                    className={cn(
+                        s.label,
+                        b612_bold.className,
+                        isFocused && s.light
+                    )}
+                    htmlFor={inputId}
+                >
                     {label}
-                </span>
+                </label>
                 <div className={s.input_space}>
                     <input
                         {...props}
@@ -135,6 +142,6 @@ export const StayInput = ({
                     />
                 </div>
             </div>
-        </label>
+        </div>
     )
 }

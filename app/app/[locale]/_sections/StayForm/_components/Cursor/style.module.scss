@@ -2,7 +2,7 @@
 
 .cursor {
     @apply absolute z-10 rounded-full
-        bg-white shadow-xl;
+        bg-white shadow-xl pointer-events-none;
 }
 
 @media (max-width: 945px) {
