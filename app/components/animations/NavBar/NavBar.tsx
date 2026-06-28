@@ -26,6 +26,7 @@ export const Navbar = ({className}: NavbarType)=>{
             className={cn(
                 "h-full relative flex",
                 "gap-4 items-center",
+                "max-[560px]:gap-1",
                 className
             )}
             onMouseLeave={()=> setPosition(positionClicked)}

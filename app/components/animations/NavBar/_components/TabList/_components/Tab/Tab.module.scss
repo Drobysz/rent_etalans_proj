@@ -2,5 +2,6 @@
 
 .sm_text {
 	@apply cursor-pointer px-3 duration-200
-		hover:text-[#AE8A1D] transition;
+		hover:text-[#AE8A1D] transition
+		max-[560px]:px-1.5 max-[560px]:text-sm;
 }

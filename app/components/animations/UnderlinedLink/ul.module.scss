@@ -2,19 +2,22 @@
 
 .underline {
 	width: 0%;
-	@apply block h-px
+	@apply block h-px max-w-full
 		cursor-pointer duration-300
 		transition-all;
 }
 
 .underline_link {
-	@apply relative w-fit;
+	@apply relative inline-flex w-fit flex-col items-start;
+}
+
+.underline_link > a {
+	@apply inline-flex w-fit flex-col items-start;
 }
 
 .underline_link:hover .underline{
 	animation: load 0.5s ease forwards;
 }
-
 
 @keyframes load{
   to { width: 90%; }

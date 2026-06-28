@@ -11,7 +11,7 @@ export const UnderlinedInnerLink = ({
 	colorLine = "light",
 }: UnderlinedLinkProps)=> {
 	return (
-		<span>
+		<span className="relative">
 			<Link
 				href={href}
 				className={cn(
@@ -24,7 +24,8 @@ export const UnderlinedInnerLink = ({
 					styles.underline, {
 						["bg-white"]: colorLine == "light",
 						["bg-gray-700"]: colorLine == "dark",
-						["bg-blue-500"]: colorLine == "primary"
+						["bg-blue-500"]: colorLine == "primary",
+						["bg-inherit"]: colorLine == "inherit",
 					}
 				)}/>
 			</Link>

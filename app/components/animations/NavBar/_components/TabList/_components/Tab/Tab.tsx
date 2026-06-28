@@ -34,6 +34,21 @@ export const Tab = ({
         };
     }, [handleInteraction, isActive]);
 
+    useEffect(()=> {
+        if (!isActive) return;
+
+        const handleResize = ()=> {
+            handleInteraction("hover");
+            handleInteraction("click");
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return ()=> {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [handleInteraction, isActive]);
+
     return (
         <Link
             href={href} 
