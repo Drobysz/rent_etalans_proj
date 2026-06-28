@@ -26,7 +26,7 @@ export const SideMenu = ({
 
     const docs = [
         { href: "/documentation/privacy_policy", label: t("privacyPolicy") },
-        { href: "/documentation/meals", label: "Meals" },
+        { href: "/documentation/meals", label: t("meals") },
         { href: "/documentation/developer", label: t("developer") },
     ];
     const isHidden = pn.split('/').length < 4;

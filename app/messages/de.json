@@ -88,7 +88,26 @@
     "sideMenu": {
       "categories": "Kategorien",
       "privacyPolicy": "Datenschutzerklärung",
+      "meals": "Mahlzeiten",
       "developer": "Entwickler"
+    },
+    "developer": {
+      "title": "Hinweis zum Entwickler",
+      "description": "Wenn Sie die Projekte des Entwicklers kennenlernen möchten, besuchen Sie ",
+      "linkText": "die Website",
+      "linkUrl": "https://drobysz.vercel.app/de/projects",
+      "imageAlt": "Illustration der Projektseite des Entwicklers"
+    },
+    "meals": {
+      "title": "Frühstück",
+      "description": "Dieser Artikel listet die Speisen auf, die zum Frühstück serviert werden können.",
+      "imageAlt": "Frühstücksillustration",
+      "items": [
+        "Obst: Kiwis, Bananen, Orangen, Avocado.",
+        "Getränke: Tee, Kaffee, Milch, Wasser.",
+        "Backwaren: rosenförmige Brötchen, Kuchen, Pfannkuchen, Baguettes.",
+        "Zusätzlich: hausgemachte Marmelade und Walnüsse."
+      ]
     }
   },
   "privacyPolicy": {

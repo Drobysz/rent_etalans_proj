@@ -1,14 +1,23 @@
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
-export default function MealsPage () {
+export default async function MealsPage ({
+    params
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "documentation.meals" });
+    const items = t.raw("items") as string[];
+
     return (
         <article className="p-4">
             <header className="pb-5">
                 <h1 className="font-bold text-neutral-700 text-4xl">
-                    Breakfast
+                    {t("title")}
                 </h1>
                 <p className="text-neutral-500 text-sm">
-                    This article will list the dishes that may be served for breakfast.
+                    {t("description")}
                 </p>
             </header>
 
@@ -17,23 +26,16 @@ export default function MealsPage () {
                 width={125}
                 height={250}
                 src="/breakfast.jpg"
-                alt="Breakfast illustration"
+                alt={t("imageAlt")}
                 loading="eager"
             />
 
             <ul className="flex flex-col gap-1 text-neutral-500 pl-1 pt-4 max-[560px]:text-sm">
-                <li>
-                    Fruits: Kiwi, bananas, oranges, avacado.
-                </li>
-                <li>
-                    Drinks: Tea, Coffee, Milk, Water.
-                </li>
-                <li>
-                    Baked goods: rose-shaped buns, pie, pancakes, baguettes.
-                </li>
-                <li>
-                    Additional: jam produced by us, walnuts. 
-                </li>
+                {items.map((item) => (
+                    <li key={item}>
+                        {item}
+                    </li>
+                ))}
             </ul>
         </article>
     )

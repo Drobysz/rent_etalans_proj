@@ -88,7 +88,26 @@
     "sideMenu": {
       "categories": "Catégories",
       "privacyPolicy": "Politique de confidentialité",
+      "meals": "Repas",
       "developer": "Développeur"
+    },
+    "developer": {
+      "title": "Note sur le développeur",
+      "description": "Si vous souhaitez découvrir les projets du développeur, vous pouvez consulter ",
+      "linkText": "le site",
+      "linkUrl": "https://drobysz.vercel.app/fr/projects",
+      "imageAlt": "Illustration de la page des projets du développeur"
+    },
+    "meals": {
+      "title": "Petit-déjeuner",
+      "description": "Cet article présente les plats qui peuvent être servis au petit-déjeuner.",
+      "imageAlt": "Illustration du petit-déjeuner",
+      "items": [
+        "Fruits : kiwis, bananes, oranges, avocat.",
+        "Boissons : thé, café, lait, eau.",
+        "Viennoiseries et pains : brioches en forme de rose, tarte, crêpes, baguettes.",
+        "Suppléments : confiture maison et noix."
+      ]
     }
   },
   "privacyPolicy": {

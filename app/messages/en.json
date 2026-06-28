@@ -88,7 +88,26 @@
     "sideMenu": {
       "categories": "Categories",
       "privacyPolicy": "Privacy policy",
+      "meals": "Meals",
       "developer": "Developer"
+    },
+    "developer": {
+      "title": "Note on the developer",
+      "description": "If you want to get acquainted with the developer projects, you can follow ",
+      "linkText": "the site",
+      "linkUrl": "https://drobysz.vercel.app/en/projects",
+      "imageAlt": "Developer project page illustration"
+    },
+    "meals": {
+      "title": "Breakfast",
+      "description": "This article will list the dishes that may be served for breakfast.",
+      "imageAlt": "Breakfast illustration",
+      "items": [
+        "Fruits: kiwi, bananas, oranges, avocado.",
+        "Drinks: tea, coffee, milk, water.",
+        "Baked goods: rose-shaped buns, pie, pancakes, baguettes.",
+        "Additional: homemade jam and walnuts."
+      ]
     }
   },
   "privacyPolicy": {

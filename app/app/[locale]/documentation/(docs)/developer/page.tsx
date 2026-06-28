@@ -1,22 +1,30 @@
 import { UnderlinedInnerLink } from "@/components/animations/UnderlinedLink/UnderlinedInnerLink";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
-export default function DeveloperPage () {
+export default async function DeveloperPage ({
+    params
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "documentation.developer" });
+
     return (
         <article className="p-10 max-[560px]:p-3">
             <header className="pb-5">
                 <h1 className="text-4xl text-neutral-700 font-bold max-[560px]:text-2xl">
-                    Note on the developer 
+                    {t("title")}
                 </h1>
                 <p className="text-neutral-500 max-[560px]:text-xs">
-                    if you want to get acquinted with the developer projects you can follow 
+                    {t("description")}
                     <span className="w-fit h-fit pl-1 relative">
                         <UnderlinedInnerLink
                             className="text-blue-600"
                             colorLine="primary"
-                            href="https://drobysz.vercel.app/en/projects"
+                            href={t("linkUrl")}
                         >
-                            the site
+                            {t("linkText")}
                         </UnderlinedInnerLink>
                     </span>
                 </p>
@@ -26,7 +34,7 @@ export default function DeveloperPage () {
                 src="/developer.png"
                 width={2648}
                 height={1334}
-                alt="developer project page illustration"
+                alt={t("imageAlt")}
                 loading="eager"
             />
         </article>
