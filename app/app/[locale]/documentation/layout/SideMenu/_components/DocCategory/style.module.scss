@@ -1,0 +1,11 @@
+@reference "tailwindcss";
+
+.doc_category {
+    @apply cursor-pointer
+        transition-all;
+}
+
+.chosen,
+.doc_category:hover {
+    @apply text-amber-500 translate-x-1.5;
+}

@@ -84,6 +84,156 @@
   "cancel": {
     "title": "Le paiement a échoué. Redirection..."
   },
+  "documentation": {
+    "sideMenu": {
+      "categories": "Catégories",
+      "privacyPolicy": "Politique de confidentialité",
+      "developer": "Développeur"
+    }
+  },
+  "privacyPolicy": {
+    "title": "Politique de confidentialité",
+    "lastUpdatedLabel": "Dernière mise à jour",
+    "lastUpdated": "2026-06-28",
+    "sections": [
+      {
+        "id": "introduction",
+        "title": "1. Introduction",
+        "content": [
+          "Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles.",
+          "La présente politique de confidentialité explique comment nous collectons, utilisons, conservons et protégeons vos informations lorsque vous utilisez notre site web.",
+          "En utilisant notre site web, vous acceptez les pratiques décrites dans cette politique de confidentialité."
+        ]
+      },
+      {
+        "id": "information-we-collect",
+        "title": "2. Informations que nous collectons",
+        "content": [
+          "Nous collectons uniquement les informations personnelles suivantes :"
+        ],
+        "list": [
+          "Adresse email"
+        ],
+        "footer": "Nous ne collectons pas de noms, numéros de téléphone, informations de paiement, adresses ou autres données personnelles, sauf indication explicite."
+      },
+      {
+        "id": "how-we-use-information",
+        "title": "3. Utilisation de vos informations",
+        "content": [
+          "Votre adresse email peut être utilisée pour :"
+        ],
+        "list": [
+          "Créer et gérer votre compte.",
+          "Authentifier votre identité lors de la connexion.",
+          "Vous communiquer des informations importantes liées à votre compte.",
+          "Répondre à vos demandes ou questions.",
+          "Respecter nos obligations légales."
+        ],
+        "footer": "Nous ne vendons ni ne louons vos informations personnelles à des tiers."
+      },
+      {
+        "id": "legal-basis",
+        "title": "4. Base légale du traitement (RGPD)",
+        "content": [
+          "Conformément au Règlement général sur la protection des données (RGPD), nous traitons votre adresse email sur la base d'un ou plusieurs des fondements juridiques suivants :"
+        ],
+        "list": [
+          "Votre consentement.",
+          "L'exécution d'un contrat.",
+          "Le respect d'obligations légales.",
+          "Nos intérêts légitimes, à condition qu'ils ne prévalent pas sur vos droits."
+        ]
+      },
+      {
+        "id": "data-storage",
+        "title": "5. Conservation des données",
+        "content": [
+          "Votre adresse email est conservée de manière sécurisée au moyen de mesures techniques et organisationnelles appropriées.",
+          "Nous conservons vos informations uniquement aussi longtemps que nécessaire pour fournir nos services ou respecter nos obligations légales."
+        ]
+      },
+      {
+        "id": "sharing",
+        "title": "6. Partage des informations",
+        "content": [
+          "Nous ne vendons pas vos données personnelles.",
+          "Nous pouvons partager vos informations uniquement lorsque :"
+        ],
+        "list": [
+          "La loi l'exige.",
+          "Cela est nécessaire pour fournir nos services (par exemple avec des prestataires d'hébergement).",
+          "Cela est nécessaire pour protéger nos droits légaux."
+        ],
+        "footer": "Tout prestataire traitant vos données pour notre compte est tenu de respecter le RGPD."
+      },
+      {
+        "id": "cookies",
+        "title": "7. Cookies",
+        "content": [
+          "Notre site web peut utiliser des cookies essentiels nécessaires à son fonctionnement.",
+          "Nous n'utilisons pas de cookies publicitaires ou analytiques sans obtenir votre consentement lorsque la loi l'exige."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "8. Vos droits en vertu du RGPD",
+        "content": [
+          "Si vous vous trouvez dans l'Espace économique européen (EEE), vous disposez des droits suivants :"
+        ],
+        "list": [
+          "Accéder à vos données personnelles.",
+          "Corriger les informations inexactes.",
+          "Demander la suppression de vos données.",
+          "Limiter le traitement.",
+          "Vous opposer au traitement.",
+          "Demander la portabilité des données.",
+          "Retirer votre consentement.",
+          "Déposer une réclamation auprès de votre autorité locale de protection des données."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "9. Sécurité des données",
+        "content": [
+          "Nous mettons en place des mesures de sécurité appropriées pour protéger vos informations personnelles.",
+          "Cependant, aucune méthode de stockage électronique ou de transmission sur Internet n'est totalement sécurisée."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "10. Confidentialité des enfants",
+        "content": [
+          "Nos services ne sont pas destinés aux enfants de moins de 16 ans.",
+          "Nous ne collectons pas sciemment d'informations personnelles auprès d'enfants."
+        ]
+      },
+      {
+        "id": "international-transfers",
+        "title": "11. Transferts internationaux de données",
+        "content": [
+          "Si vos données sont transférées en dehors de l'Espace économique européen, nous veillons à ce que des garanties appropriées soient mises en place conformément au RGPD."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "12. Modifications de cette politique de confidentialité",
+        "content": [
+          "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre.",
+          "Toute modification sera publiée sur cette page avec la date de dernière mise à jour actualisée."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "13. Contact",
+        "content": [
+          "Si vous avez des questions concernant cette politique de confidentialité ou si vous souhaitez exercer vos droits RGPD, veuillez nous contacter."
+        ],
+        "contact": {
+          "email": "support@example.com"
+        }
+      }
+    ]
+  },
   "footer": {
     "developedBy": "Développé par",
     "holidayLine": "Vos vacances à Etalans"

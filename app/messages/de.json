@@ -84,6 +84,156 @@
   "cancel": {
     "title": "Zahlung fehlgeschlagen. Weiterleitung..."
   },
+  "documentation": {
+    "sideMenu": {
+      "categories": "Kategorien",
+      "privacyPolicy": "Datenschutzerklärung",
+      "developer": "Entwickler"
+    }
+  },
+  "privacyPolicy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdatedLabel": "Zuletzt aktualisiert",
+    "lastUpdated": "2026-06-28",
+    "sections": [
+      {
+        "id": "introduction",
+        "title": "1. Einleitung",
+        "content": [
+          "Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre personenbezogenen Daten zu schützen.",
+          "Diese Datenschutzerklärung erläutert, wie wir Ihre Informationen erfassen, verwenden, speichern und schützen, wenn Sie unsere Website nutzen.",
+          "Durch die Nutzung unserer Website stimmen Sie den in dieser Datenschutzerklärung beschriebenen Verfahren zu."
+        ]
+      },
+      {
+        "id": "information-we-collect",
+        "title": "2. Informationen, die wir erfassen",
+        "content": [
+          "Wir erfassen ausschließlich die folgenden personenbezogenen Informationen:"
+        ],
+        "list": [
+          "E-Mail-Adresse"
+        ],
+        "footer": "Wir erfassen keine Namen, Telefonnummern, Zahlungsinformationen, Adressen oder sonstigen personenbezogenen Daten, sofern dies nicht ausdrücklich angegeben ist."
+      },
+      {
+        "id": "how-we-use-information",
+        "title": "3. Wie wir Ihre Informationen verwenden",
+        "content": [
+          "Ihre E-Mail-Adresse kann verwendet werden, um:"
+        ],
+        "list": [
+          "Ihr Konto zu erstellen und zu verwalten.",
+          "Ihre Identität bei der Anmeldung zu authentifizieren.",
+          "Wichtige kontobezogene Informationen mitzuteilen.",
+          "Auf Ihre Anfragen oder Anliegen zu antworten.",
+          "Gesetzliche Verpflichtungen einzuhalten."
+        ],
+        "footer": "Wir verkaufen oder vermieten Ihre personenbezogenen Informationen nicht an Dritte."
+      },
+      {
+        "id": "legal-basis",
+        "title": "4. Rechtsgrundlage der Verarbeitung (DSGVO)",
+        "content": [
+          "Gemäß der Datenschutz-Grundverordnung (DSGVO) verarbeiten wir Ihre E-Mail-Adresse auf Grundlage einer oder mehrerer der folgenden Rechtsgrundlagen:"
+        ],
+        "list": [
+          "Ihre Einwilligung.",
+          "Erfüllung eines Vertrags.",
+          "Einhaltung gesetzlicher Verpflichtungen.",
+          "Unsere berechtigten Interessen, sofern diese Ihre Rechte nicht überwiegen."
+        ]
+      },
+      {
+        "id": "data-storage",
+        "title": "5. Datenspeicherung",
+        "content": [
+          "Ihre E-Mail-Adresse wird durch geeignete technische und organisatorische Maßnahmen sicher gespeichert.",
+          "Wir bewahren Ihre Informationen nur so lange auf, wie es zur Bereitstellung unserer Dienste oder zur Einhaltung gesetzlicher Verpflichtungen erforderlich ist."
+        ]
+      },
+      {
+        "id": "sharing",
+        "title": "6. Weitergabe von Informationen",
+        "content": [
+          "Wir verkaufen Ihre personenbezogenen Daten nicht.",
+          "Wir können Ihre Informationen nur weitergeben, wenn:"
+        ],
+        "list": [
+          "Dies gesetzlich vorgeschrieben ist.",
+          "Dies zur Bereitstellung unserer Dienste erforderlich ist (z. B. bei Hosting-Anbietern).",
+          "Dies zum Schutz unserer gesetzlichen Rechte erforderlich ist."
+        ],
+        "footer": "Alle Dienstleister, die Ihre Daten in unserem Auftrag verarbeiten, müssen die DSGVO einhalten."
+      },
+      {
+        "id": "cookies",
+        "title": "7. Cookies",
+        "content": [
+          "Unsere Website kann essenzielle Cookies verwenden, die für ihren Betrieb erforderlich sind.",
+          "Wir verwenden keine Werbe- oder Analyse-Cookies, ohne Ihre Einwilligung einzuholen, sofern dies gesetzlich erforderlich ist."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "8. Ihre Rechte nach der DSGVO",
+        "content": [
+          "Wenn Sie sich im Europäischen Wirtschaftsraum (EWR) befinden, haben Sie das Recht:"
+        ],
+        "list": [
+          "Auf Ihre personenbezogenen Daten zuzugreifen.",
+          "Unrichtige Informationen berichtigen zu lassen.",
+          "Die Löschung Ihrer Daten zu verlangen.",
+          "Die Verarbeitung einzuschränken.",
+          "Der Verarbeitung zu widersprechen.",
+          "Datenübertragbarkeit zu verlangen.",
+          "Ihre Einwilligung zu widerrufen.",
+          "Eine Beschwerde bei Ihrer örtlichen Datenschutzaufsichtsbehörde einzureichen."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "9. Datensicherheit",
+        "content": [
+          "Wir setzen geeignete Sicherheitsmaßnahmen ein, um Ihre personenbezogenen Informationen zu schützen.",
+          "Keine Methode der elektronischen Speicherung oder Übertragung über das Internet ist jedoch vollständig sicher."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "10. Datenschutz von Kindern",
+        "content": [
+          "Unsere Dienste richten sich nicht an Kinder unter 16 Jahren.",
+          "Wir erfassen wissentlich keine personenbezogenen Informationen von Kindern."
+        ]
+      },
+      {
+        "id": "international-transfers",
+        "title": "11. Internationale Datenübermittlungen",
+        "content": [
+          "Wenn Ihre Daten außerhalb des Europäischen Wirtschaftsraums übertragen werden, stellen wir sicher, dass geeignete Garantien gemäß der DSGVO bestehen."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "12. Änderungen dieser Datenschutzerklärung",
+        "content": [
+          "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren.",
+          "Alle Änderungen werden auf dieser Seite zusammen mit dem aktualisierten Datum der letzten Aktualisierung veröffentlicht."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "13. Kontakt",
+        "content": [
+          "Wenn Sie Fragen zu dieser Datenschutzerklärung haben oder Ihre DSGVO-Rechte ausüben möchten, kontaktieren Sie uns bitte."
+        ],
+        "contact": {
+          "email": "support@example.com"
+        }
+      }
+    ]
+  },
   "footer": {
     "developedBy": "Entwickelt von",
     "holidayLine": "Ihre Ferien in Etalans"

@@ -84,6 +84,156 @@
   "cancel": {
     "title": "Payment failed. Redirecting..."
   },
+  "documentation": {
+    "sideMenu": {
+      "categories": "Categories",
+      "privacyPolicy": "Privacy policy",
+      "developer": "Developer"
+    }
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdatedLabel": "Last updated",
+    "lastUpdated": "2026-06-28",
+    "sections": [
+      {
+        "id": "introduction",
+        "title": "1. Introduction",
+        "content": [
+          "We respect your privacy and are committed to protecting your personal data.",
+          "This Privacy Policy explains how we collect, use, store, and protect your information when you use our website.",
+          "By using our website, you agree to the practices described in this Privacy Policy."
+        ]
+      },
+      {
+        "id": "information-we-collect",
+        "title": "2. Information We Collect",
+        "content": [
+          "We collect only the following personal information:"
+        ],
+        "list": [
+          "Email address"
+        ],
+        "footer": "We do not collect names, phone numbers, payment information, addresses, or any other personal data unless explicitly stated."
+      },
+      {
+        "id": "how-we-use-information",
+        "title": "3. How We Use Your Information",
+        "content": [
+          "Your email address may be used to:"
+        ],
+        "list": [
+          "Create and manage your account.",
+          "Authenticate your identity when signing in.",
+          "Communicate important account-related information.",
+          "Respond to your requests or inquiries.",
+          "Comply with legal obligations."
+        ],
+        "footer": "We do not sell or rent your personal information to third parties."
+      },
+      {
+        "id": "legal-basis",
+        "title": "4. Legal Basis for Processing (GDPR)",
+        "content": [
+          "Under the General Data Protection Regulation (GDPR), we process your email address based on one or more of the following legal grounds:"
+        ],
+        "list": [
+          "Your consent.",
+          "Performance of a contract.",
+          "Compliance with legal obligations.",
+          "Our legitimate interests, provided they do not override your rights."
+        ]
+      },
+      {
+        "id": "data-storage",
+        "title": "5. Data Storage",
+        "content": [
+          "Your email address is stored securely using appropriate technical and organizational measures.",
+          "We retain your information only as long as necessary to provide our services or comply with legal obligations."
+        ]
+      },
+      {
+        "id": "sharing",
+        "title": "6. Sharing of Information",
+        "content": [
+          "We do not sell your personal data.",
+          "We may share your information only when:"
+        ],
+        "list": [
+          "Required by law.",
+          "Necessary to provide our services (e.g., hosting providers).",
+          "Required to protect our legal rights."
+        ],
+        "footer": "Any service providers processing your data on our behalf are required to comply with GDPR."
+      },
+      {
+        "id": "cookies",
+        "title": "7. Cookies",
+        "content": [
+          "Our website may use essential cookies necessary for its operation.",
+          "We do not use advertising or analytics cookies without obtaining your consent where required by law."
+        ]
+      },
+      {
+        "id": "rights",
+        "title": "8. Your Rights Under GDPR",
+        "content": [
+          "If you are located in the European Economic Area (EEA), you have the right to:"
+        ],
+        "list": [
+          "Access your personal data.",
+          "Correct inaccurate information.",
+          "Request deletion of your data.",
+          "Restrict processing.",
+          "Object to processing.",
+          "Request data portability.",
+          "Withdraw consent.",
+          "Lodge a complaint with your local data protection authority."
+        ]
+      },
+      {
+        "id": "security",
+        "title": "9. Data Security",
+        "content": [
+          "We implement appropriate security measures to safeguard your personal information.",
+          "However, no method of electronic storage or transmission over the Internet is completely secure."
+        ]
+      },
+      {
+        "id": "children",
+        "title": "10. Children's Privacy",
+        "content": [
+          "Our services are not intended for children under the age of 16.",
+          "We do not knowingly collect personal information from children."
+        ]
+      },
+      {
+        "id": "international-transfers",
+        "title": "11. International Data Transfers",
+        "content": [
+          "If your data is transferred outside the European Economic Area, we ensure that appropriate safeguards are in place in accordance with GDPR."
+        ]
+      },
+      {
+        "id": "changes",
+        "title": "12. Changes to This Privacy Policy",
+        "content": [
+          "We may update this Privacy Policy from time to time.",
+          "Any changes will be posted on this page together with the updated 'Last updated' date."
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "13. Contact",
+        "content": [
+          "If you have any questions regarding this Privacy Policy or wish to exercise your GDPR rights, please contact us."
+        ],
+        "contact": {
+          "email": "support@example.com"
+        }
+      }
+    ]
+  },
   "footer": {
     "developedBy": "Developed by",
     "holidayLine": "Your holidays in Etalans"

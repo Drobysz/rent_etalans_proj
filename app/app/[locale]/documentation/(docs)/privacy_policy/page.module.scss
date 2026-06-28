@@ -1,0 +1,47 @@
+@reference "tailwindcss";
+
+.article {
+    @apply py-10 px-8 text-neutral-700;
+}
+
+.header {
+    @apply mb-10 border-b border-neutral-200 pb-6;
+}
+
+.title {
+    @apply text-4xl text-neutral-700 font-bold;
+}
+
+.updated {
+    @apply mt-3 text-sm text-neutral-500;
+}
+
+.section {
+    @apply mb-8;
+}
+
+.sectionTitle {
+    @apply mb-3 text-2xl font-semibold text-neutral-700;
+}
+
+.paragraph {
+    @apply mb-3 leading-7;
+}
+
+.list {
+    @apply mb-4 list-disc pl-6 leading-7;
+}
+
+.contactLink {
+    @apply text-amber-600 underline underline-offset-4;
+}
+
+@media (max-width: 680px) {
+    .article {
+        @apply px-4 pt-4;
+    }
+
+    .title {
+        @apply text-3xl;
+    }
+}
