@@ -1,0 +1,26 @@
+@reference "tailwindcss";
+
+.feed {
+    touch-action: pan-y;
+    @apply flex w-full overflow-x-hidden 
+        scroll-smooth;
+    
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE/Edge
+}
+
+.feed::-webkit-scrollbar {
+    display: none; // Chrome/Safari
+}
+
+// @media (min-width: 768px) {
+//     .feed {
+//        @apply overflow-x-auto pointer-events-none;
+//     }
+// }
+
+// @media (hover: hover) and (pointer: fine) {
+//     .feed {
+//        @apply overflow-x-auto pointer-events-none;
+//     }
+// }

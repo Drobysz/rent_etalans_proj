@@ -17,30 +17,11 @@ export const Cards = ()=> {
         isServiceLoading: isLoading,
         serviceError: error,
         services,
-        setMouseText
     } = useContext(GlobalContext);
-    
-    const MOUSE_GUIDE_TEXT = t("mouseGuide");
-    const isCard3d = useWindowWidth(768);
-
-    const handleMouseEnter = ()=> {
-        if (isCard3d) {
-            setMouseText(MOUSE_GUIDE_TEXT);
-        }
-    };
-
-    const handleMouseLeave = ()=> {
-        if (isCard3d) {
-            setMouseText("");
-        }
-    };
 
     return (
         <section 
             className={s.service_section}
-
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
         >
             {isLoading && 
                 <Loading/>

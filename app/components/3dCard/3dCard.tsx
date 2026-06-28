@@ -1,22 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import { 
-  CardBody as Card3dBody, 
   CardContainer as Card3dContainer, 
-  CardItem as Card3dItem,
-  DefaultItem
 } from "@/components/ui/3d-card";
+import {
+  Title,
+  Desc,
+  Price,
+  BuyBtn,
+  Body,
+} from "./_components";
 import s from "./style.module.scss";
-import { cn } from "@/lib/utils";
-import { MouseEvent, useState } from "react";
-import { useTranslations } from "next-intl";
 import { useWindowWidth } from "@/hooks";
-import { b612_bold } from "@/fonts/fonts";
+import { Image } from "@/types";
+import { ImageSwitcher } from "../ImageSwitcher/ImageSwitcher";
 
 export default function ThreeDCard({
   title, desc, btnStyle,
-  btnSign, price, img_url,
+  btnSign, price, images,
   className, isChosen, IsFixedPrice,
   btnAction
 }: {
@@ -25,127 +26,53 @@ export default function ThreeDCard({
   btnStyle?: string;
   btnSign?: string;
   price?: number;
-  img_url: string;
+  images: Image[];
   isChosen: boolean;
   IsFixedPrice: boolean;
   className?: string;
   btnAction?: () => void;
 }) {
-  const t = useTranslations("services");
-  const [descConceal, setDescConceal] = useState(true);
-
-  const isLong = desc.length > 60;
-  const descShort = desc.slice(0, 59) + "...";
-
   const is3dCard = useWindowWidth(768) as boolean;
   const Container = is3dCard ? Card3dContainer : "article";
-  const Body = is3dCard ? Card3dBody : DefaultItem;
-  const Item = is3dCard ? Card3dItem : DefaultItem;
-
-  const handleReadBtnClick = (e: MouseEvent<HTMLButtonElement>)=> {
-    e.stopPropagation();
-    setDescConceal(p => !p);
-  };
 
   return (
     <Container className="flex justify-center">
-      <Body 
-        className={cn(
-          s.body,
-          className,
-          "group/card", {
-            [s.body_chosen]: isChosen,
-            ["active:scale-97"]: is3dCard
-          }
-        )}
-        onClick={is3dCard ? btnAction : ()=> {}}
+      <Body
+        className={className}
+        is3dCard={is3dCard}
+        isChosen={isChosen}
+        btnAction={btnAction}
       >
-        <Item
-          translateZ="50"
-          className={cn(
-            s.title,
-            b612_bold.className,
-            isChosen 
-              ? "text-amber-600" 
-              : "text-neutral-600"
-          )}
+        <Title
+          is3dCard={is3dCard}
+          isChosen={isChosen}
         >
           {title}
-        </Item>
-        <Item
-          as="p"
-          translateZ="60"
-          className={s.desc}
-        >
-          {isLong &&
-            <>
-              {descConceal ? descShort : desc}
-                <button 
-                  className={cn(
-                    s.read_btn,
-                    descConceal 
-                      ? "hover:border-amber-600/50 hover:bg-amber-400/10" 
-                      : "hover:border-red-600/50 hover:bg-red-400/10"
-                  )}
-                  onClick={handleReadBtnClick}
-                >
-                  <span className={cn(
-                    "z-20",
-                    descConceal ? "text-yellow-600" : "text-red-700"
-                  )}>
-                    {descConceal ? t("readMore") : t("readLess")}
-                  </span>
-                  <div />
-                </button>
-            </>
-          }
-          {!isLong && desc}
-        </Item>
-        <Item 
-          translateZ="100" 
-          className="w-full pt-4"
-        >
-          <Image
-            src={img_url}
-            height={400}
-            width={400}
-            className={cn(s.img, "group-hover/card:shadow-xl")}
-            alt="thumbnail"
-          />
-        </Item>
+        </Title>
+        <Desc
+          is3dCard={is3dCard}
+          desc={desc}
+        />
+        <ImageSwitcher 
+          images={images}
+          format3d={is3dCard}
+        />
         {btnSign &&
           <div className={s.bottom}>
-            <Item
-              translateZ={20}
-              as="button"
-              onClick={btnAction}
-              className={cn(
-                s.btn,
-                btnStyle,
-                !btnStyle && "bg-black text-white"
-              )}
+            <BuyBtn
+              is3dCard={is3dCard}
+              btnStyle={btnStyle}
+              btnAction={btnAction}
             >
               {btnSign}
-            </Item>
-            <Item
-              translateZ={20}
-              as="button"
-              className={cn(s.price, "text-gold")}
-              onClick={!is3dCard ? btnAction : ()=> {}}
+            </BuyBtn>
+            <Price
+              is3dCard={is3dCard}
+              isFixedPrice={IsFixedPrice}
+              btnAction={btnAction}
             >
-              <div className="flex items-start">
-                {`${price}`}
-                <span className={s.currency}>
-                  €
-                  {!IsFixedPrice &&
-                    <span className="text-xs">
-                      {t("perDay")}
-                    </span>
-                  }
-                </span>
-              </div>
-            </Item>
-            
+              {price}
+            </Price>
           </div>
         }
       </Body>

@@ -44,6 +44,6 @@
 
 @media (max-width: 768px) {
     .main {
-        @apply overflow-x-hidden;
+        overflow-x: clip;
     }
 }
