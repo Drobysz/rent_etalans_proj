@@ -48,21 +48,21 @@ export const ImageSwitcher = ({
                 />
             }
             {images.length > 1 && (
-            <>
-                <Switchers 
-                    imgIdx={imgIdx}
-                    setImgIdx={setImgIdx}
-                    lastIdx={images.length - 1}
-                    hover={hover}
-                />
-                <CardPagination
-                    qntty={images.length}
-                    hover={hover}
-                    imgIdx={imgIdx}
-                    setImgIdx={setImgIdx}
-                />
-            </>
-        )}
+                <>
+                    <Switchers 
+                        imgIdx={imgIdx}
+                        setImgIdx={setImgIdx}
+                        lastIdx={images.length - 1}
+                        hover={hover}
+                    />
+                    <CardPagination
+                        qntty={images.length}
+                        hover={hover}
+                        imgIdx={imgIdx}
+                        setImgIdx={setImgIdx}
+                    />
+                </>
+            )}
         </Item>
     );
 }

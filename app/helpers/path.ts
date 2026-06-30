@@ -11,4 +11,14 @@ export class PathService {
        
         return pathPoints.filter(p => p !== '').includes(pagename);
     }
+
+    static withBasePath(path: string) {
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
+
+        if (!basePath || basePath === "/") {
+            return path;
+        }
+
+        return `${basePath.replace(/\/$/, "")}${path}`;
+    }
 }

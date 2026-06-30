@@ -1,4 +1,5 @@
 import { UnderlinedInnerLink } from "@/components/animations/UnderlinedLink/UnderlinedInnerLink";
+import { PathService } from "@/helpers/path";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
@@ -9,6 +10,7 @@ export default async function DeveloperPage ({
 }) {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "documentation.developer" });
+    const ps = PathService;
 
     return (
         <article className="p-10 max-[560px]:p-3">
@@ -31,7 +33,7 @@ export default async function DeveloperPage ({
             </header>
             <Image
                 className="w-full h-[60%] rounded-xl "
-                src="/developer.png"
+                src={ps.withBasePath("/developer.png")}
                 width={2648}
                 height={1334}
                 alt={t("imageAlt")}

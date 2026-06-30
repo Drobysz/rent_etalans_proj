@@ -36,7 +36,7 @@ export default function ThreeDCard({
   const Container = is3dCard ? Card3dContainer : "article";
 
   return (
-    <Container className="flex justify-center">
+    <Container className="flex justify-center w-full">
       <Body
         className={className}
         is3dCard={is3dCard}

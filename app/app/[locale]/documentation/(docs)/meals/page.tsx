@@ -1,3 +1,4 @@
+import { PathService } from "@/helpers/path";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
@@ -9,6 +10,7 @@ export default async function MealsPage ({
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "documentation.meals" });
     const items = t.raw("items") as string[];
+    const ps = PathService;
 
     return (
         <article className="p-4">
@@ -25,7 +27,7 @@ export default async function MealsPage ({
                 className="h-80 w-60 rounded-xl"
                 width={125}
                 height={250}
-                src="/breakfast.jpg"
+                src={ps.withBasePath("/breakfast.jpg")}
                 alt={t("imageAlt")}
                 loading="eager"
             />
