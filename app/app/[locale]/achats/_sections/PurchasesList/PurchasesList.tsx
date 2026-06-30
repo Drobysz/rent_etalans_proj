@@ -24,10 +24,6 @@ export const PurchasesList = ({
     const [isPending, setIsPending] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    // function getPath(path: string) {
-    //     return process.env.
-    // }
-
     useEffect(()=> {
         const loadPayments = async ()=> {
             setIsPending(true);
@@ -36,6 +32,13 @@ export const PurchasesList = ({
                 method: "GET",
                 credentials: "include",
             });
+
+            if (!res.ok) {
+                setPayments([]);
+                setIsPending(false);
+                return
+            }
+
             const item = await res.json();
 
             setPayments(item.payments);
@@ -57,7 +60,13 @@ export const PurchasesList = ({
     const filteredPayments = payments.filter(p => 
         ts.includesNormalized(p.reserve_id ?? "", searchValue)
     );
-    const lastPage = Math.ceil(filteredPayments.length / 7);
+
+    const ITEMS_PER_PAGE = 7;
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+
+    const pagePayments = filteredPayments.slice(start, end);
+    const lastPage = Math.ceil(filteredPayments.length / ITEMS_PER_PAGE);
 
     const showEmpty = !isPending && filteredPayments.length === 0;
     const showPagination = !isPending && filteredPayments.length > 0;
@@ -73,8 +82,8 @@ export const PurchasesList = ({
                 transition={transitionBounce}
                 variants={variantsOpacityAppearence}
             >
-                {filteredPayments.length > 0 && !isPending &&
-                    filteredPayments.map((p, i)=> 
+                {pagePayments.length > 0 && !isPending &&
+                    pagePayments.map((p, i)=> 
                         <PurchaseArticle
                             key={`serv_result_${p.id}_${i}`}
                             payment={p}
