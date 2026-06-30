@@ -41,7 +41,12 @@ export const createPayment = async (
         }
 
         const payload = await res.json();
+        const payment = payload["0"];
         const isExisted = payload.existed; 
+
+        if (!payment) {
+            throw new Error("Payment API response did not include a payment.");
+        }
 
         if (!isExisted) {
             await sendTelegramPurchaseNotification({
@@ -58,7 +63,7 @@ export const createPayment = async (
             });
         }
 
-        return res.ok;
+        return payment;
 
     } catch (error){
         if (error instanceof DOMException && error.name === "AbortError") {

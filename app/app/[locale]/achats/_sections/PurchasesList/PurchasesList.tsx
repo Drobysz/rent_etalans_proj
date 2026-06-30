@@ -1,6 +1,5 @@
 "use client";
 
-import { getServiceResult } from "@/queries/serviceResults";
 import { Payment } from "@/types";
 import { useEffect, useState } from "react";
 import { Loading } from "./loading";
@@ -13,6 +12,7 @@ import { motion } from "framer-motion";
 import { transitionBounce } from "@/framer_templates/transitions";
 import { variantsOpacityAppearence } from "@/framer_templates/variants";
 import { useTranslations } from "next-intl";
+import { TextService } from "@/helpers/string";
 
 export const PurchasesList = ({
     searchValue
@@ -20,56 +20,47 @@ export const PurchasesList = ({
     searchValue: string;
 })=> {
     const t = useTranslations("achats");
-    const [purchases, setPurchases] = useState<Payment[]>([]);
+     const [payments, setPayments] = useState<Payment[]>([]);
     const [isPending, setIsPending] = useState(false);
-    const [hasLoaded, setHasLoaded] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [lastPage, setLastPage] = useState(0);
+
+    // function getPath(path: string) {
+    //     return process.env.
+    // }
 
     useEffect(()=> {
-        setCurrentPage(1);
-    }, [searchValue]);
-
-    useEffect(()=> {
-        let ignore = false;
-
-        const fetchResult = async ()=> {
+        const loadPayments = async ()=> {
             setIsPending(true);
-            setHasLoaded(false);
 
-            try {
-                const res = await getServiceResult(searchValue, currentPage);
-                const items = res.data ?? [];
+            const res = await fetch(process.env.NEXT_PUBLIC_BASE_PATH + "/api/cookies/payment-storage", {
+                method: "GET",
+                credentials: "include",
+            });
+            const item = await res.json();
 
-                if (!ignore) {
-                    setPurchases(items);
-                    setCurrentPage(res.current_page);
-                    setLastPage(res.last_page);
-                }
-            } catch (error) {
-                console.error(error);
-
-                if (!ignore) {
-                    setPurchases([]);
-                    setLastPage(0);
-                }
-            } finally {
-                if (!ignore) {
-                    setIsPending(false);
-                    setHasLoaded(true);
-                }
-            }
+            setPayments(item.payments);
+            setIsPending(false);
         }
 
-        fetchResult();
+        loadPayments();
+    }, []);
 
-        return ()=> {
-            ignore = true;
-        };
-    }, [searchValue, currentPage]);
+    useEffect(()=> {
+        const setDefault = ()=> setCurrentPage(1);
+        setDefault();
+    }, [searchValue]);
 
-    const showEmpty = hasLoaded && !isPending && purchases.length === 0;
-    const showPagination = hasLoaded && !isPending && purchases.length > 0;
+    const ts = TextService;
+
+    console.log(payments)
+
+    const filteredPayments = payments.filter(p => 
+        ts.includesNormalized(p.reserve_id ?? "", searchValue)
+    );
+    const lastPage = Math.ceil(filteredPayments.length / 7);
+
+    const showEmpty = !isPending && filteredPayments.length === 0;
+    const showPagination = !isPending && filteredPayments.length > 0;
 
     return (
         <div className="flex flex-col gap-3">
@@ -82,8 +73,8 @@ export const PurchasesList = ({
                 transition={transitionBounce}
                 variants={variantsOpacityAppearence}
             >
-                {purchases.length > 0 && !isPending &&
-                    purchases.map((p, i)=> 
+                {filteredPayments.length > 0 && !isPending &&
+                    filteredPayments.map((p, i)=> 
                         <PurchaseArticle
                             key={`serv_result_${p.id}_${i}`}
                             payment={p}

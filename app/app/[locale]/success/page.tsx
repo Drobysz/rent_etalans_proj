@@ -11,6 +11,7 @@ import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 import { Service } from "@/types";
 import { getTranslations } from "next-intl/server";
+import { PaymentStorageSync } from "./_components";
 
 type SuccessSearchParams = {
     session_id?: string;
@@ -56,7 +57,7 @@ export default async function SuccessPage ({
 
     const serviceNames = filteredServices.map((service: Service) => service.name);
 
-    await createPayment(
+    const payment = await createPayment(
         email,
         reserve_id,
         clientNumber,
@@ -76,6 +77,8 @@ export default async function SuccessPage ({
                 />
             }
         >
+            <PaymentStorageSync payment={payment} />
+
             <div className={s.space}>
                 <section className="flex flex-col gap-4">
                     <h1 className={s.title}>

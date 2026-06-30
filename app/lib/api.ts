@@ -32,5 +32,7 @@ export function getBackendApiUrl(path: string) {
     return "";
   }
 
+  console.log(`${apiUrl.replace(/\/$/, "")}${normalizedPath}`)
+
   return `${apiUrl.replace(/\/$/, "")}${normalizedPath}`;
 }

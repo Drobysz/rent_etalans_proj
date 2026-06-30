@@ -114,8 +114,6 @@ export const PagesPagination = ({
                             />
                         </button>
                     </div>
-
-
                 </div>
             )}
         </>
