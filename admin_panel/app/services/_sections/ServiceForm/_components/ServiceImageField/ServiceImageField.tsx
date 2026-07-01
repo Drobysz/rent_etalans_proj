@@ -2,13 +2,12 @@
 
 import cn from "classnames";
 import { useEffect, useRef, useState } from "react";
-import type { ChangeEvent, CSSProperties, DragEvent } from "react";
+import type { ChangeEvent, DragEvent } from "react";
 import styles from "./style.module.scss";
 import type { ServiceImageFieldProps } from "./ServiceImageField.props";
 import type { ServiceImage } from "@/interfaces";
 
 type ImagePreview = {
-  isObjectUrl: boolean;
   name: string;
   url: string;
 };
@@ -21,46 +20,66 @@ export function ServiceImageField({
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentImages, setCurrentImages] = useState<ServiceImage[]>(existingImages);
   const [removedImageIds, setRemovedImageIds] = useState<string[]>([]);
-  const [preview, setPreview] = useState<ImagePreview | null>(null);
+  const [previews, setPreviews] = useState<ImagePreview[]>([]);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     return () => {
-      if (preview?.isObjectUrl) {
-        URL.revokeObjectURL(preview.url);
-      }
+      previews.forEach((preview) => URL.revokeObjectURL(preview.url));
     };
-  }, [preview]);
+  }, [previews]);
 
-  const setSelectedImage = (file: File | null) => {
-    setPreview((current) => {
-      if (current?.isObjectUrl) {
-        URL.revokeObjectURL(current.url);
-      }
+  const setSelectedImages = (files: File[]) => {
+    setPreviews((current) => {
+      current.forEach((preview) => URL.revokeObjectURL(preview.url));
 
-      if (!file) {
-        return null;
-      }
-
-      return {
-        isObjectUrl: true,
+      return files.map((file) => ({
         name: file.name,
         url: URL.createObjectURL(file),
-      };
+      }));
     });
   };
 
-  const applyFiles = (files: FileList | File[]) => {
-    const file = Array.from(files).find((item) => item.type.startsWith("image/"));
-
-    if (!file || !inputRef.current) {
+  const updateInputFiles = (files: File[]) => {
+    if (!inputRef.current) {
       return;
     }
 
     const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
+    files.forEach((file) => dataTransfer.items.add(file));
     inputRef.current.files = dataTransfer.files;
-    setSelectedImage(file);
+  };
+
+  const clearSelectedImages = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+
+    setSelectedImages([]);
+  };
+
+  const removeSelectedImage = (index: number) => {
+    const selectedFiles = Array.from(inputRef.current?.files ?? []);
+    const nextFiles = selectedFiles.filter((_, fileIndex) => fileIndex !== index);
+
+    if (nextFiles.length === 0) {
+      clearSelectedImages();
+      return;
+    }
+
+    updateInputFiles(nextFiles);
+    setSelectedImages(nextFiles);
+  };
+
+  const applyFiles = (files: FileList | File[]) => {
+    const images = Array.from(files).filter((item) => item.type.startsWith("image/"));
+
+    if (images.length === 0) {
+      return;
+    }
+
+    updateInputFiles(images);
+    setSelectedImages(images);
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -78,27 +97,16 @@ export function ServiceImageField({
     applyFiles(event.dataTransfer.files);
   };
 
-  const clearSelectedImage = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-
-    setSelectedImage(null);
-  };
-
   const removeExistingImage = (image: ServiceImage) => {
     setCurrentImages((images) => images.filter((item) => item.id !== image.id));
     setRemovedImageIds((ids) => [...ids, image.id]);
   };
 
-  const previewStyle: CSSProperties | undefined = preview
-    ? { backgroundImage: `url("${preview.url}")` }
-    : undefined;
-  const requiresImage = required && !preview && currentImages.length === 0;
+  const requiresImage = required && previews.length === 0 && currentImages.length === 0;
 
   return (
     <div className={styles.field}>
-      <span>Image</span>
+      <span>Images</span>
       {removedImageIds.map((imageId) => (
         <input key={imageId} type="hidden" name="deleteImageIds" value={imageId} />
       ))}
@@ -109,12 +117,13 @@ export function ServiceImageField({
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
         >
-          Choisir une image
+          Choisir des images
           <input
             ref={inputRef}
             name="images"
             type="file"
             accept="image/*"
+            multiple
             required={requiresImage}
             aria-invalid={Boolean(error)}
             onChange={handleFileChange}
@@ -139,16 +148,17 @@ export function ServiceImageField({
             </span>
           </button>
         ))}
-        {preview ? (
+        {previews.map((preview, index) => (
           <button
+            key={`${preview.name}-${preview.url}`}
             className={styles.previewButton}
             type="button"
-            onClick={clearSelectedImage}
+            onClick={() => removeSelectedImage(index)}
             aria-label={`Supprimer l'image sélectionnée : ${preview.name}`}
           >
             <span
               className={styles.preview}
-              style={previewStyle}
+              style={{ backgroundImage: `url("${preview.url}")` }}
               title={preview.name}
               aria-hidden="true"
             />
@@ -156,7 +166,7 @@ export function ServiceImageField({
               <span className={styles.removeIconInner}>×</span>
             </span>
           </button>
-        ) : null}
+        ))}
       </span>
       {error ? <strong>{error}</strong> : null}
     </div>

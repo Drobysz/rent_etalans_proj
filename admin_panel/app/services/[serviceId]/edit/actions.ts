@@ -5,10 +5,10 @@ import { requireAdmin } from "@/auth/sessions";
 import { getBackendApiBaseUrl, getBackendApiUrl } from "@/lib/api";
 import { serviceFormSchema, type ServiceFormActionState } from "../../_sections/ServiceForm/ServiceForm.schema";
 
-function getSelectedImage(formData: FormData) {
-  const image = formData.get("images");
-
-  return image instanceof File && image.size > 0 ? image : null;
+function getSelectedImages(formData: FormData) {
+  return formData
+    .getAll("images")
+    .filter((image): image is File => image instanceof File && image.size > 0);
 }
 
 async function readApiMessage(response: Response, fallback: string) {
@@ -145,7 +145,7 @@ export async function updateServiceAction(
       };
     }
 
-    const selectedImage = getSelectedImage(formData);
+    const selectedImages = getSelectedImages(formData);
 
     for (const imageId of deletedImageIds) {
       const imageResponse = await deleteServiceImage(
@@ -169,7 +169,7 @@ export async function updateServiceAction(
       }
     }
 
-    if (selectedImage) {
+    for (const selectedImage of selectedImages) {
       const imageResponse = await addServiceImage(
         apiUrl,
         serviceId,
