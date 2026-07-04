@@ -3,15 +3,23 @@
 import { useEffect, useRef } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
+import { useWindowWidth } from '@/hooks';
 
 export function SmoothScroll({
     children,
 }: {
     children: React.ReactNode
 }) {
-    const scrollRef = useRef<LocomotiveScroll | null>(null)
+    const scrollRef = useRef<LocomotiveScroll | null>(null);
+    const isDesktop = useWindowWidth(768) as boolean;
 
     useEffect(() => {
+        if (!isDesktop) {
+            scrollRef.current?.destroy();
+            scrollRef.current = null;
+            return;
+        }
+
         scrollRef.current = new LocomotiveScroll({
             lenisOptions: {
                 duration: 1.6,
@@ -22,10 +30,11 @@ export function SmoothScroll({
                 syncTouch: true,
             }
         })
+
         return () => {
             scrollRef.current?.destroy()
         }
-    }, [])
+    }, [isDesktop])
 
     return <>{children}</>    
 }
