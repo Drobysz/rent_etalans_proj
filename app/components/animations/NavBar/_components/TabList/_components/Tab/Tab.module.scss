@@ -14,8 +14,8 @@
 }
 
 .tab_title {
-	@apply cursor-pointer duration-200
-		transition max-[560px]:text-sm;
+	@apply cursor-pointer duration-200 transition
+		max-[340px]:text-sm;
 }
 
 .tab_list {
@@ -35,7 +35,7 @@
 	@apply duration-500 transition-transform;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 340px) {
 	.wrapper_default {
 		@apply px-1.5;
 	}

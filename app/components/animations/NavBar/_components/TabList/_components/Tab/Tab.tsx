@@ -21,7 +21,7 @@ export const Tab = ({
 
     const isList = list?.length > 0;
     const isDesktop = useWindowWidth(768) as boolean;
-    const chevronSize = isDesktop ? "w-5 h-5" : "w-3.5 h-3.5";
+    // const chevronSize = isDesktop ? "w-5 h-5" : "w-3.5 h-3.5";
     const isListOpen = isList && (isDesktop ? hover : clicked);
     const isHightLighted = isActive || hover;
     const tabColor = isHightLighted ? "text-gold" : "text-neutral-500";
@@ -66,7 +66,7 @@ export const Tab = ({
     }, [handleInteraction, isActive]);
 
     useEffect(()=> {
-        if (!isListOpen) return;
+        // if (!isListOpen) return;
 
         const handleClickOutside = (event: MouseEvent)=> {
             if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -79,7 +79,7 @@ export const Tab = ({
         return ()=> {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [isListOpen]);
+    }, [isListOpen, clicked]);
 
     return (
         <div 
@@ -90,8 +90,11 @@ export const Tab = ({
                 setHover(true)
             }}
             onClick={()=> {
-                handleInteraction("click")
-                setClicked(p => !p)
+                handleInteraction("click");
+                if (!isDesktop) {
+                    setClicked(p => !p);
+                }
+                setHover(false);
             }}
             onMouseLeave={()=> setHover(false)}
         >
@@ -104,7 +107,7 @@ export const Tab = ({
                         className={cn(
                             s.chevron,
                             tabColor,
-                            chevronSize,
+                            "w-5 h-5",
                             isListOpen 
                                 ? "rotate-180 transtale-y-0.5" 
                                 : "rotate-0 -transtale-y-0.5",
@@ -120,6 +123,12 @@ export const Tab = ({
                     {children}
                 </span>
             </Link>
+
+            {isList &&
+                <div 
+                    className="h-9.5 w-20 absolute top-0"
+                />
+            }
 
             {isList && 
                 <motion.ul

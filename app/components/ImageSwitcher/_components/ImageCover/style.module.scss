@@ -2,7 +2,7 @@
 
 .image_cover {
     @apply relative shrink-0 w-full 
-        h-52 max-w-full overflow-hidden 
+        max-w-full overflow-hidden 
         rounded-2xl bg-slate-100;
 }
 

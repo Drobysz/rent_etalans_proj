@@ -19,6 +19,7 @@ export const ImageSwitcher = ({
     images,
     nb_lits,
     format3d = false,
+    imageCoverClassName
 }: ImageSwitcherProps) => {
     const isImage = images.length > 0;
     const [imgIdx, setImgIdx] = useState(0);
@@ -38,13 +39,19 @@ export const ImageSwitcher = ({
                     {nb_lits} bed{nb_lits > 1 ? "s" : ""}
                 </span>
             }
-            {!isImage && <ImageCover url={"/empty_room.jpg"} /> } 
+            {!isImage && 
+                <ImageCover
+                    className={imageCoverClassName}
+                    url={"/empty_room.jpg"} 
+                /> 
+            } 
 
             {isImage && 
                 <Feed 
                     imgIdx={imgIdx}
                     setImgIdx={setImgIdx}
                     images={images}
+                    imageCoverClassName={imageCoverClassName}
                 />
             }
             {images.length > 1 && (

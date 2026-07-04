@@ -1,0 +1,42 @@
+@reference "tailwindcss";
+
+.features_list {
+    @apply grid gap-x-24 gap-y-6 justify-center;
+    grid-template-columns: repeat(3, max-content);
+}
+
+.feature {
+    @apply flex items-center gap-3;
+}
+
+.feature span {
+    @apply text-left leading-6;
+}
+
+@media (max-width: 768px) {
+    .features_list {
+        grid-template-columns: repeat(2, max-content);
+    }
+}
+
+@media (max-width: 560px) {
+    .features_list {
+        @apply gap-x-8 gap-y-4;
+    }
+}
+
+@media (max-width: 460px) {
+    .features_list {
+        @apply text-xs;
+    }
+
+    .feature svg {
+        @apply w-5 h-5;
+    }
+}
+
+@media (max-width: 390px) {
+    .features_list {
+        @apply gap-x-3 gap-y-3;
+    }
+}

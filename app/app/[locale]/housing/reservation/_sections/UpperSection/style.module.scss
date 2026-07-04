@@ -1,0 +1,88 @@
+@reference "tailwindcss";
+
+.upper_section {
+    @apply grid grid-cols-2 gap-8;
+}
+
+.image_cover {
+    @apply h-90;
+}
+
+.header {
+    @apply flex flex-col gap-0.5 items-end;
+}
+
+.title {
+    @apply text-5xl text-neutral-700
+        pt-3;
+}
+
+.subtitle {
+    @apply text-sm text-neutral-500;
+}
+
+.paragraph {
+    @apply flex flex-col gap-2;
+}
+
+.paragraph_title {
+    @apply text-xl text-neutral-700;
+}
+
+.desc {
+    @apply text-neutral-600;
+}
+
+@media (max-width: 860px) {
+    .upper_section {
+        @apply flex flex-col gap-2;
+    }
+
+    .header {
+        @apply flex flex-row justify-between 
+            items-end px-4;
+    }
+
+    .paragraph {
+        @apply px-3;
+    }
+
+    .title {
+        @apply text-4xl;
+    }
+
+    .subtitle {
+        @apply pb-2;
+    }
+}
+
+@media (max-width: 640px) {
+    .image_cover {
+        @apply h-80;
+    }
+}
+
+@media (max-width: 580px) {
+    .header {
+        @apply flex flex-col justify-between 
+            items-start px-4;
+    }
+
+    .title {
+        @apply text-3xl;
+    }
+
+    .subtitle {
+        @apply text-xs;
+    }
+
+    .image_cover {
+        @apply h-65;
+    }
+}
+
+@media (max-width: 580px) {
+    .image_cover {
+        @apply h-45;
+    }
+}

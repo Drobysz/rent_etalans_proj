@@ -53,7 +53,8 @@ export default function ThreeDCard({
           is3dCard={is3dCard}
           desc={desc}
         />
-        <ImageSwitcher 
+        <ImageSwitcher
+          imageCoverClassName={s.image_cover} 
           images={images}
           format3d={is3dCard}
         />

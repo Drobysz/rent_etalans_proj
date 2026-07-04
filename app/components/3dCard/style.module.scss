@@ -20,6 +20,10 @@
         min-w-20;
 }
 
+.image_cover {
+    @apply h-52;
+}
+
 .read_btn {
     @apply inline-block pl-2 
         duration-200 transition-transform rounded-xl
@@ -93,6 +97,13 @@
     }
 }
 
+@media (max-width: 640px) {
+    .image_cover {
+        width: min(100%, 19.125rem);
+        @apply h-30;
+    }
+}
+
 @media (max-width: 480px) {
     .body {
         @apply max-w-80;
@@ -112,5 +123,9 @@
 
     .price {
         @apply text-lg;
+    }
+
+    .image_cover {
+        @apply h-40;
     }
 }

@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import Image from "next/image";
 import cn from "classnames";
 import s from "./style.module.scss";
+import { PathService } from '@/helpers/path';
 
 interface ImageCoverProps{
   url: string;
@@ -20,7 +21,7 @@ export const ImageCover = forwardRef<HTMLDivElement, ImageCoverProps>(
         {...props}
       >
         <Image
-          src={url}
+          src={PathService.withBasePath(url)}
           alt=""
           fill
           priority

@@ -8,6 +8,7 @@ import { ImageCover } from "../ImageCover/ImageCover";
 
 export const Feed = ({
     images,
+    imageCoverClassName,
     imgIdx,
     setImgIdx
 }: FeedProps)=> {
@@ -111,6 +112,7 @@ export const Feed = ({
             {images.map((img, idx) => (
                 <ImageCover
                     key={idx}
+                    className={imageCoverClassName}
                     ref={(el) => {
                         itemsRef.current[idx] = el;
                     }}

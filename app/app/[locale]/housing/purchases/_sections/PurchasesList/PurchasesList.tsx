@@ -55,8 +55,6 @@ export const PurchasesList = ({
 
     const ts = TextService;
 
-    console.log(payments)
-
     const filteredPayments = payments.filter(p => 
         ts.includesNormalized(p.reserve_id ?? "", searchValue)
     );

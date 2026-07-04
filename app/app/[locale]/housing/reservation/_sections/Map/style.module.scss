@@ -1,0 +1,83 @@
+@reference "tailwindcss";
+
+.header {
+    @apply flex flex-col gap-2;
+}
+
+.title {
+    @apply text-3xl text-neutral-700;
+}
+
+.subtitle {
+    @apply text-neutral-500 pl-2;
+}
+
+.map {
+    @apply h-100 w-full overflow-hidden 
+        rounded-2xl border border-zinc-300
+        shrink-0;
+}
+
+@media (max-width: 590px) {
+    .header {
+        @apply gap-1;
+    }
+
+    .title {
+        @apply text-2xl;
+    }
+
+    .subtitle {
+        @apply pl-1 text-sm;
+    }
+
+    .map {
+        @apply h-70;
+    }
+
+    .map iframe {
+        @apply h-70;
+    }
+}
+
+@media (max-width: 420px) {
+    .header {
+        @apply pl-1.5;
+    }
+
+    .title {
+        @apply text-xl;
+    }
+
+    .subtitle {
+        @apply text-sm;
+    }
+
+    .map {
+        @apply h-50;
+    }
+
+    .map iframe {
+        @apply h-50;
+    }
+}
+
+@media (max-width: 420px) {
+    .title {
+        @apply text-lg;
+    }
+
+    .subtitle {
+        @apply text-xs;
+    }
+}
+
+@media (max-width: 340px) {
+    .header {
+        @apply pl-0.5;
+    }
+
+    .title {
+        @apply text-base;
+    }
+}
