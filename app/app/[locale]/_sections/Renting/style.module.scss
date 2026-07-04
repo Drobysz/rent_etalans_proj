@@ -1,0 +1,67 @@
+@reference "tailwindcss";
+
+.container {
+    @apply grid justify-center;
+    grid-template-columns: auto minmax(260px, 900px) auto;
+    grid-template-areas: ". main .";
+}
+
+.inner_content {
+    grid-area: main;
+    @apply flex flex-col gap-8 items-center;
+}
+
+.header {
+    @apply grid grid-cols-2 justify-start 
+        px-2;
+}
+
+.title {
+    @apply text-5xl text-neutral-700;
+}
+
+.note {
+    @apply text-neutral-500;
+}
+
+.link {
+    @apply rounded-lg bg-neutral-100 px-2 
+        py-2 w-fit text-sm
+        flex gap-1 items-center
+        hover:bg-neutral-200 hover:text-neutral-700
+        duration-200 transition-all text-neutral-600;
+}
+
+.link div {
+    @apply duration-200 transition-all ease-in;
+}
+
+.link:hover div {
+    @apply translate-x-0.5;
+}
+
+.salon_cover {
+    @apply w-full h-auto rounded-2xl;
+}
+
+@media (max-width: 770px) {
+    .header {
+        @apply block self-start;
+    }
+}
+
+@media (max-width: 450px) {
+    .title {
+        @apply text-3xl;
+    }
+    
+    .inner_content {
+        @apply gap-3;
+    }
+}
+
+@media (max-width: 390px) {
+    .title {
+        @apply text-2xl;
+    }
+}

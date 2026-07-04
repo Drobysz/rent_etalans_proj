@@ -9,7 +9,6 @@ import {
 } from "./_components";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { motion, useAnimationControls, useMotionValueEvent, useScroll } from "framer-motion";
-import { usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { variants, transition } from "./framerValues";
 import { BasketService } from "@/helpers/basket";
@@ -22,14 +21,13 @@ export const Basket = ()=> {
         services,
         isServiceLoading: isLoading,
     } = useContext(GlobalContext);
-    const pathname = usePathname();
 
     const [isConcealed, setIsConcealed] = useState(false);
     const [isOpened, setIsOpened] = useState(false);
     const isNotEmpty = servParams.services_ids.length > 0;
 
     const isFullWidth = useWindowWidth(480) as boolean;
-    const isBasketHidden = pathname !== "/" || !services
+    const isBasketHidden = !services
         || isLoading || isConcealed ;
     const chosenServices = BasketService.getChosenServices(servParams, services ?? []);
     const TOTAL_PRICE = BasketService.getTotalPrice(servParams, chosenServices);

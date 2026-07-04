@@ -1,14 +1,30 @@
 import { Link } from "@/i18n/navigation";
-import { useCallback, useEffect, useRef } from "react";
-import { Tabprops } from "../../../../NavBar.interface";
-import styles from "./Tab.module.scss";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Tabprops } from "../../../../types";
+import { motion } from "framer-motion";
+import { transition, variants } from "./framer";
 import cn from "classnames";
+import s from "./Tab.module.scss";
+import { UnderlinedLink } from "@/components/animations/UnderlinedLink/UnderlinedLink";
+import Triangle from "@/assets/triangle.svg";
+import { ChevronDown } from "lucide-react";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 export const Tab = ({
     children, isActive, href,
+    list, 
     setPosition, setPositionClicked
 }: Tabprops)=> {
-    const ref = useRef<HTMLSpanElement>(null!);
+    const ref = useRef<HTMLDivElement>(null!);
+    const [hover, setHover] = useState(false);
+    const [clicked, setClicked] = useState(false);
+
+    const isList = list?.length > 0;
+    const isDesktop = useWindowWidth(768) as boolean;
+    const chevronSize = isDesktop ? "w-5 h-5" : "w-3.5 h-3.5";
+    const isListOpen = isList && (isDesktop ? hover : clicked);
+    const isHightLighted = isActive || hover;
+    const tabColor = isHightLighted ? "text-gold" : "text-neutral-500";
 
     const handleInteraction = useCallback(
         (action: "hover" | "click")=> {
@@ -49,22 +65,86 @@ export const Tab = ({
         };
     }, [handleInteraction, isActive]);
 
+    useEffect(()=> {
+        if (!isListOpen) return;
+
+        const handleClickOutside = (event: MouseEvent)=> {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                setClicked(false);
+            };
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return ()=> {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isListOpen]);
+
     return (
-        <Link
-            href={href} 
-            className="z-20"
+        <div 
+            ref={ref}
+            className={isList ? s.wrapper_list : s.wrapper_default}
+            onMouseEnter={()=> {
+                handleInteraction("hover")
+                setHover(true)
+            }}
+            onClick={()=> {
+                handleInteraction("click")
+                setClicked(p => !p)
+            }}
+            onMouseLeave={()=> setHover(false)}
         >
-            <span 
-                className={cn(
-                    isActive ? "text-gold" : "text-neutral-500",
-                    styles.sm_text,
-                )}
-                ref={ref}
-                onMouseEnter={()=> handleInteraction("hover")}
-                onClick={()=> handleInteraction("click")}
+            <Link
+                href={href ?? "#"}
+                className="flex items-center gap-0.5"
             >
-                {children}
-            </span>
-        </Link>
+                {isList &&
+                    <ChevronDown 
+                        className={cn(
+                            s.chevron,
+                            tabColor,
+                            chevronSize,
+                            isListOpen 
+                                ? "rotate-180 transtale-y-0.5" 
+                                : "rotate-0 -transtale-y-0.5",
+                        )}
+                    />
+                }
+                <span 
+                    className={cn(
+                        tabColor,
+                        s.tab_title,
+                    )}
+                >
+                    {children}
+                </span>
+            </Link>
+
+            {isList && 
+                <motion.ul
+                    hidden={!isListOpen}
+                    initial="initial"
+                    animate={isListOpen ? "animate" : "initial"}
+                    exit="exit"
+                    variants={variants}
+                    transition={transition}
+                    className={s.tab_list}
+                >
+                    {list.map((item, idx)=> (
+                        <UnderlinedLink
+                            key={`tab_list_${idx}`}
+                            href={item.href ?? "#"}
+                            colorLine="dark"
+                        >
+                            {item.label}
+                        </UnderlinedLink>
+                    ))}
+                    <Triangle 
+                        className={s.triangle}
+                    />
+                </motion.ul>
+            }
+        </div>
     );
 };

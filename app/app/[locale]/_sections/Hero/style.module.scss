@@ -1,0 +1,19 @@
+@reference "tailwindcss";
+
+.body {
+    @apply rounded-xl h-[86vh] w-full 
+        bg-cover bg-center bg-no-repeat
+        relative;
+}
+
+@media (max-width:768px) {
+    .body {
+        @apply h-[65vh];
+    }
+}
+
+@media (max-width:520px) {
+    .body {
+        @apply h-[40vh];
+    }
+}

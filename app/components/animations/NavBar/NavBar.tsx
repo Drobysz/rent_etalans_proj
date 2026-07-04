@@ -1,6 +1,6 @@
 'use client'
 
-import { CursorPosition } from "./NavBar.interface";
+import { CursorPosition } from "./types";
 import { DetailedHTMLProps, HTMLAttributes, useState } from "react";
 import cn from "classnames";
 import { TabList, Cursor } from "./_components";

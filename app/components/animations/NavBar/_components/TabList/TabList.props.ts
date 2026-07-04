@@ -1,4 +1,4 @@
-import { CursorPosition } from "@/components/animations/NavBar/NavBar.interface";
+import { CursorPosition } from "@/components/animations/NavBar/types";
 
 export interface TabListProps {
 	setPosition: ( PosProps : CursorPosition )=> void;

@@ -1,0 +1,75 @@
+@reference "tailwindcss";
+
+.bar_body {
+    @apply absolute left-3 bottom-3
+        p-5 rounded-xl bg-neutral-900/50
+        text-white flex flex-col gap-4
+        backdrop-blur-xl;
+}
+
+.inner_content {
+    @apply flex items-center gap-3 justify-between;
+}
+
+.link {
+    @apply duration-300 transition-all hover:scale-102
+        hover:opacity-85 pt-0.5;
+}
+
+.bar_progress_lines {
+    @apply grid grid-flow-col auto-cols-fr 
+        gap-1.5 grid-rows-1;
+}
+
+.progress_line {
+    @apply rounded-full h-0.5 bg-neutral-500 w-20;
+}
+
+.progress {
+    @apply bg-white h-full;
+}
+
+.progress_line_run{
+    width: 0%;
+    animation: load 5s linear forwards;
+}
+
+@keyframes load{
+    to { width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .bar_body {
+        @apply p-3 pt-4 gap-2;
+    }
+
+    .progress_line {
+        @apply w-10;
+    }
+
+    .link {
+        @apply text-xs;
+    }
+}
+
+@media (max-width: 520px) {
+    .bar_body {
+        @apply w-full left-0 bottom-0
+            rounded-t-none;
+    }
+    .progress_line {
+        @apply w-20;
+    }
+}
+
+@media (max-width: 395px) {
+    .progress_line {
+        @apply w-15;
+    }
+}
+
+@media (max-width: 315px) {
+    .progress_line {
+        @apply w-13;
+    }
+}

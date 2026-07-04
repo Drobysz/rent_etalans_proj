@@ -3,9 +3,9 @@ import {
   Header,
   Footer,
   MouseGuide,
-  Basket,
   NotificationBar,
   LangBar,
+  SmoothScroll
 } from "./layout/index";
 import "./globals.css";
 import { GlobalContextProvider } from "./context/global.context";
@@ -46,17 +46,18 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider>
           <GlobalContextProvider>
-            <div className={s.wrapper}>
-              <Header className={s.header} />
-              <main className={s.main}>
-                {children}
-              </main>
-              <Footer className={s.footer} />
-              <MouseGuide />
-              <Basket />
-              <NotificationBar />
-              <LangBar />
-            </div>
+            <SmoothScroll>
+              <div className={s.wrapper}>
+                  <Header className={s.header} />
+                  <main className={s.main}>
+                    {children}
+                  </main>
+                  <Footer className={s.footer} />
+                  <MouseGuide />
+                  <NotificationBar />
+                  <LangBar />
+              </div>
+            </SmoothScroll>
           </GlobalContextProvider>
         </NextIntlClientProvider>
       </body>

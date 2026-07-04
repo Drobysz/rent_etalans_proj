@@ -9,10 +9,18 @@ export interface CursorProps {
     position: CursorPosition;
 };
 
+export type TabListType = {
+	href?: string;
+	label: string;
+	links?: TabListType[];
+}
+
 export interface Tabprops {
     children: ReactNode;
-    href: string;
+    href?: string;
+    list: TabListType[];
     isActive: boolean;
     setPosition: ( PosProps : CursorPosition )=> void;
     setPositionClicked: ( PosProps : CursorPosition )=> void;
 };
+

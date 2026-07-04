@@ -5,7 +5,7 @@ import { AppNotification, Coords, GlobalContextInterface } from "./global.interf
 import { ServicesOrderParams } from "@/types";
 import { getServices } from "@/queries/services";
 import useSWR from "swr";
-import { FormError } from "../layout/Basket/_components/BuyBtn/formScheme";
+import { FormError } from "../housing/services/_sections/Basket/_components/BuyBtn/formScheme";
 
 export const initialServParams: ServicesOrderParams = {
     email: "",

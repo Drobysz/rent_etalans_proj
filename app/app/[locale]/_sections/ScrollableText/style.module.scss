@@ -1,0 +1,57 @@
+@reference "tailwindcss";
+
+.inner_content {
+    @apply flex justify-center items-center 
+        gap-10 sticky top-40 
+        h-fit;
+}
+
+.yard_image {
+    @apply rounded-xl w-120 h-80;
+}
+
+.title {
+    @apply text-3xl text-neutral-700;
+}
+
+.paragraph {
+    @apply flex flex-wrap w-100 gap-1;
+}
+
+@media (max-width: 960px) {
+    .inner_content {
+        @apply flex-col top-20 gap-5;
+    }
+
+    .yard_image {
+        @apply w-85 h-50;
+    }
+
+    .paragraph {
+        @apply w-85;
+    }
+}
+
+@media (max-width: 420px) {
+    .title {
+        @apply text-2xl;
+    }
+
+    .yard_image {
+        @apply w-65 h-35;
+    }
+
+    .paragraph {
+        @apply w-60 text-xs;
+    }
+
+    .inner_content {
+        @apply top-35;
+    }
+}
+
+@media (max-width: 420px) {
+    .title {
+        @apply text-xl;
+    }
+}

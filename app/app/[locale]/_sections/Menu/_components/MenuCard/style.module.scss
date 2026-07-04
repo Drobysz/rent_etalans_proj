@@ -1,0 +1,40 @@
+@reference "tailwindcss";
+
+.card {
+    @apply flex flex-col gap-4 
+        h-100;
+    flex: 1 1 0;
+    transition: flex-grow .35s ease;
+}
+
+.card_active {
+    flex-grow: 2.5;
+}
+
+.article {
+    @apply w-full h-full bg-no-repeat
+        bg-center;
+    background-size: auto 150%;
+}
+
+.arrow {
+    @apply duration-400 transition-opacity ease-in
+        h-4 w-4;
+}
+
+@media (max-width: 560px) {
+    .article {
+        @apply h-30;
+        background-size: auto 300%;
+    }
+
+    .card {
+        @apply gap-1 h-50;
+    }
+}
+
+@media (max-width: 390px) {
+    .article {
+        @apply h-20;
+    }
+}

@@ -1,7 +1,50 @@
 @reference "tailwindcss";
 
-.sm_text {
-	@apply cursor-pointer px-3 duration-200
-		hover:text-[#AE8A1D] transition
-		max-[560px]:px-1.5 max-[560px]:text-sm;
+.wrapper_default,
+.wrapper_list {
+	@apply relative z-20;
+}
+
+.wrapper_default {
+	@apply px-3;
+}
+
+.wrapper_list {
+	@apply pr-3 pl-1.5;
+}
+
+.tab_title {
+	@apply cursor-pointer duration-200
+		transition max-[560px]:text-sm;
+}
+
+.tab_list {
+	@apply absolute top-9.5 flex w-max
+		flex-col gap-1 py-2 
+		px-3 left-1/2 -translate-x-1/2
+		rounded-2xl bg-neutral-200 text-zinc-500;
+}
+
+.triangle {
+	@apply absolute -top-1 left-1/2 
+		-translate-1/2 text-neutral-200
+		w-4 h-4;
+}
+
+.chevron {
+	@apply duration-500 transition-transform;
+}
+
+@media (max-width: 560px) {
+	.wrapper_default {
+		@apply px-1.5;
+	}
+
+	.wrapper_list {
+		@apply pr-2 pl-1;
+	}
+
+	.tab_list {
+		@apply top-8 text-sm;
+	}
 }

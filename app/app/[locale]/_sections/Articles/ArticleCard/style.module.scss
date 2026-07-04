@@ -1,0 +1,65 @@
+@reference "tailwindcss";
+
+.article {
+    @apply rounded-xl w-full h-full
+        text-white transition-shadow
+        duration-300 overflow-hidden
+        relative;
+}
+
+.article:hover {
+    box-shadow: 
+        rgba(255, 221, 0, 0.522) 0px 8px 38px, 
+        rgba(247, 222, 0, 0.518) 0px 5px 12px;
+}
+
+.bg_img {
+    @apply w-full h-full bg-no-repeat
+        bg-center bg-cover transition-all
+        duration-500 ease-in-out;
+}
+
+.bg_img_hover {
+    @apply scale-102;
+}
+
+.note_bar {
+    @apply rounded-xl bg-neutral-900/65 backdrop-blur-xl
+        p-3 pt-1.5 flex gap-2 transition-all
+        duration-400 absolute left-2
+        bottom-2 z-20 items-center;
+}
+
+.note_bar_default {
+    @apply opacity-0 -translate-5;
+}
+
+.note_bar_hover {
+    @apply opacity-100 translate-0;
+}
+
+.note_bar_title {
+    @apply text-xl;
+}
+
+.note_bar_note {
+    @apply text-neutral-400 text-xs w-35;
+}
+
+.view_link {
+    @apply uppercase text-[0.7rem] hover:opacity-70;
+}
+
+@media (max-width: 390px) {
+    .note_bar_title {
+        @apply text-xs;
+    }
+
+    .note_bar_note {
+        @apply text-[0.6rem];
+    }
+
+    .view_link {
+        @apply text-[0.6rem]
+    }
+}

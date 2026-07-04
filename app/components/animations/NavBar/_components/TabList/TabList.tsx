@@ -5,6 +5,7 @@ import { usePathname } from "@/i18n/navigation";
 import { TabListProps } from "./TabList.props";
 import { useTranslations } from "next-intl";
 import { PathService } from "@/helpers/path";
+import { TabListType } from "../../types";
 
 export const TabList = ({
 	setPosition,
@@ -12,23 +13,31 @@ export const TabList = ({
 }: TabListProps)=> {
 	const t = useTranslations("navigation");
 	const pathname = usePathname();
-	const tabsList = [
-        { href: '/', label: t("services") },
-        { href: '/achats', label: t("purchases") },
-		{ href: '/documentation', label: "Documentation" },
+	const tabsList: TabListType[] = [
+        { href: '/', label: "Main page" },
+        { 
+			links: [
+				{ href: '/housing/reservation', label: "Reservation" },
+				{ href: '/housing/purchases', label: t("purchases") },
+				{ href: '/housing/services', label: t("services") }
+			],
+			label: "Housing"
+		},
+		{ href: '/documentation', label: "Docs" },
     ];
 
 	return (
 		<>
-			{ tabsList.map(tab=> (
+			{tabsList.map(tab=> (
 				<Tab
 					key={"id_" + tab.label}
 					isActive={PathService.getPageActivity(
-						pathname, tab.href
+						pathname, tab.href, tab.links
 					)}
 					setPosition={setPosition}
 					setPositionClicked={setPositionClicked}
-					href={tab.href}
+					href={tab.href ?? ""}
+					list={tab.links ?? []} 
 				>
 					{tab.label}
 				</Tab>

@@ -16,3 +16,9 @@
         @apply h-30;
     }
 }
+
+@media (max-width: 480px) {
+    .image_cover {
+        @apply h-40;
+    }
+}

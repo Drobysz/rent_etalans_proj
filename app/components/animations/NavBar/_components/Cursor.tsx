@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CursorProps } from "../NavBar.interface";
+import { CursorProps } from "../types";
 
 export const Cursor = ({ position }: CursorProps)=> {
     return (

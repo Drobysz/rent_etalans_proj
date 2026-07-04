@@ -1,6 +1,6 @@
 import { Service, ServicesOrderParams } from "@/types";
 import { Dispatch, SetStateAction } from "react";
-import { FormError } from "../layout/Basket/_components/BuyBtn/formScheme";
+import { FormError } from "../housing/services/_sections/Basket/_components/BuyBtn/formScheme";
 
 export type NotificationStatus = "error" | "alert" | "success" | "none";
 

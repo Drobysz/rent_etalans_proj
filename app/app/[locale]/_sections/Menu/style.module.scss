@@ -1,0 +1,18 @@
+@reference "tailwindcss";
+
+.container {
+    @apply grid justify-center;
+    grid-template-columns: auto minmax(275px, 950px) auto;
+    grid-template-areas: ". main .";
+}
+
+.extandable_cards {
+    grid-area: main;
+    @apply flex gap-4 justify-center min-w-0;
+}
+
+@media (max-width: 560px) {
+    .extandable_cards {
+        @apply flex-col;
+    }
+}

@@ -1,23 +1,7 @@
 @reference "tailwindcss";
 
-.home {
-    @apply px-4 pt-5 pb-20 flex flex-col gap-15;
-}
-
-@media (max-width: 1024px) {
-    .home {
-        @apply gap-12;
-    }
-}
-
-@media (max-width: 768px) {
-    .home {
-        @apply px-3 pt-4 gap-10;
-    }
-}
-
-@media (max-width: 480px) {
-    .home {
-        @apply px-2 pt-3 pb-28;
-    }
+.page {
+    @apply flex flex-col gap-30 
+        px-4 pt-3 pb-15 max-[620px]:gap-15
+        max-[620px]:px-2;
 }
