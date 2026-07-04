@@ -37,7 +37,7 @@ export const MenuCard = ({
                 <div
                     className={s.article}
                     style={{
-                        backgroundImage: PathService.withBasePath(`url('${img_url}')`),
+                        backgroundImage: `url('${PathService.withBasePath(img_url)}')`,
                     }}
                 />
             </Link>

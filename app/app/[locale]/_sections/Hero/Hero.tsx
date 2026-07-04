@@ -52,7 +52,7 @@ export const Hero = () => {
                 transition={{ duration: 0.5 }}
                 className={s.body}
                 style={{
-                    backgroundImage: PathService.withBasePath(`url('${articles[imgId].src}')`),
+                    backgroundImage: `url('${PathService.withBasePath(articles[imgId].src)}')`,
                 }}
             >
                 <TitleBar 
