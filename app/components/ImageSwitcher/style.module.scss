@@ -12,15 +12,3 @@
         backdrop-blur-sm py-1 px-3
         rounded-full;
 }
-
-@media (max-width: 640px) {
-    .image_switcher {
-        width: min(100%, 19.125rem);
-    }
-}
-
-@media (max-width: 480px) {
-    .image_switcher {
-        width: min(100%, 19rem);
-    }
-}

@@ -25,7 +25,7 @@ export const ImageCover = forwardRef<HTMLDivElement, ImageCoverProps>(
           alt=""
           fill
           priority
-          sizes="(max-width: 640px) 100vw, 306px"
+          sizes="100vw"
           unoptimized
         />
       </div>

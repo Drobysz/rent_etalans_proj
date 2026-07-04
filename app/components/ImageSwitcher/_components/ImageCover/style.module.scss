@@ -9,16 +9,3 @@
 .image_cover :global(img) {
     @apply h-full w-full object-cover;
 }
-
-@media (max-width: 640px) {
-    .image_cover {
-        width: min(100%, 19.125rem);
-        @apply h-30;
-    }
-}
-
-@media (max-width: 480px) {
-    .image_cover {
-        @apply h-40;
-    }
-}
