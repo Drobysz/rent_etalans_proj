@@ -60,6 +60,10 @@
     .progress_line {
         @apply w-20;
     }
+
+    .inner_content {
+        @apply justify-start gap-5;
+    }
 }
 
 @media (max-width: 395px) {
