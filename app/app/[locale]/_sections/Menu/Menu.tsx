@@ -5,14 +5,16 @@ import {
     MenuCard
 } from "./_components";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export const Menu = ()=> {
-     const [hover, setHover] = useState(false);
+    const [hover, setHover] = useState(false);
+    const t = useTranslations("home.menu");
 
     const cards = [
-        { img: "/main_page/reservation.jpg", href: "/housing/reservation", label: "Reservation" },
-        { img: "/main_page/services.jpg", href: "/housing/services", label: "Services" },
-        { img: "/main_page/docs.jpg", href: "/documentation", label: "Documentation" },
+        { img: "/main_page/reservation.jpg", href: "/housing/reservation", label: t("reservation") },
+        { img: "/main_page/services.jpg", href: "/housing/services", label: t("services") },
+        { img: "/main_page/docs.jpg", href: "/documentation", label: t("documentation") },
     ];
 
     return (

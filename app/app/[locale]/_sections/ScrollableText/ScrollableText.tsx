@@ -9,10 +9,12 @@ import { useScroll } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { bagel } from "@/fonts/fonts";
 import { useWindowWidth } from "@/hooks";
+import { useTranslations } from "next-intl";
 
 export const ScrollableText = ()=> {
     const ref = useRef<HTMLDivElement>(null);
     const isMobile = useWindowWidth(960) as boolean;
+    const t = useTranslations("home.scrollableText");
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start 20%", "end 90%"],
@@ -31,14 +33,14 @@ export const ScrollableText = ()=> {
                     )}
                     hidden={isMobile}
                 >
-                    Au la calme de la campagne
+                    {t("title")}
                 </h3>
                 <Image
                     className={s.yard_image}
                     src={PathService.withBasePath("/house/front_yard.png")}
                     width={1000}
                     height={300}
-                    alt="rent house"
+                    alt={t("imageAlt")}
                 />
                 <div className="flex flex-col gap-4">
                     <h3 
@@ -48,17 +50,13 @@ export const ScrollableText = ()=> {
                         )}
                         hidden={!isMobile}
                     >
-                        Au la calme de la campagne
+                        {t("title")}
                     </h3>
                     <ScrollParagraph
                         className={s.paragraph}
                         scrollYProgress={scrollYProgress}
                     >
-                        We look forward to welcoming you to “Au calme de la campagne,” 
-                        located in the Doubs department, known for its blend of historical 
-                        heritage and natural beauty. The area is home to Besançon and its 
-                        UNESCO-listed citadel, the picturesque towns of Ornans and Pontarlier, 
-                        Lake Saint-Poin, the Saut du Doubs waterfall, and the Château de Joux fortress.
+                        {t("body")}
                     </ScrollParagraph>
                 </div>
             </div>

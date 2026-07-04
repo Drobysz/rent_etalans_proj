@@ -7,6 +7,7 @@ import { ArticleCardProps } from "./ArticleCard.props";
 import { cn } from "@/lib/utils";
 import { bagel } from "@/fonts/fonts";
 import { useWindowWidth } from "@/hooks";
+import { useTranslations } from "next-intl";
 
 export const ArticleCard = ({
     label, href, img_url,
@@ -15,6 +16,7 @@ export const ArticleCard = ({
     const [hover, setHover] = useState(false);
     const isDesktop = useWindowWidth(930) as boolean;
     const isConcealed = isSectionHovered && !hover && isDesktop;
+    const t = useTranslations("home.articles");
 
     return (
         <article 
@@ -55,7 +57,7 @@ export const ArticleCard = ({
                     target="_blank"
                     className={s.view_link}
                 >
-                    View
+                    {t("view")}
                 </a>
             </div>
         </article>

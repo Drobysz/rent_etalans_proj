@@ -5,7 +5,37 @@
   },
   "home": {
     "stayFormTitle": "Saisissez les détails de votre séjour",
-    "servicesTitle": "Profitez de services qui rendront votre séjour encore plus agréable"
+    "servicesTitle": "Profitez de services qui rendront votre séjour encore plus agréable",
+    "hero": {
+      "view": "Voir"
+    },
+    "articles": {
+      "title": "Lieux à découvrir autour de nous",
+      "view": "Voir",
+      "items": {
+        "dinoZoo": "parc préhistorique",
+        "pontarlier": "l'une des deux sous-préfectures du Doubs",
+        "besancon": "la capitale du département du Doubs",
+        "sourceDeLaLoue": "une résurgence majeure située sur la commune d'Ouhans",
+        "ornans": "une ville de conte de fées au bord de la rivière"
+      }
+    },
+    "menu": {
+      "reservation": "Réservation",
+      "services": "Services",
+      "documentation": "Documentation"
+    },
+    "scrollableText": {
+      "title": "Au calme de la campagne",
+      "imageAlt": "Extérieur de la maison à louer",
+      "body": "Nous avons hâte de vous accueillir à \"Au calme de la campagne\", dans le département du Doubs, connu pour son patrimoine historique et sa beauté naturelle. La région abrite Besançon et sa citadelle inscrite à l'UNESCO, les villes pittoresques d'Ornans et de Pontarlier, le lac Saint-Point, la cascade du Saut du Doubs et le Château de Joux."
+    },
+    "renting": {
+      "title": "Famille Pointet",
+      "note": "Nous sommes ravis de vous accueillir chez nous. Nous avons fait de notre mieux pour rendre votre séjour aussi confortable que possible. Nous proposons également des services supplémentaires qui peuvent améliorer votre séjour.",
+      "reservationLink": "Faire une réservation",
+      "imageAlt": "Salon de l'appartement"
+    }
   },
   "stayForm": {
     "mouseGuide": "Utilisez les flèches (bas) et (haut) pour faire défiler les champs",

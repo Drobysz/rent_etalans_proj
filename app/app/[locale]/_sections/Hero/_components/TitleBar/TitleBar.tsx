@@ -3,12 +3,14 @@ import { TitleBarProps } from "./TitleBar.props"
 import s from './style.module.scss';
 import { cn } from "@/lib/utils";
 import { bilbo_swash_caps } from "@/fonts/fonts";
+import { useTranslations } from "next-intl";
 
 export const TitleBar = ({
     count,
     article,
     imgId
 }: TitleBarProps)=> {
+    const t = useTranslations("home.hero");
 
     return (
         <article className={s.bar_body}>
@@ -44,7 +46,7 @@ export const TitleBar = ({
                     href={article.href}
                     className={s.link}
                 >
-                    VIEW
+                    {t("view")}
                 </Link>
             </div>
         </article>

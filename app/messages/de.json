@@ -5,7 +5,37 @@
   },
   "home": {
     "stayFormTitle": "Geben Sie Ihre Aufenthaltsdetails ein",
-    "servicesTitle": "Wählen Sie Services, die Ihren Aufenthalt noch angenehmer machen"
+    "servicesTitle": "Wählen Sie Services, die Ihren Aufenthalt noch angenehmer machen",
+    "hero": {
+      "view": "Ansehen"
+    },
+    "articles": {
+      "title": "Orte in der Umgebung",
+      "view": "Ansehen",
+      "items": {
+        "dinoZoo": "prähistorischer Park",
+        "pontarlier": "eine der beiden Unterpräfekturen des Départements Doubs",
+        "besancon": "die Hauptstadt des Départements Doubs",
+        "sourceDeLaLoue": "eine bedeutende Quelle in der Gemeinde Ouhans",
+        "ornans": "eine märchenhafte Stadt am Fluss"
+      }
+    },
+    "menu": {
+      "reservation": "Reservierung",
+      "services": "Services",
+      "documentation": "Dokumentation"
+    },
+    "scrollableText": {
+      "title": "Au calme de la campagne",
+      "imageAlt": "Außenansicht des Miethauses",
+      "body": "Wir freuen uns darauf, Sie in \"Au calme de la campagne\" im Département Doubs willkommen zu heißen, das für seine Verbindung aus historischem Erbe und natürlicher Schönheit bekannt ist. In der Umgebung liegen Besançon mit seiner UNESCO-gelisteten Zitadelle, die malerischen Orte Ornans und Pontarlier, der Lac de Saint-Point, der Wasserfall Saut du Doubs und das Château de Joux."
+    },
+    "renting": {
+      "title": "Familie Pointet",
+      "note": "Wir freuen uns sehr, Sie bei uns willkommen zu heißen. Wir haben unser Bestes getan, um Ihren Aufenthalt so angenehm wie möglich zu machen. Außerdem bieten wir zusätzliche Services an, die Ihren Aufenthalt bereichern können.",
+      "reservationLink": "Reservierung vornehmen",
+      "imageAlt": "Wohnzimmer des Apartments"
+    }
   },
   "stayForm": {
     "mouseGuide": "Verwenden Sie die Pfeiltasten (unten) und (oben), um durch die Formularfelder zu wechseln",
