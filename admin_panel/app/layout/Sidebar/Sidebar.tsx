@@ -7,6 +7,7 @@ import cn from "classnames";
 import { motion } from "framer-motion";
 import { logoutAction } from "@/auth/actions";
 import AdminsIcon from "@/assets/admins.svg";
+import CalendarIcon from "@/assets/calendar.svg";
 import DashboardIcon from "@/assets/dashboard.svg";
 import MenuIcon from "@/assets/menu.svg";
 import OrdersIcon from "@/assets/orders.svg";
@@ -21,6 +22,7 @@ const navigation = [
   { href: "/", label: "Tableau de bord", icon: DashboardIcon, superadminOnly: false },
   { href: "/services", label: "Services", icon: ServicesIcon, superadminOnly: false },
   { href: "/orders", label: "Commandes", icon: OrdersIcon, superadminOnly: false },
+  { href: "/calendar", label: "Calendrier", icon: CalendarIcon, superadminOnly: false },
   { href: "/admins", label: "Administrateurs", icon: AdminsIcon, superadminOnly: true },
 ] as const;
 

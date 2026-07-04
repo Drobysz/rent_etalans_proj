@@ -25,7 +25,7 @@ export function RevenueChart({ series }: RevenueChartProps) {
   return (
     <article className={styles.panel}>
       <div className={styles.header}>
-        <h2>Graphique du chiffre d'affaires</h2>
+        <h2>Graphique du chiffre d&apos;affaires</h2>
         <div className={styles.tabs}>
           {ranges.map((item) => (
             <button

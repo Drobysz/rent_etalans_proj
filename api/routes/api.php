@@ -7,6 +7,7 @@ use App\Http\Controllers\api\{
     ApartmentController,
     AuthController,
     PaymentController,
+    ReservationAvailabilityController,
     ServiceController,
     StripeController,
     ImageController,
@@ -34,6 +35,10 @@ Route::apiResource('apartments', ApartmentController::class);
 Route::get('/payments/dashboard', [PaymentController::class, 'dashboard']);
 Route::apiResource('payments', PaymentController::class)
     ->except(['update']);
+Route::get('/reservations/availability', [ReservationAvailabilityController::class, 'index']);
+Route::get('/blocked-dates', [ReservationAvailabilityController::class, 'blockedDates']);
+Route::post('/blocked-dates', [ReservationAvailabilityController::class, 'block']);
+Route::delete('/blocked-dates/{date}', [ReservationAvailabilityController::class, 'unblock']);
 Route::apiResource('image-uploader', ImageController::class)
     ->except(['index', 'show']);
 

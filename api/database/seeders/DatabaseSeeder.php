@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Apartment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -37,5 +38,27 @@ class DatabaseSeeder extends Seeder
             'role' => 'client',
             'password' => bcrypt('password3241'),
         ]);
+
+        Apartment::query()->updateOrCreate(
+            ['name' => 'Apartment 1 - one room'],
+            [
+                'nb_chambers' => 1,
+                'nb_beds' => 1,
+                'price' => 60,
+                'apart_link' => '/housing/reservation',
+                'description' => 'One room reservation option.',
+            ],
+        );
+
+        Apartment::query()->updateOrCreate(
+            ['name' => 'Apartment 2 - two rooms'],
+            [
+                'nb_chambers' => 2,
+                'nb_beds' => 2,
+                'price' => 100,
+                'apart_link' => '/housing/reservation',
+                'description' => 'Two rooms reservation option.',
+            ],
+        );
     }
 }

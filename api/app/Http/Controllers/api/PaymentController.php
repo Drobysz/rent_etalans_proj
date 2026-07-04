@@ -11,6 +11,7 @@ use App\Http\Requests\PaymentStoreRequest;
 
 use App\Models\{
     Payment,
+    Reservation,
     Service
 };
 
@@ -25,9 +26,13 @@ class PaymentController extends Controller
         $reserveId = trim((string) ($data['reserve_id'] ?? ''));
 
         return Payment::query()
-            ->with(['services'])
+            ->with(['services', 'apartment', 'reservation.apartment'])
             ->when($reserveId !== '', function ($query) use ($reserveId) {
-                $query->where('reserve_id', 'like', "%{$reserveId}%");
+                $query->where(function ($nested) use ($reserveId) {
+                    $nested
+                        ->where('reserve_id', 'like', "%{$reserveId}%")
+                        ->orWhere('reservation_code', 'like', "%{$reserveId}%");
+                });
             })
             ->orderBy('created_at', $data['sort'] ?? 'desc')
             ->paginate(7);
@@ -62,7 +67,7 @@ class PaymentController extends Controller
 
     public function show(Payment $payment)
     {
-        return $payment->load(['services']);
+        return $payment->load(['services', 'apartment', 'reservation.apartment']);
     }
 
     public function store(PaymentStoreRequest $request)
@@ -73,15 +78,41 @@ class PaymentController extends Controller
 
         if ($existingPayment) {
             return response()->json([
-               $existingPayment->load(['services']),
+               $existingPayment->load(['services', 'apartment', 'reservation.apartment']),
                 'existed' => true,
             ]);
+        }
+
+        $reservation = null;
+
+        if (!empty($data['reservation_id'])) {
+            $reservation = Reservation::query()->find($data['reservation_id']);
+        }
+
+        if (!empty($data['checkin']) && !empty($data['checkout'])) {
+            $checkin = CarbonImmutable::parse($data['checkin'])->startOfDay();
+            $checkout = CarbonImmutable::parse($data['checkout'])->startOfDay();
+            $daysCount = max(1, $checkin->diffInDays($checkout));
+
+            $data['days_count'] = $daysCount;
+            $data['days_number'] = $daysCount;
+        } else {
+            $data['days_count'] = $data['days_count'] ?? $data['days_number'];
+        }
+
+        if ($reservation) {
+            $data['reservation_code'] = $reservation->reservation_code;
+            $data['apart_id'] = $reservation->apart_id;
+            $data['checkin'] = $reservation->checkin->toDateString();
+            $data['checkout'] = $reservation->checkout->toDateString();
+            $data['days_count'] = $reservation->days_count;
+            $data['days_number'] = $reservation->days_count;
         }
 
         $serviceIds = $data['service_ids'] ?? [];
         unset($data['service_ids']);
 
-        $payment = DB::transaction( function () use ($data, $serviceIds)
+        $payment = DB::transaction( function () use ($data, $serviceIds, $reservation)
         {
             $payment = Payment::create($data);
 
@@ -89,11 +120,15 @@ class PaymentController extends Controller
                 $payment->services()->sync($serviceIds);
             }
 
+            if ($reservation) {
+                $reservation->forceFill(['status' => 'paid'])->save();
+            }
+
             return $payment;
         });
 
         return response()->json([
-                $payment->load(['services']),
+                $payment->load(['services', 'apartment', 'reservation.apartment']),
                 'existed' => false,
             ],
             201

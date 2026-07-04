@@ -21,6 +21,11 @@ class Apartment extends Model
         return $this->hasMany(Payment::class, 'apart_id');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'apart_id');
+    }
+
     public function images()
     {
         return $this->hasMany(ApartmentImage::class, 'apart_id');

@@ -5,7 +5,7 @@ export function DashboardHeader() {
     <div className={styles.header}>
       <div>
         <h1 className={styles.title}>Tableau de bord</h1>
-        <p className={styles.description}>Chiffre d'affaires, volume de commandes et demande par service.</p>
+        <p className={styles.description}>Chiffre d&apos;affaires, volume de commandes et demande par service.</p>
       </div>
     </div>
   );

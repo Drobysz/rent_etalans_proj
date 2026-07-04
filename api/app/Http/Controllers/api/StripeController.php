@@ -11,11 +11,14 @@ use Stripe\StripeClient;
 use Stripe\Checkout\Session;
 use Stripe\Exception\InvalidRequestException;
 
-use Illuminate\Support\Facades\Storage;
-
 use App\Http\Requests\StripeStoreRequest;
 
-use App\Models\Service;
+use App\Models\{
+    Apartment,
+    Reservation,
+    Service
+};
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 
 class StripeController extends Controller
@@ -23,14 +26,67 @@ class StripeController extends Controller
     public function createCheckout(StripeStoreRequest $request)
     {
         $data = $request->validated();
+        $serviceIds = $data['service_ids'] ?? [];
+        $apartment = $this->resolveApartment($data['apart_id'] ?? null, $data['rooms_count'] ?? null);
+        $apartmentId = $apartment?->id;
 
-        $checkout_session = $this->createInvoice(
-            $data['email'],
-            $data['service_ids'],
-            $data['reserve_id'],
-            $data['client_number'],
-            $data['days_number']
-        );
+        if (empty($serviceIds) && !$apartmentId) {
+            return response()->json([
+                'message' => 'Select an apartment or at least one service.',
+            ], 422);
+        }
+
+        if ($apartmentId && (empty($data['checkin']) || empty($data['checkout']))) {
+            return response()->json([
+                'message' => 'Check-in and check-out dates are required for apartment reservations.',
+            ], 422);
+        }
+
+        $reservationDays = null;
+        $reservation = null;
+
+        if ($apartmentId) {
+            $checkin = CarbonImmutable::parse($data['checkin'])->startOfDay();
+            $checkout = CarbonImmutable::parse($data['checkout'])->startOfDay();
+            $reservationDays = max(1, $checkin->diffInDays($checkout));
+
+            $reservation = Reservation::query()->create([
+                'email' => $data['email'],
+                'apart_id' => $apartmentId,
+                'checkin' => $checkin->toDateString(),
+                'checkout' => $checkout->toDateString(),
+                'days_count' => $reservationDays,
+                'rooms_count' => $apartment->nb_chambers,
+                'guests' => $data['client_number'],
+                'status' => 'pending',
+            ]);
+        }
+
+        try {
+            $checkout_session = $this->createInvoice(
+                $data['email'],
+                $serviceIds,
+                $data['reserve_id'],
+                $data['client_number'],
+                $data['days_number'],
+                $apartmentId,
+                $data['checkin'] ?? null,
+                $data['checkout'] ?? null,
+                $reservationDays ?? $data['days_count'] ?? null,
+                $apartment?->nb_chambers ?? $data['rooms_count'] ?? null,
+                $reservation
+            );
+        } catch (\Throwable $exception) {
+            $reservation?->delete();
+
+            throw $exception;
+        }
+
+        if ($reservation) {
+            $reservation->forceFill([
+                'stripe_session_id' => $checkout_session->id,
+            ])->save();
+        }
 
         return response()->json([ 'url' => $checkout_session->url ], 200);
     }
@@ -63,12 +119,41 @@ class StripeController extends Controller
                 'reserve_id' => $metadata->reserve_id ?? null,
                 'client_number' => (int) ($metadata->client_number ?? 0),
                 'days_number' => (int) ($metadata->days_number ?? 0),
+                'days_count' => (int) ($metadata->days_count ?? $metadata->days_number ?? 0),
+                'reservation_id' => isset($metadata->reservation_id) && $metadata->reservation_id !== ''
+                    ? (int) $metadata->reservation_id
+                    : null,
+                'reservation_code' => $metadata->reservation_code ?? null,
+                'apart_id' => isset($metadata->apart_id) && $metadata->apart_id !== ''
+                    ? (int) $metadata->apart_id
+                    : null,
+                'rooms_count' => isset($metadata->rooms_count) && $metadata->rooms_count !== ''
+                    ? (int) $metadata->rooms_count
+                    : null,
+                'checkin' => $metadata->checkin ?? null,
+                'checkout' => $metadata->checkout ?? null,
                 'service_ids' => array_values(array_filter(
                     array_map('intval', explode(',', $metadata->service_ids ?? ''))
                 )),
                 'total_price' => ((float) ($session->amount_total ?? 0)) / 100,
             ],
         ]);
+    }
+
+    private function resolveApartment(?int $apartmentId, ?int $roomsCount): ?Apartment
+    {
+        if ($apartmentId) {
+            return Apartment::query()->find($apartmentId);
+        }
+
+        if (!$roomsCount) {
+            return null;
+        }
+
+        return Apartment::query()
+            ->where('nb_chambers', $roomsCount)
+            ->orderBy('id')
+            ->first();
     }
 
     public function getStripeInvoicePdf(Request $request)
@@ -162,12 +247,53 @@ class StripeController extends Controller
         return $lineItems;
     }
 
+    private function getApartmentInvoiceItem(
+        int $apartmentId,
+        int $daysNumber,
+        ?string $checkin,
+        ?string $checkout,
+    ): array {
+        $apartment = Apartment::query()->findOrFail($apartmentId);
+        $descriptionParts = array_filter([$checkin, $checkout]);
+
+        return [
+            'quantity' => $daysNumber,
+            'price_data' => [
+                'currency' => 'eur',
+                'unit_amount' => (int) round(((float) $apartment->price) * 100),
+                'product_data' => [
+                    'name' => $apartment->name,
+                    'description' => !empty($descriptionParts)
+                        ? implode(' - ', $descriptionParts)
+                        : $apartment->description,
+                ],
+            ],
+        ];
+    }
+
+    private function getApartmentTotalPrice(?int $apartmentId, int $daysNumber): float
+    {
+        if (!$apartmentId) {
+            return 0;
+        }
+
+        $apartment = Apartment::query()->findOrFail($apartmentId);
+
+        return ((float) $apartment->price) * $daysNumber;
+    }
+
     private function createInvoice(
         string $email,
         array $service_ids,
         string $reserve_id,
         int $client_number,
-        int $days_number
+        int $days_number,
+        ?int $apart_id = null,
+        ?string $checkin = null,
+        ?string $checkout = null,
+        ?int $days_count = null,
+        ?int $rooms_count = null,
+        ?Reservation $reservation = null
     ){
         $lineItems = $this->getServiceInvoiceItems(
             $service_ids,
@@ -179,6 +305,19 @@ class StripeController extends Controller
             $days_number,
             $client_number,
         );
+
+        if ($apart_id) {
+            $reservationDays = $days_count ?? $days_number;
+
+            $lineItems[] = $this->getApartmentInvoiceItem(
+                $apart_id,
+                $reservationDays,
+                $checkin,
+                $checkout,
+            );
+            $totalPrice += $this->getApartmentTotalPrice($apart_id, $reservationDays);
+        }
+
         $stripe = new StripeClient(config('services.stripe.secret'));
         $checkout_session = $stripe->checkout->sessions->create(
             [
@@ -196,6 +335,13 @@ class StripeController extends Controller
                     'reserve_id'    => $reserve_id,
                     'client_number' => (string) $client_number,
                     'days_number'   => (string) $days_number,
+                    'days_count'    => (string) ($days_count ?? $days_number),
+                    'reservation_id' => $reservation ? (string) $reservation->id : '',
+                    'reservation_code' => $reservation?->reservation_code ?? '',
+                    'apart_id'      => $apart_id ? (string) $apart_id : '',
+                    'rooms_count'   => $rooms_count ? (string) $rooms_count : '',
+                    'checkin'       => $checkin ?? '',
+                    'checkout'      => $checkout ?? '',
                     'total_price'   => (string) $totalPrice,
                 ],
             ],

@@ -14,7 +14,7 @@ export function TopServicesTable({ services }: TopServicesTableProps) {
             <tr>
               <th>Service</th>
               <th>Commandes</th>
-              <th>Chiffre d'affaires</th>
+              <th>Chiffre d&apos;affaires</th>
             </tr>
           </thead>
           <tbody>

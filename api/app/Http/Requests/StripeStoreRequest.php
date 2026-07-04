@@ -22,12 +22,17 @@ class StripeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'         => ['required', 'string', 'max:80'],
+            'email'         => ['required', 'email', 'max:80'],
             'client_number' => ['required', 'numeric', 'digits_between:1,20'],
             'days_number'   => ['required', 'numeric', 'digits_between:1,365'],
             'reserve_id'    => ['required', 'string', 'max:20'],
-            'service_ids'   => ['required', 'array'],
-            'service_ids.*' => ['integer', 'exists:services,id']
+            'service_ids'   => ['nullable', 'array'],
+            'service_ids.*' => ['integer', 'exists:services,id'],
+            'apart_id'      => ['nullable', 'integer', 'exists:apartments,id'],
+            'checkin'       => ['nullable', 'date'],
+            'checkout'      => ['nullable', 'date', 'after:checkin'],
+            'days_count'    => ['nullable', 'numeric', 'digits_between:1,365'],
+            'rooms_count'   => ['nullable', 'integer', 'in:1,2'],
         ];
     }
 }
