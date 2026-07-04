@@ -10,6 +10,7 @@ type Popup = {
     id: string;
     text: string;
     status: NotificationStatus;
+    duration: number;
 };
 
 export const NotificationBar = ()=> {
@@ -28,13 +29,14 @@ export const NotificationBar = ()=> {
                     id,
                     text: notification.text,
                     status: notification.status,
+                    duration: notification.duration ?? 3000,
                 },
             ]);
         }, 0);
 
         setTimeout(() => {
             setPopUps((prev) => prev.filter((popUp) => popUp.id !== id));
-        }, 3000);
+        }, notification.duration ?? 3000);
     }, [notification]);
 
     return (

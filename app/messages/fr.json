@@ -37,6 +37,66 @@
       "imageAlt": "Salon de l'appartement"
     }
   },
+  "reservation": {
+    "header": {
+      "title": "Au calme de la campagne",
+      "subtitle": "1-4 voyageurs ○ 1-2 chambres ○ 1-2 lits"
+    },
+    "upperSection": {
+      "housingTitle": "Logement",
+      "housingDescription": "Une chambre dans une maison, avec salle de bain et salon disponibles, chez l'habitant. Intimité garantie !",
+      "notesTitle": "Autres informations",
+      "notesDescription": "Une chambre supplémentaire avec un lit double et le petit-déjeuner (5 euros) est disponible sur demande."
+    },
+    "features": {
+      "wifi": "Wifi",
+      "parking": "Parking : 2 places",
+      "tv": "TV Full HD",
+      "heating": "Chauffage central",
+      "firePit": "Brasero",
+      "bedding": "Linge de lit",
+      "airConditioner": "Climatisation",
+      "washingMachine": "Machine à laver",
+      "outdoorShower": "Douche extérieure"
+    },
+    "map": {
+      "title": "Où se trouve l'appartement ?",
+      "subtitle": "Étalans, Bourgogne-Franche-Comté, France"
+    },
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "vous@example.com",
+      "dates": "Dates",
+      "checkin": "Arrivée",
+      "checkout": "Départ",
+      "apartment": "Appartement",
+      "oneRoom": "1 chambre",
+      "twoRooms": "2 chambres",
+      "guests": "Voyageurs",
+      "selectDates": "Sélectionnez les dates",
+      "nights": "{count, plural, one {# nuit} other {# nuits}}",
+      "reserve": "Réserver",
+      "errors": {
+        "email": "Saisissez un email valide.",
+        "dates": "Sélectionnez les dates d'arrivée et de départ.",
+        "apartment": "Sélectionnez un appartement.",
+        "submit": "Impossible de créer la page de paiement."
+      }
+    },
+    "calendar": {
+      "previousMonth": "Mois précédent",
+      "nextMonth": "Mois suivant",
+      "weekdays": {
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mer",
+        "thu": "Jeu",
+        "fri": "Ven",
+        "sat": "Sam",
+        "sun": "Dim"
+      }
+    }
+  },
   "stayForm": {
     "mouseGuide": "Utilisez les flèches (bas) et (haut) pour faire défiler les champs",
     "email": {
@@ -89,11 +149,19 @@
     "serviceRequired": "Sélectionnez au moins un service"
   },
   "achats": {
-    "title": "Retrouvez vos achats de services",
-    "searchPlaceholder": "Écrivez votre code de réservation (Airbnb/Booking)",
+    "title": "Retrouvez vos achats",
+    "searchPlaceholder": "Écrivez votre code de réservation",
     "empty": "Aucun achat trouvé",
     "reservationCode": "Code de réservation :",
-    "total": "Total :"
+    "total": "Total :",
+    "apartment": "Appartement",
+    "checkin": "Arrivée",
+    "checkout": "Départ",
+    "nights": "Nuits",
+    "guests": "Voyageurs",
+    "rooms": "Chambres",
+    "paymentStatus": "Statut du paiement",
+    "paid": "Payé"
   },
   "success": {
     "title": "Votre paiement a bien été traité",
@@ -104,6 +172,14 @@
     "durationValue": "{count, plural, one {# jour} other {# jours}}",
     "visitors": "Visiteurs",
     "visitorsValue": "{count, plural, one {# personne} other {# personnes}}",
+    "reservationDetails": "Détails de la réservation",
+    "apartment": "Appartement",
+    "rooms": "Chambres",
+    "roomsValue": "{count, plural, one {# chambre} other {# chambres}}",
+    "guests": "Voyageurs",
+    "checkin": "Arrivée",
+    "checkout": "Départ",
+    "nights": "Nuits",
     "total": "Total :",
     "daysShort": "j",
     "visitorsShort": "vis",

@@ -12,6 +12,14 @@ export const createPayment = async (
     service_ids: number[],
     service_names: string[],
     session_id: string,
+    apartment?: {
+        reservation_id?: number | null;
+        reservation_code?: string | null;
+        apart_id?: number | null;
+        checkin?: string | null;
+        checkout?: string | null;
+        days_count?: number | null;
+    },
 )=> {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
@@ -28,6 +36,12 @@ export const createPayment = async (
                 reserve_id: reserve_id,
                 client_number: client_number,
                 days_number: days_number,
+                days_count: apartment?.days_count ?? days_number,
+                reservation_id: apartment?.reservation_id ?? null,
+                reservation_code: apartment?.reservation_code ?? null,
+                apart_id: apartment?.apart_id ?? null,
+                checkin: apartment?.checkin ?? null,
+                checkout: apartment?.checkout ?? null,
                 service_ids: service_ids,
                 total_price: total_price,
                 session_id: session_id,
@@ -56,6 +70,12 @@ export const createPayment = async (
                 daysCount: days_number,
                 totalPrice: total_price,
                 serviceNames: service_names,
+                reservationCode: apartment?.reservation_code ?? undefined,
+                apartment: apartment?.apart_id ? {
+                    checkin: apartment.checkin ?? null,
+                    checkout: apartment.checkout ?? null,
+                    daysCount: apartment.days_count ?? null,
+                } : undefined,
                 paymentStatus: "paid",
                 sessionId: session_id,
             }).catch((error) => {

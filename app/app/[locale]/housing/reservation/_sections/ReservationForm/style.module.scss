@@ -1,0 +1,205 @@
+@reference "tailwindcss";
+
+.form {
+    @apply fixed left-1/2 bottom-5 z-40
+        grid w-[min(1120px,calc(100vw-2rem))]
+        -translate-x-1/2 grid-cols-[1fr_auto_auto]
+        items-center gap-3 rounded-3xl border border-neutral-200
+        bg-white/95 p-3 shadow-2xl shadow-neutral-900/20
+        backdrop-blur-xl;
+}
+
+.form_collapsed {
+    @apply w-[min(22rem,calc(100vw-1.5rem))] grid-cols-1;
+}
+
+.fields {
+    @apply grid grid-cols-[1.3fr_1.4fr_1fr_0.7fr] gap-2;
+}
+
+.field,
+.date_field {
+    @apply flex min-h-14 rounded-2xl border border-neutral-200
+        bg-neutral-50 px-4 py-2 text-left transition
+        duration-200 ease-out;
+}
+
+.field {
+    @apply flex-col gap-1;
+}
+
+.date_field {
+    @apply items-center gap-3;
+}
+
+.date_field svg {
+    @apply h-5 w-5 text-neutral-500;
+}
+
+.field span,
+.date_field small {
+    @apply text-xs font-semibold text-neutral-500;
+}
+
+.field input {
+    @apply w-full bg-transparent text-sm text-neutral-900 outline-none;
+}
+
+.field:focus-within,
+.date_field:hover {
+    @apply border-neutral-400 bg-white shadow-sm;
+}
+
+.dropdown {
+    @apply relative min-w-0;
+}
+
+.dropdown_trigger {
+    @apply relative w-full pr-10;
+}
+
+.dropdown_trigger strong {
+    @apply truncate text-sm font-normal text-neutral-900;
+}
+
+.dropdown_chevron {
+    @apply absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2
+        text-neutral-600 transition duration-200;
+}
+
+.dropdown_chevron_open {
+    @apply rotate-180;
+}
+
+.dropdown_menu {
+    @apply absolute bottom-[calc(100%+0.45rem)] left-0 z-50
+        grid w-full min-w-36 overflow-hidden rounded-2xl
+        border border-neutral-200 bg-white p-1 shadow-2xl
+        shadow-neutral-900/20;
+}
+
+.dropdown_option {
+    @apply flex w-full items-center gap-2 rounded-xl px-3 py-2
+        text-left text-sm text-neutral-700 transition duration-150
+        hover:bg-neutral-100;
+}
+
+.dropdown_option svg,
+.dropdown_option span {
+    @apply h-4 w-4 shrink-0;
+}
+
+.dropdown_option_active {
+    @apply bg-neutral-100 font-semibold text-neutral-950;
+}
+
+.summary {
+    @apply flex min-w-28 flex-col text-right text-xs text-neutral-500;
+}
+
+.summary strong {
+    @apply text-base text-neutral-900;
+}
+
+.reserve_btn {
+    @apply flex h-14 min-w-32 items-center justify-center
+        rounded-2xl bg-neutral-900 px-5 text-sm font-semibold
+        text-white transition duration-200 ease-out
+        hover:bg-neutral-700 disabled:cursor-wait
+        disabled:bg-neutral-400;
+}
+
+.loader {
+    @apply h-5 w-5 animate-spin;
+}
+
+.error {
+    @apply absolute bottom-full right-4 mb-2 rounded-2xl
+        bg-red-50 px-4 py-2 text-sm text-red-700 shadow-sm;
+}
+
+.calendar {
+    @apply absolute bottom-[calc(100%+0.75rem)] left-0
+        w-[21.5rem] rounded-3xl border border-neutral-200 bg-white
+        p-4 shadow-2xl shadow-neutral-900/15;
+}
+
+.calendar_header {
+    @apply mb-4 flex items-center justify-between;
+}
+
+.calendar_header button {
+    @apply flex h-9 w-9 items-center justify-center rounded-full
+        border border-neutral-200 text-neutral-700 transition
+        hover:bg-neutral-100;
+}
+
+.calendar_header svg {
+    @apply h-4 w-4;
+}
+
+.weekdays,
+.days_grid {
+    @apply grid grid-cols-7 gap-1;
+}
+
+.weekdays span {
+    @apply pb-2 text-center text-xs font-semibold text-neutral-400;
+}
+
+.day {
+    @apply relative flex h-10 items-center justify-center rounded-xl
+        text-sm text-neutral-800 transition duration-150
+        hover:bg-neutral-100;
+}
+
+.day_in_range {
+    @apply bg-amber-100 text-neutral-900;
+}
+
+.day_selected {
+    @apply bg-neutral-900 text-white hover:bg-neutral-900;
+}
+
+.day_disabled {
+    @apply cursor-not-allowed text-neutral-300 line-through hover:bg-transparent;
+}
+
+@media (max-width: 860px) {
+    .form {
+        @apply bottom-0 w-full grid-cols-1 rounded-b-none
+            rounded-t-3xl p-3;
+    }
+
+    .form_collapsed {
+        @apply bottom-3 w-[min(20rem,calc(100vw-1.5rem))]
+            rounded-3xl;
+    }
+
+    .fields {
+        @apply grid-cols-2 overflow-visible;
+    }
+
+    .summary {
+        @apply flex-row justify-between text-left;
+    }
+
+    .reserve_btn {
+        @apply w-full;
+    }
+
+    .calendar {
+        @apply left-3 w-[calc(100vw-1.5rem)];
+    }
+}
+
+@media (max-width: 520px) {
+    .fields {
+        @apply grid-cols-1;
+    }
+
+    .field,
+    .date_field {
+        @apply min-h-12 rounded-2xl;
+    }
+}

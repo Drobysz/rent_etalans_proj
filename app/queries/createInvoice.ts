@@ -1,11 +1,20 @@
 import { getBackendApiUrl } from "@/lib/api";
 
+export type ApartmentInvoiceOptions = {
+    apart_id?: number | null;
+    rooms_count?: number;
+    checkin?: string | null;
+    checkout?: string | null;
+    days_count?: number;
+};
+
 export const createInvoice = async (
     email: string,
     reserve_id: string,
     client_number: number,
     days_number: number,
-    service_ids: number[]
+    service_ids: number[],
+    apartment?: ApartmentInvoiceOptions,
 )=> {
     const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 15_000);
@@ -22,7 +31,12 @@ export const createInvoice = async (
                 reserve_id: reserve_id,
                 client_number: client_number,
                 days_number: days_number,
-                service_ids: service_ids
+                service_ids: service_ids,
+                apart_id: apartment?.apart_id ?? null,
+                rooms_count: apartment?.rooms_count,
+                checkin: apartment?.checkin,
+                checkout: apartment?.checkout,
+                days_count: apartment?.days_count,
             }),
             signal: controller.signal,
         });

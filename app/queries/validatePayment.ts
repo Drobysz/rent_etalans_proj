@@ -5,6 +5,13 @@ export type ValidatedPaymentData = {
     reserve_id: string;
     client_number: number;
     days_number: number;
+    days_count?: number;
+    reservation_id?: number | null;
+    reservation_code?: string | null;
+    apart_id?: number | null;
+    rooms_count?: number | null;
+    checkin?: string | null;
+    checkout?: string | null;
     total_price: number;
     service_ids: number[];
 };

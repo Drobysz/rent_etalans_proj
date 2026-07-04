@@ -1,4 +1,5 @@
 import { createPayment } from "@/queries/createPayment";
+import { getApartments } from "@/queries/apartments";
 import { getServices } from "@/queries/services";
 import { validatePayment } from "@/queries/validatePayment";
 import { redirect } from "@/i18n/navigation";
@@ -45,15 +46,26 @@ export default async function SuccessPage ({
         reserve_id,
         client_number: clientNumber,
         days_number: daysNumber,
+        days_count: daysCount,
+        reservation_id: reservationId,
+        reservation_code: reservationCode,
+        apart_id: apartmentId,
+        rooms_count: roomsCount,
+        checkin,
+        checkout,
         service_ids: serviceIds,
         total_price: totalPrice,
     } = validation.payment;
 
-    const services = await getServices();
+    const [services, apartments] = await Promise.all([
+        getServices(),
+        getApartments().catch(() => []),
+    ]);
 
     const filteredServices = services?.filter(
         (s: Service) => serviceIds.includes(s.id)
     ) ?? [];
+    const selectedApartment = apartments.find((apartment) => apartment.id === apartmentId);
 
     const serviceNames = filteredServices.map((service: Service) => service.name);
 
@@ -66,6 +78,14 @@ export default async function SuccessPage ({
         serviceIds,
         serviceNames,
         session_id,
+        {
+            reservation_id: reservationId,
+            reservation_code: reservationCode,
+            apart_id: apartmentId,
+            checkin,
+            checkout,
+            days_count: daysCount ?? daysNumber,
+        },
     );
 
     return (
@@ -91,6 +111,15 @@ export default async function SuccessPage ({
                             duration={daysNumber}
                             visitors_count={clientNumber}
                             reserve_id={reserve_id}
+                            reservation={apartmentId ? {
+                                code: reservationCode,
+                                apartment: selectedApartment?.name,
+                                roomsCount,
+                                guests: clientNumber,
+                                checkin,
+                                checkout,
+                                nights: daysCount ?? daysNumber,
+                            } : undefined}
                         />
                         <ServicesList 
                             services={filteredServices}

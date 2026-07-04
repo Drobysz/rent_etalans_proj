@@ -7,9 +7,11 @@ import { cn } from "@/lib/utils";
 import { bagel } from "@/fonts/fonts";
 import { Header } from "./Header/Header";
 import { useWindowWidth } from "@/hooks";
+import { useTranslations } from "next-intl";
 
 export const UpperSection = ()=> {
     const isDesktop = useWindowWidth(860) as boolean;
+    const t = useTranslations("reservation.upperSection");
 
     return (
         <section className={s.upper_section}>
@@ -27,11 +29,11 @@ export const UpperSection = ()=> {
                         s.paragraph_title,
                         bagel.className
                     )}>
-                        Housing
+                        {t("housingTitle")}
                     </h2>
 
                     <p className={s.desc}>
-                        A room in a house, with a bathroom and living room available for use, in a private home. Privacy guaranteed!
+                        {t("housingDescription")}
                     </p>
                 </div>
 
@@ -40,11 +42,11 @@ export const UpperSection = ()=> {
                         s.paragraph_title,
                         bagel.className
                     )}>
-                        Other notes
+                        {t("notesTitle")}
                     </h2>
 
                     <p className={s.desc}>
-                        An additional room with a double bed and breakfast (5 euros) is available upon request.
+                        {t("notesDescription")}
                     </p>
                 </div>
             </div>

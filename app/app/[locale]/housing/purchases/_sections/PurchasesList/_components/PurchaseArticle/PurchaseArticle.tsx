@@ -28,7 +28,7 @@ export const PurchaseArticle = ({
             <TitleBlock 
                 isOpened={isOpened}
                 setIsOpened={setIsOpened}
-                reserve_id={payment.reserve_id}
+                reserve_id={payment.reservation_code ?? payment.reservation?.reservation_code ?? payment.reserve_id}
                 total_price={payment.total_price}
             />
             {isOpened &&
@@ -36,6 +36,7 @@ export const PurchaseArticle = ({
                     email={payment.email}
                     dateStr={dateStr}
                     services={payment.services ?? []}
+                    payment={payment}
                 />
             }
         </motion.li>

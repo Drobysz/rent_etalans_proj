@@ -7,6 +7,7 @@ export type NotificationStatus = "error" | "alert" | "success" | "none";
 export interface AppNotification {
     status: NotificationStatus;
     text: string;
+    duration?: number;
 }
 
 export interface Coords {

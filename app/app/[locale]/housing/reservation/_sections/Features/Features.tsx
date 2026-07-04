@@ -3,21 +3,23 @@ import {
     Heater, FlameKindling, TowelRack,
     AirVent, WashingMachine, ShowerHead
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import s from "./style.module.scss";
 
 export const Features = ()=> {
+    const t = useTranslations("reservation.features");
     const featuresList = [
-        { label: "Wifi", Icon: Wifi },
-        { label: "Parking: 2 places", Icon: SquareParking },
-        { label: "TV Full HD", Icon: TvMinimal },
+        { label: t("wifi"), Icon: Wifi },
+        { label: t("parking"), Icon: SquareParking },
+        { label: t("tv"), Icon: TvMinimal },
 
-        { label: "Central Heating", Icon: Heater },
-        { label: "Fire pit", Icon: FlameKindling },
-        { label: "Bedding", Icon: TowelRack },
+        { label: t("heating"), Icon: Heater },
+        { label: t("firePit"), Icon: FlameKindling },
+        { label: t("bedding"), Icon: TowelRack },
 
-        { label: "Air Conditioner", Icon: AirVent },
-        { label: "Washing machine", Icon: WashingMachine },
-        { label: "Outdoor shower", Icon: ShowerHead },
+        { label: t("airConditioner"), Icon: AirVent },
+        { label: t("washingMachine"), Icon: WashingMachine },
+        { label: t("outdoorShower"), Icon: ShowerHead },
     ];
 
     return (

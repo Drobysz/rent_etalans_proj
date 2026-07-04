@@ -3,10 +3,16 @@ import "server-only";
 export type TelegramPurchaseNotificationParams = {
   email: string;
   reserveId: string;
+  reservationCode?: string;
   visitorsCount: number;
   daysCount: number;
   totalPrice: number;
   serviceNames: string[];
+  apartment?: {
+    checkin?: string | null;
+    checkout?: string | null;
+    daysCount?: number | null;
+  };
   paymentStatus?: string;
   sessionId?: string;
 };
@@ -30,10 +36,34 @@ export const sendTelegramPurchaseNotification = async (
     headers["X-Notification-Secret"] = notifySecret;
   }
 
+  const message = [
+    "Nouvelle réservation payée",
+    "",
+    `Client : ${params.email}`,
+    `Code de séjour : ${params.reservationCode ?? params.reserveId}`,
+    `Référence de paiement : ${params.reserveId}`,
+    "",
+    `Voyageurs : ${params.visitorsCount}`,
+    `Durée : ${params.apartment?.daysCount ?? params.daysCount} nuit(s)`,
+    params.apartment?.checkin ? `Arrivée : ${params.apartment.checkin}` : null,
+    params.apartment?.checkout ? `Départ : ${params.apartment.checkout}` : null,
+    "",
+    params.serviceNames.length > 0
+      ? `Services : ${params.serviceNames.join(", ")}`
+      : "Services : aucun",
+    "",
+    `Montant : ${params.totalPrice.toFixed(2)} EUR`,
+    `Statut : ${params.paymentStatus ?? "payé"}`,
+    params.sessionId ? `Session Stripe : ${params.sessionId}` : null,
+  ].filter(Boolean).join("\n");
+
   const res = await fetch(notifyUrl!, {
     method: "POST",
     headers,
-    body: JSON.stringify(params),
+    body: JSON.stringify({
+      ...params,
+      message,
+    }),
   });
 
   if (!res.ok) {

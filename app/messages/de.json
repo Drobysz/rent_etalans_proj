@@ -37,6 +37,66 @@
       "imageAlt": "Wohnzimmer des Apartments"
     }
   },
+  "reservation": {
+    "header": {
+      "title": "Au calme de la campagne",
+      "subtitle": "1-4 Gäste ○ 1-2 Zimmer ○ 1-2 Betten"
+    },
+    "upperSection": {
+      "housingTitle": "Unterkunft",
+      "housingDescription": "Ein Zimmer in einem Haus mit nutzbarem Badezimmer und Wohnzimmer in einem Privathaus. Privatsphäre garantiert!",
+      "notesTitle": "Weitere Hinweise",
+      "notesDescription": "Ein zusätzliches Zimmer mit Doppelbett und Frühstück (5 Euro) ist auf Anfrage verfügbar."
+    },
+    "features": {
+      "wifi": "Wifi",
+      "parking": "Parken: 2 Plätze",
+      "tv": "Full-HD-TV",
+      "heating": "Zentralheizung",
+      "firePit": "Feuerstelle",
+      "bedding": "Bettwäsche",
+      "airConditioner": "Klimaanlage",
+      "washingMachine": "Waschmaschine",
+      "outdoorShower": "Außendusche"
+    },
+    "map": {
+      "title": "Wo befindet sich das Apartment?",
+      "subtitle": "Étalans, Bourgogne-Franche-Comté, Frankreich"
+    },
+    "form": {
+      "email": "E-Mail",
+      "emailPlaceholder": "sie@example.com",
+      "dates": "Daten",
+      "checkin": "Anreise",
+      "checkout": "Abreise",
+      "apartment": "Apartment",
+      "oneRoom": "1 Zimmer",
+      "twoRooms": "2 Zimmer",
+      "guests": "Gäste",
+      "selectDates": "Daten auswählen",
+      "nights": "{count, plural, one {# Nacht} other {# Nächte}}",
+      "reserve": "Reservieren",
+      "errors": {
+        "email": "Geben Sie eine gültige E-Mail-Adresse ein.",
+        "dates": "Wählen Sie Anreise- und Abreisedatum.",
+        "apartment": "Wählen Sie ein Apartment.",
+        "submit": "Die Checkout-Seite konnte nicht erstellt werden."
+      }
+    },
+    "calendar": {
+      "previousMonth": "Vorheriger Monat",
+      "nextMonth": "Nächster Monat",
+      "weekdays": {
+        "mon": "Mo",
+        "tue": "Di",
+        "wed": "Mi",
+        "thu": "Do",
+        "fri": "Fr",
+        "sat": "Sa",
+        "sun": "So"
+      }
+    }
+  },
   "stayForm": {
     "mouseGuide": "Verwenden Sie die Pfeiltasten (unten) und (oben), um durch die Formularfelder zu wechseln",
     "email": {
@@ -89,11 +149,19 @@
     "serviceRequired": "Wählen Sie mindestens einen Service aus"
   },
   "achats": {
-    "title": "Finden Sie Ihre Servicekäufe",
-    "searchPlaceholder": "Geben Sie Ihren Reservierungscode ein (Airbnb/Booking)",
+    "title": "Finden Sie Ihre Käufe",
+    "searchPlaceholder": "Geben Sie Ihren Reservierungscode ein",
     "empty": "Keine Käufe gefunden",
     "reservationCode": "Reservierungscode:",
-    "total": "Gesamt:"
+    "total": "Gesamt:",
+    "apartment": "Apartment",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "nights": "Nächte",
+    "guests": "Gäste",
+    "rooms": "Zimmer",
+    "paymentStatus": "Zahlungsstatus",
+    "paid": "Bezahlt"
   },
   "success": {
     "title": "Ihre Zahlung wurde erfolgreich verarbeitet",
@@ -104,6 +172,14 @@
     "durationValue": "{count, plural, one {# Tag} other {# Tage}}",
     "visitors": "Gäste",
     "visitorsValue": "{count, plural, one {# Gast} other {# Gäste}}",
+    "reservationDetails": "Reservierungsdetails",
+    "apartment": "Apartment",
+    "rooms": "Zimmer",
+    "roomsValue": "{count, plural, one {# Zimmer} other {# Zimmer}}",
+    "guests": "Gäste",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "nights": "Nächte",
     "total": "Gesamt:",
     "daysShort": "T",
     "visitorsShort": "Gäste",

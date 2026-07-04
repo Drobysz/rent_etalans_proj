@@ -55,8 +55,8 @@ export const PurchasesList = ({
 
     const ts = TextService;
 
-    const filteredPayments = payments.filter(p => 
-        ts.includesNormalized(p.reserve_id ?? "", searchValue)
+    const filteredPayments = payments.filter(p =>
+        ts.includesNormalized(p.reservation_code ?? p.reservation?.reservation_code ?? p.reserve_id ?? "", searchValue)
     );
 
     const ITEMS_PER_PAGE = 7;
