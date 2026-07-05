@@ -14,16 +14,16 @@ export const TabList = ({
 	const t = useTranslations("navigation");
 	const pathname = usePathname();
 	const tabsList: TabListType[] = [
-        { href: '/', label: "Main page" },
+        { href: '/', label: t("home") },
         { 
 			links: [
-				{ href: '/housing/reservation', label: "Reservation" },
+				{ href: '/housing/reservation', label: t("reservation") },
 				{ href: '/housing/purchases', label: t("purchases") },
 				{ href: '/housing/services', label: t("services") }
 			],
-			label: "Housing"
+			label: t("housing")
 		},
-		{ href: '/documentation', label: "Docs" },
+		{ href: '/documentation', label: t("docs") },
     ];
 
 	return (

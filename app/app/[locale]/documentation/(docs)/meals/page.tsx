@@ -1,6 +1,17 @@
 import { PathService } from "@/helpers/path";
+import { createPageMetadata } from "@/lib/metadata";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+
+    return createPageMetadata(locale, "meals", "/documentation/meals");
+}
 
 export default async function MealsPage ({
     params

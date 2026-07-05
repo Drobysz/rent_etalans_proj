@@ -5,11 +5,13 @@ import { useEffect, useRef } from "react";
 import { FeedProps } from "./Feed.props";
 import s from "./style.module.scss";
 import { ImageCover } from "../ImageCover/ImageCover";
+import { PathService } from "@/helpers/path";
 
 export const Feed = ({
     images,
     imageCoverClassName,
     imgIdx,
+    isImageLocale,
     setImgIdx
 }: FeedProps)=> {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -116,7 +118,11 @@ export const Feed = ({
                     ref={(el) => {
                         itemsRef.current[idx] = el;
                     }}
-                    url={img.url || "/empty_room.jpg"}
+                    url={
+                        isImageLocale
+                            ? PathService.withBasePath(img.url)
+                            : img.url
+                        || "/empty_room.jpg"}
                 />
             ))}
         </motion.div>

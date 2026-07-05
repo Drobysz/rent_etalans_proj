@@ -1,5 +1,16 @@
 import { SideMenu } from "./layout/index";
 import s from "./layout/GridLayout.module.scss";
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  return createPageMetadata(locale, "documentation", "/documentation");
+}
 
 export default function DocsLayout ({
   children,

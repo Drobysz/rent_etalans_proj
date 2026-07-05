@@ -14,12 +14,14 @@ import {
   CardItem as Card3dItem,
   DefaultItem
 } from "@/components/ui/3d-card";
+import { PathService } from "@/helpers/path";
 
 export const ImageSwitcher = ({
     images,
     nb_lits,
     format3d = false,
-    imageCoverClassName
+    imageCoverClassName,
+    isImageLocal = false
 }: ImageSwitcherProps) => {
     const isImage = images.length > 0;
     const [imgIdx, setImgIdx] = useState(0);
@@ -42,7 +44,7 @@ export const ImageSwitcher = ({
             {!isImage && 
                 <ImageCover
                     className={imageCoverClassName}
-                    url={"/empty_room.jpg"} 
+                    url={PathService.withBasePath("/empty.png")}
                 /> 
             } 
 
@@ -51,6 +53,7 @@ export const ImageSwitcher = ({
                     imgIdx={imgIdx}
                     setImgIdx={setImgIdx}
                     images={images}
+                    isImageLocale={isImageLocal}
                     imageCoverClassName={imageCoverClassName}
                 />
             }

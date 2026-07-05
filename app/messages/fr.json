@@ -1,7 +1,49 @@
 {
   "metadata": {
-    "title": "Services supplémentaires",
-    "description": "Services supplémentaires pour la location d'une chambre à Etalans"
+    "site": {
+      "title": "Au calme de la campagne",
+      "description": "Location de chambres, réservations d'appartement et services supplémentaires à Étalans, en Bourgogne-Franche-Comté."
+    },
+    "home": {
+      "title": "Au calme de la campagne | Location de chambres à Étalans",
+      "description": "Découvrez Au calme de la campagne, une location paisible à Étalans avec réservation d'appartement, lieux à visiter et services optionnels."
+    },
+    "reservation": {
+      "title": "Réserver l'appartement | Au calme de la campagne",
+      "description": "Réservez une ou deux chambres à Étalans, choisissez vos dates et vos voyageurs, puis finalisez votre réservation en ligne."
+    },
+    "services": {
+      "title": "Services supplémentaires | Au calme de la campagne",
+      "description": "Ajoutez des services utiles à votre séjour à Étalans, comme l'arrivée anticipée, le départ tardif et d'autres options de confort."
+    },
+    "purchases": {
+      "title": "Vos achats | Au calme de la campagne",
+      "description": "Retrouvez vos réservations d'appartement, achats de services, statuts de paiement, factures et détails de réservation."
+    },
+    "success": {
+      "title": "Paiement confirmé | Au calme de la campagne",
+      "description": "Consultez votre paiement confirmé, votre code de réservation, les détails de l'appartement et vos factures."
+    },
+    "cancel": {
+      "title": "Paiement annulé | Au calme de la campagne",
+      "description": "Votre paiement a été annulé. Revenez sur Au calme de la campagne pour modifier votre réservation ou choisir des services."
+    },
+    "documentation": {
+      "title": "Documentation | Au calme de la campagne",
+      "description": "Consultez les informations utiles sur les repas, la confidentialité et le site Au calme de la campagne à Étalans."
+    },
+    "privacyPolicy": {
+      "title": "Politique de confidentialité | Au calme de la campagne",
+      "description": "Découvrez comment Au calme de la campagne collecte, utilise et protège les données personnelles liées aux réservations et paiements."
+    },
+    "meals": {
+      "title": "Informations repas | Au calme de la campagne",
+      "description": "Consultez les informations sur les repas et le petit-déjeuner pour votre séjour à Au calme de la campagne à Étalans."
+    },
+    "developer": {
+      "title": "Informations développeur | Au calme de la campagne",
+      "description": "Retrouvez les informations développeur et projet du site de réservation et de services Au calme de la campagne."
+    }
   },
   "home": {
     "stayFormTitle": "Saisissez les détails de votre séjour",
@@ -198,6 +240,7 @@
       "lateCheckout": "Départ tardif",
       "afterLate": "."
     },
+    "chat": "Discuter avec le propriétaire",
     "getServices": "Voir les services",
     "seePurchases": "Voir vos achats",
     "loading": "Chargement..."
@@ -380,6 +423,10 @@
   },
   "navigation": {
     "services": "Services",
-    "purchases": "Vos achats"
+    "reservation": "Réservation",
+    "purchases": "Vos achats",
+    "home": "Accueil",
+    "docs": "Docs",
+    "housing": "Logement"
   }
 }

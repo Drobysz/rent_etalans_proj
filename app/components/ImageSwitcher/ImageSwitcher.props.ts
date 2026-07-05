@@ -5,4 +5,5 @@ export interface ImageSwitcherProps {
     nb_lits?: number;
     format3d?: boolean;
     imageCoverClassName?: string;
+    isImageLocal?: boolean
 }

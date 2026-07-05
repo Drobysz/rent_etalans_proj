@@ -1,7 +1,49 @@
 {
   "metadata": {
-    "title": "Zusatzleistungen",
-    "description": "Zusatzleistungen für Ihre Zimmermiete in Etalans"
+    "site": {
+      "title": "Au calme de la campagne",
+      "description": "Zimmervermietung, Apartmentreservierungen und Zusatzleistungen in Etalans, Bourgogne-Franche-Comte, Frankreich."
+    },
+    "home": {
+      "title": "Au calme de la campagne | Zimmervermietung in Etalans",
+      "description": "Entdecken Sie Au calme de la campagne, eine ruhige Zimmervermietung in Etalans mit Apartmentreservierung, Ausflugszielen und optionalen Services."
+    },
+    "reservation": {
+      "title": "Apartment reservieren | Au calme de la campagne",
+      "description": "Buchen Sie ein oder zwei Zimmer in Etalans, wählen Sie Daten und Gäste aus und schließen Sie Ihre Apartmentreservierung online ab."
+    },
+    "services": {
+      "title": "Zusatzleistungen | Au calme de la campagne",
+      "description": "Ergänzen Sie Ihren Aufenthalt in Etalans mit nützlichen Services wie früher Anreise, später Abreise und weiteren Komfortoptionen."
+    },
+    "purchases": {
+      "title": "Ihre Käufe | Au calme de la campagne",
+      "description": "Finden Sie Ihre Apartmentreservierungen, Servicekäufe, Zahlungsstatus, Rechnungen und Reservierungsdetails."
+    },
+    "success": {
+      "title": "Zahlung bestätigt | Au calme de la campagne",
+      "description": "Sehen Sie Ihre bestätigte Zahlung, Ihren Reservierungscode, Apartmentdetails und Rechnungsdownloads."
+    },
+    "cancel": {
+      "title": "Zahlung abgebrochen | Au calme de la campagne",
+      "description": "Ihre Zahlung wurde abgebrochen. Kehren Sie zu Au calme de la campagne zurück, um Ihre Reservierung zu ändern oder Services auszuwählen."
+    },
+    "documentation": {
+      "title": "Dokumentation | Au calme de la campagne",
+      "description": "Lesen Sie nützliche Informationen zu Mahlzeiten, Datenschutz und der Website Au calme de la campagne in Etalans."
+    },
+    "privacyPolicy": {
+      "title": "Datenschutzerklärung | Au calme de la campagne",
+      "description": "Erfahren Sie, wie Au calme de la campagne personenbezogene Daten für Reservierungen, Zahlungen und Services verarbeitet und schützt."
+    },
+    "meals": {
+      "title": "Informationen zu Mahlzeiten | Au calme de la campagne",
+      "description": "Sehen Sie Informationen zu Mahlzeiten und Frühstück für Ihren Aufenthalt bei Au calme de la campagne in Etalans."
+    },
+    "developer": {
+      "title": "Entwicklerinformationen | Au calme de la campagne",
+      "description": "Finden Sie Entwickler- und Projektinformationen zur Reservierungs- und Service-Website von Au calme de la campagne."
+    }
   },
   "home": {
     "stayFormTitle": "Geben Sie Ihre Aufenthaltsdetails ein",
@@ -198,6 +240,7 @@
       "lateCheckout": "Später Check-out",
       "afterLate": "."
     },
+    "chat": "Mit dem Vermieter chatten",
     "getServices": "Services ansehen",
     "seePurchases": "Ihre Käufe ansehen",
     "loading": "Lädt..."
@@ -380,6 +423,10 @@
   },
   "navigation": {
     "services": "Services",
-    "purchases": "Ihre Käufe"
+    "reservation": "Reservierung",
+    "purchases": "Ihre Käufe",
+    "home": "Startseite",
+    "docs": "Docs",
+    "housing": "Wohnraum"
   }
 }

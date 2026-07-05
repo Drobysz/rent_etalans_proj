@@ -14,6 +14,17 @@ import { Payment, Service } from "@/types";
 import { getTranslations } from "next-intl/server";
 import { PaymentStorageSync } from "./_components";
 import type { InvoiceApartmentItem } from "@/utils/createInvoicePdf";
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+
+    return createPageMetadata(locale, "success", "/success", { noIndex: true });
+}
 
 type SuccessSearchParams = {
     session_id?: string;

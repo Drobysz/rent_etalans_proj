@@ -1,5 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import s from "./page.module.scss";
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+
+    return createPageMetadata(locale, "privacyPolicy", "/documentation/privacy_policy");
+}
 
 type PolicySection = {
     id: string;

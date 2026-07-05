@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .container {
-    @apply grid justify-center px-3 pb-44 pt-3;
+    @apply grid justify-center px-3 pb-10 pt-3;
     grid-template-columns: auto minmax(260px, 1080px) auto;
     grid-template-areas: ". main .";
 }

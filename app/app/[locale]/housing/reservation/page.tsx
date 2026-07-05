@@ -6,6 +6,17 @@ import {
     ReservationForm
 } from "./_sections";
 import { ReservationContextProvider } from "./context/reservation.context";
+import { createPageMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+
+    return createPageMetadata(locale, "reservation", "/housing/reservation");
+}
 
 export default function ReservationPage () {
     return (

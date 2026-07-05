@@ -5,5 +5,6 @@ export interface FeedProps {
     images: Image[];
     imageCoverClassName?: string;
     imgIdx: number;
+    isImageLocale: boolean;
     setImgIdx: Dispatch<SetStateAction<number>>;
 }

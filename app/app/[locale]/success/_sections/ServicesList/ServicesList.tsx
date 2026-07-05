@@ -157,6 +157,13 @@ export const ServicesList = ({
                     >
                         {t("seePurchases")}
                     </button>
+                    <Link
+                        href="https://wa.me/33636652035"
+                        target="_blank"
+                        className="text-end"
+                    >
+                        {t("chat")}
+                    </Link>
                 </div>
             </div>
         </section>

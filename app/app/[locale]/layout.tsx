@@ -11,9 +11,9 @@ import "./globals.css";
 import { GlobalContextProvider } from "./context/global.context";
 import s from "./layout/layout.module.scss";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { createPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -21,12 +21,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata" });
-
-  return {
-    title: t("title"),
-    description: t("description"),
-  };
+  return createPageMetadata(locale, "site", "/");
 }
 
 export default async function RootLayout({
