@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { CSSProperties } from "react";
-import { useMemo, useState } from "react";
+import type { RefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { useReservation } from "../../context/reservation.context";
@@ -12,7 +12,7 @@ import s from "./style.module.scss";
 type DatePickerProps = {
     open: boolean;
     disabledDates: string[];
-    anchorLeft?: number;
+    triggerRef: RefObject<HTMLElement | null>;
     onClose: () => void;
 };
 
@@ -61,7 +61,7 @@ function rangeContainsDisabled(start: string, end: string, disabledDates: Set<st
 export const DatePicker = ({
     open,
     disabledDates,
-    anchorLeft,
+    triggerRef,
     onClose,
 }: DatePickerProps) => {
     const t = useTranslations("reservation.calendar");
@@ -75,6 +75,7 @@ export const DatePicker = ({
         const baseDate = checkin ? fromDateId(checkin) : new Date();
         return new Date(baseDate.getFullYear(), baseDate.getMonth(), 1);
     });
+    const calendarRef = useRef<HTMLDivElement | null>(null);
 
     const disabledSet = useMemo(() => new Set(disabledDates), [disabledDates]);
     const today = toDateId(new Date());
@@ -110,14 +111,39 @@ export const DatePicker = ({
         ));
     };
 
+    useEffect(() => {
+        if (!open) return;
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        };
+
+        const handlePointerDown = (event: PointerEvent) => {
+            const target = event.target as Node;
+
+            if (calendarRef.current?.contains(target)) return;
+            if (triggerRef.current?.contains(target)) return;
+
+            onClose();
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("pointerdown", handlePointerDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+            document.removeEventListener("pointerdown", handlePointerDown);
+        };
+    }, [onClose, open, triggerRef]);
+
     return (
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
             {open && (
                 <motion.div
+                    ref={calendarRef}
                     className={s.calendar}
-                    style={{
-                        "--calendar-anchor-left": anchorLeft ? `${anchorLeft}px` : "50%",
-                    } as CSSProperties}
                     initial={{ opacity: 0, x: "-50%", y: 14, scale: 0.98 }}
                     animate={{ opacity: 1, x: "-50%", y: 0, scale: 1 }}
                     exit={{ opacity: 0, x: "-50%", y: 10, scale: 0.98 }}

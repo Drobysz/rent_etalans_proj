@@ -76,6 +76,8 @@
       "selectDates": "Daten auswählen",
       "nights": "{count, plural, one {# Nacht} other {# Nächte}}",
       "reserve": "Reservieren",
+      "expand": "Reservierungsformular ausklappen",
+      "collapse": "Reservierungsformular einklappen",
       "errors": {
         "email": "Geben Sie eine gültige E-Mail-Adresse ein.",
         "dates": "Wählen Sie Anreise- und Abreisedatum.",

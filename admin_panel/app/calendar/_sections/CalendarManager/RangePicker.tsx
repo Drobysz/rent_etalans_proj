@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./style.module.scss";
 
 type RangePickerProps = {
@@ -54,6 +54,7 @@ function expandRange(startDate: string, endDate: string) {
 
 export function RangePicker({ startDate, endDate, blockedRanges = [], onChange }: RangePickerProps) {
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const [monthDate, setMonthDate] = useState(() => {
     const baseDate = startDate ? fromDateId(startDate) : new Date();
     return new Date(baseDate.getFullYear(), baseDate.getMonth(), 1);
@@ -86,8 +87,34 @@ export function RangePicker({ startDate, endDate, blockedRanges = [], onChange }
     setMonthDate((current) => new Date(current.getFullYear(), current.getMonth() + direction, 1));
   };
 
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+
+      if (rootRef.current?.contains(target)) return;
+
+      setOpen(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [open]);
+
   return (
-    <div className={styles.rangePicker}>
+    <div ref={rootRef} className={styles.rangePicker}>
       <button type="button" className={styles.rangeTrigger} onClick={() => setOpen((current) => !current)}>
         <span>Période</span>
         <strong>{label}</strong>

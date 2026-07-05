@@ -76,6 +76,8 @@
       "selectDates": "Select dates",
       "nights": "{count, plural, one {# night} other {# nights}}",
       "reserve": "Reserve",
+      "expand": "Expand reservation form",
+      "collapse": "Collapse reservation form",
       "errors": {
         "email": "Enter a valid email.",
         "dates": "Select check-in and check-out dates.",

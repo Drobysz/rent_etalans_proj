@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Loader2 } from "lucide-react";
+import { CalendarDays, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import type { FormEvent } from "react";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -9,7 +9,6 @@ import type { Apartment } from "@/types";
 import { getApartments } from "@/queries/apartments";
 import { createInvoice } from "@/queries/createInvoice";
 import { getReservationAvailability } from "@/queries/reservationAvailability";
-import { useWindowWidth } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { useReservation } from "../../context/reservation.context";
@@ -49,6 +48,12 @@ const formatDisplayDate = (date: string | null, fallback: string) => {
 
 const createReserveId = () => `RSV-${Date.now().toString(36).toUpperCase()}`;
 
+const compactReservationQuery = "(max-width: 859px)";
+
+function getIsCompactReservation() {
+    return typeof window !== "undefined" && window.matchMedia(compactReservationQuery).matches;
+}
+
 export const ReservationForm = () => {
     const t = useTranslations("reservation.form");
     const { setNotification } = useContext(GlobalContext);
@@ -70,11 +75,8 @@ export const ReservationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAtPageBottom, setIsAtPageBottom] = useState(false);
-    const [calendarAnchorLeft, setCalendarAnchorLeft] = useState<number | undefined>();
-    const formRef = useRef<HTMLFormElement | null>(null);
+    const [isCompact, setIsCompact] = useState(getIsCompactReservation);
     const dateFieldRef = useRef<HTMLButtonElement | null>(null);
-    const windowWidth = useWindowWidth() as number;
-    const isCompact = windowWidth > 0 && windowWidth < 860;
     const showFields = !isCompact || isExpanded;
 
     useEffect(() => {
@@ -121,31 +123,14 @@ export const ReservationForm = () => {
     }, []);
 
     useEffect(() => {
-        if (!isCalendarOpen) return;
+        const mediaQuery = window.matchMedia(compactReservationQuery);
+        const updateCompactState = () => setIsCompact(mediaQuery.matches);
 
-        const updateCalendarAnchor = () => {
-            const formRect = formRef.current?.getBoundingClientRect();
-            const fieldRect = dateFieldRef.current?.getBoundingClientRect();
+        updateCompactState();
+        mediaQuery.addEventListener("change", updateCompactState);
 
-            if (!formRect || !fieldRect) return;
-
-            const calendarWidth = Math.min(344, window.innerWidth - 32);
-            const desiredLeft = fieldRect.left - formRect.left + fieldRect.width / 2;
-            const minLeft = calendarWidth / 2 + 16 - formRect.left;
-            const maxLeft = window.innerWidth - 16 - formRect.left - calendarWidth / 2;
-
-            setCalendarAnchorLeft(Math.min(Math.max(desiredLeft, minLeft), maxLeft));
-        };
-
-        updateCalendarAnchor();
-        window.addEventListener("resize", updateCalendarAnchor);
-        window.addEventListener("scroll", updateCalendarAnchor, { passive: true });
-
-        return () => {
-            window.removeEventListener("resize", updateCalendarAnchor);
-            window.removeEventListener("scroll", updateCalendarAnchor);
-        };
-    }, [isCalendarOpen, isCompact, showFields]);
+        return () => mediaQuery.removeEventListener("change", updateCompactState);
+    }, []);
 
     const selectedApartment = useMemo(
         () => apartments.find((apartment) => apartment.nb_chambers === roomsCount) ?? apartments[0],
@@ -175,11 +160,6 @@ export const ReservationForm = () => {
 
     const submitReservation = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        if (isCompact && !isExpanded) {
-            setIsExpanded(true);
-            return;
-        }
 
         if (!email || !email.includes("@")) {
             notifyError(t("errors.email"));
@@ -223,7 +203,6 @@ export const ReservationForm = () => {
 
     return (
         <motion.form
-            ref={formRef}
             className={cn(s.form, isCompact && !isExpanded && s.form_collapsed)}
             onSubmit={submitReservation}
             initial={{ y: 80, opacity: 0 }}
@@ -278,18 +257,26 @@ export const ReservationForm = () => {
                                 onBlur={(event) => updateGuests(event.target.value)}
                             />
                         </label>
-                        <button
-                            ref={dateFieldRef}
-                            className={s.date_field}
-                            type="button"
-                            onClick={() => setIsCalendarOpen((value) => !value)}
-                        >
-                            <CalendarDays />
-                            <span>
-                                <small>{t("dates")}</small>
-                                {formatDisplayDate(checkin, t("checkin"))} - {formatDisplayDate(checkout, t("checkout"))}
-                            </span>
-                        </button>
+                        <div className={s.date_wrap}>
+                            <button
+                                ref={dateFieldRef}
+                                className={s.date_field}
+                                type="button"
+                                onClick={() => setIsCalendarOpen((value) => !value)}
+                            >
+                                <CalendarDays />
+                                <span>
+                                    <small>{t("dates")}</small>
+                                    {formatDisplayDate(checkin, t("checkin"))} - {formatDisplayDate(checkout, t("checkout"))}
+                                </span>
+                            </button>
+                            <DatePicker
+                                open={isCalendarOpen}
+                                disabledDates={disabledDates}
+                                triggerRef={dateFieldRef}
+                                onClose={() => setIsCalendarOpen(false)}
+                            />
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -299,15 +286,28 @@ export const ReservationForm = () => {
                     <strong>{totalPrice > 0 ? `${totalPrice.toFixed(2)} EUR` : "-"}</strong>
                 </div>
             )}
-            <button className={s.reserve_btn} type="submit" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className={s.loader} /> : t("reserve")}
-            </button>
-            <DatePicker
-                open={isCalendarOpen}
-                disabledDates={disabledDates}
-                anchorLeft={calendarAnchorLeft}
-                onClose={() => setIsCalendarOpen(false)}
-            />
+            <div className={s.actions_row}>
+                <button className={s.reserve_btn} type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? <Loader2 className={s.loader} /> : t("reserve")}
+                </button>
+                {isCompact && (
+                    <button
+                        className={s.expand_btn}
+                        type="button"
+                        aria-label={isExpanded ? t("collapse") : t("expand")}
+                        aria-expanded={isExpanded}
+                        onClick={() => {
+                            if (isExpanded) {
+                                setIsCalendarOpen(false);
+                            }
+
+                            setIsExpanded((current) => !current);
+                        }}
+                    >
+                        {isExpanded ? <ChevronDown /> : <ChevronUp />}
+                    </button>
+                )}
+            </div>
         </motion.form>
     );
 };
