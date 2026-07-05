@@ -1,9 +1,9 @@
-import { addToPaymentStorage, getPayments } from "@/lib/payments";
+import { addToPaymentStorage, getHydratedPayments } from "@/lib/payments";
 import { Payment } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET () {
-    const payments = await getPayments();
+    const payments = await getHydratedPayments();
 
     return NextResponse.json({ payments });
 }

@@ -1,5 +1,9 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import {
+  formatReservationCheckin,
+  formatReservationCheckout,
+} from "./reservationDateTime";
 
 export type InvoiceServiceItem = {
   id: number;
@@ -115,8 +119,8 @@ export const createInvoicePdf = (data: InvoicePdfData) => {
         data.apartment.title,
         String(data.apartment.roomsCount),
         String(data.apartment.guests),
-        formatDate(data.apartment.checkin),
-        formatDate(data.apartment.checkout),
+        formatReservationCheckin(data.apartment.checkin) ?? formatDate(data.apartment.checkin),
+        formatReservationCheckout(data.apartment.checkout) ?? formatDate(data.apartment.checkout),
         String(data.apartment.nights),
         formatEuro(data.apartment.pricePerNight),
         formatEuro(data.apartment.amount),

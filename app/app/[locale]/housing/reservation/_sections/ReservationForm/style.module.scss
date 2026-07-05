@@ -14,22 +14,22 @@
 }
 
 .fields {
-    @apply grid grid-cols-[1.25fr_1fr_0.65fr_1.35fr] gap-2;
+    @apply grid grid-cols-4 gap-2;
 }
 
 .field,
 .date_field {
-    @apply flex min-h-14 rounded-2xl border border-neutral-200
-        bg-neutral-50 px-4 py-2 text-left transition
+    @apply flex h-14 min-w-0 rounded-2xl border border-neutral-200
+        bg-neutral-50 px-4 py-2 text-left text-sm transition
         duration-200 ease-out;
 }
 
 .field {
-    @apply flex-col gap-1;
+    @apply flex-col justify-center gap-1;
 }
 
 .date_field {
-    @apply w-full items-center gap-3;
+    @apply w-full items-center gap-3 overflow-hidden;
 }
 
 .date_wrap {
@@ -37,7 +37,12 @@
 }
 
 .date_field svg {
-    @apply h-5 w-5 text-neutral-500;
+    @apply h-5 w-5 shrink-0 text-neutral-500;
+}
+
+.date_field > span {
+    @apply flex min-w-0 flex-col gap-1 whitespace-nowrap
+        text-neutral-900;
 }
 
 .field span,
@@ -46,7 +51,7 @@
 }
 
 .field input {
-    @apply w-full bg-transparent text-sm text-neutral-900 outline-none;
+    @apply w-full bg-transparent text-sm leading-tight text-neutral-900 outline-none;
     font-variant-numeric: tabular-nums;
 }
 
@@ -74,7 +79,7 @@
 }
 
 .dropdown_trigger strong {
-    @apply truncate text-sm font-normal text-neutral-900;
+    @apply truncate text-sm font-normal leading-tight text-neutral-900;
 }
 
 .dropdown_chevron {
@@ -235,6 +240,6 @@
 
     .field,
     .date_field {
-        @apply min-h-12 rounded-2xl;
+        @apply h-12 rounded-2xl;
     }
 }

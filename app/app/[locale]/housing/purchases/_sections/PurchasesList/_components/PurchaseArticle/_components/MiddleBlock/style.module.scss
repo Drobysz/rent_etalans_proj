@@ -25,8 +25,16 @@
     @apply flex gap-1.5 items-center overflow-x-auto;
 }
 
+.purchase_section {
+    @apply flex flex-col gap-2 rounded-2xl bg-neutral-50 p-3 shadow-[0_1px_0_rgba(0,0,0,0.04)];
+}
+
+.purchase_section h3 {
+    @apply text-xs font-semibold uppercase tracking-wide text-neutral-400;
+}
+
 .details {
-    @apply grid grid-cols-2 gap-2 rounded-2xl bg-neutral-50 p-3;
+    @apply grid grid-cols-2 gap-2;
 }
 
 .details div {
@@ -64,5 +72,9 @@
 @media (max-width: 480px) {
     .res_serv {
         @apply text-sm;
+    }
+
+    .purchase_section {
+        @apply rounded-xl p-2.5;
     }
 }

@@ -76,6 +76,7 @@ export const ReservationForm = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAtPageBottom, setIsAtPageBottom] = useState(false);
     const [isCompact, setIsCompact] = useState(getIsCompactReservation);
+    const [guestsInput, setGuestsInput] = useState(String(guests));
     const dateFieldRef = useRef<HTMLButtonElement | null>(null);
     const showFields = !isCompact || isExpanded;
 
@@ -143,6 +144,10 @@ export const ReservationForm = () => {
         { value: "2", label: t("twoRooms") },
     ];
 
+    useEffect(() => {
+        setGuestsInput(String(Math.min(guests, maxGuests)));
+    }, [guests, maxGuests]);
+
     const notifyError = (message: string) => {
         setNotification({
             status: "error",
@@ -150,16 +155,30 @@ export const ReservationForm = () => {
             duration: 8000,
         });
     };
-    const updateGuests = (value: string) => {
+    const updateGuests = (value: string, options?: { notify?: boolean }) => {
+        setGuestsInput(value);
+
+        if (value.trim() === "") {
+            return;
+        }
+
         const nextGuests = Number(value);
 
         if (!Number.isFinite(nextGuests)) return;
 
         if (nextGuests > maxGuests) {
-            notifyError(t("errors.guestsLimit", { count: maxGuests }));
+            if (options?.notify !== false) {
+                notifyError(t("errors.guestsLimit", { count: maxGuests }));
+            }
+
+            setGuestsInput(String(guests));
+            return;
         }
 
-        setGuests(Math.min(Math.max(Math.trunc(nextGuests), 1), maxGuests));
+        const normalizedGuests = Math.max(Math.trunc(nextGuests), 1);
+
+        setGuests(normalizedGuests);
+        setGuestsInput(String(normalizedGuests));
     };
 
     const submitReservation = async (event: FormEvent<HTMLFormElement>) => {
@@ -262,9 +281,10 @@ export const ReservationForm = () => {
                                 min={1}
                                 max={maxGuests}
                                 step={1}
-                                value={guests}
+                                value={guestsInput}
                                 onChange={(event) => updateGuests(event.target.value)}
-                                onBlur={(event) => updateGuests(event.target.value)}
+                                onBlur={(event) => updateGuests(event.target.value, { notify: false })}
+                                onFocus={(event) => event.currentTarget.select()}
                             />
                         </label>
                         <div className={s.date_wrap}>

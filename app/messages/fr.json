@@ -164,7 +164,10 @@
     "guests": "Voyageurs",
     "rooms": "Chambres",
     "paymentStatus": "Statut du paiement",
-    "paid": "Payé"
+    "paid": "Payé",
+    "reservationSection": "Réservation d'appartement",
+    "servicesSection": "Services",
+    "purchaseDate": "Date d'achat"
   },
   "success": {
     "title": "Votre paiement a bien été traité",
@@ -188,6 +191,15 @@
     "visitorsShort": "vis",
     "downloadCustomInvoice": "Télécharger la facture personnalisée",
     "downloadStripeInvoice": "Télécharger la facture Stripe",
+    "servicesSuggestion": {
+      "beforeEarly": "Vous souhaitez arriver 3 heures plus tôt ou partir 3 heures plus tard ? Vous pouvez utiliser nos services supplémentaires : ",
+      "earlyCheckin": "Arrivée anticipée",
+      "between": " ou ",
+      "lateCheckout": "Départ tardif",
+      "afterLate": "."
+    },
+    "getServices": "Voir les services",
+    "seePurchases": "Voir vos achats",
     "loading": "Chargement..."
   },
   "cancel": {

@@ -36,3 +36,12 @@ export function getBackendApiUrl(path: string) {
 
   return `${apiUrl.replace(/\/$/, "")}${normalizedPath}`;
 }
+
+export function getAppApiUrl(path: string) {
+  const normalizedPath = normalizePath(path);
+  const basePath = normalizeBasePath(
+    process.env.NEXT_PUBLIC_BASE_PATH ?? process.env.NEXT_PUBLIC_BASE_URL,
+  );
+
+  return `${basePath}${normalizedPath}`;
+}

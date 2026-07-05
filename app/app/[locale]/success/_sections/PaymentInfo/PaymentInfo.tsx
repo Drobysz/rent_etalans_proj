@@ -3,6 +3,10 @@
 import { PaymentInfoProps } from "./PaymentInfo.props";
 import s from "./style.module.scss";
 import { useTranslations } from "next-intl";
+import {
+    formatReservationCheckin,
+    formatReservationCheckout,
+} from "@/utils/reservationDateTime";
 
 export const PaymentInfo = ({
     email,
@@ -25,8 +29,8 @@ export const PaymentInfo = ({
         { label: t("apartment"), content: reservation.apartment },
         { label: t("rooms"), content: reservation.roomsCount ? t("roomsValue", { count: reservation.roomsCount }) : null },
         { label: t("guests"), content: reservation.guests ? t("visitorsValue", { count: reservation.guests }) : null },
-        { label: t("checkin"), content: reservation.checkin },
-        { label: t("checkout"), content: reservation.checkout },
+        { label: t("checkin"), content: formatReservationCheckin(reservation.checkin) },
+        { label: t("checkout"), content: formatReservationCheckout(reservation.checkout) },
     ].filter((item) => item.content) : [];
 
     return (

@@ -164,7 +164,10 @@
     "guests": "Gäste",
     "rooms": "Zimmer",
     "paymentStatus": "Zahlungsstatus",
-    "paid": "Bezahlt"
+    "paid": "Bezahlt",
+    "reservationSection": "Apartment-Reservierung",
+    "servicesSection": "Services",
+    "purchaseDate": "Kaufdatum"
   },
   "success": {
     "title": "Ihre Zahlung wurde erfolgreich verarbeitet",
@@ -188,6 +191,15 @@
     "visitorsShort": "Gäste",
     "downloadCustomInvoice": "Eigene Rechnung herunterladen",
     "downloadStripeInvoice": "Stripe-Rechnung herunterladen",
+    "servicesSuggestion": {
+      "beforeEarly": "Möchten Sie 3 Stunden früher einchecken oder 3 Stunden später auschecken? Nutzen Sie unsere Zusatzservices: ",
+      "earlyCheckin": "Früher Check-in",
+      "between": " oder ",
+      "lateCheckout": "Später Check-out",
+      "afterLate": "."
+    },
+    "getServices": "Services ansehen",
+    "seePurchases": "Ihre Käufe ansehen",
     "loading": "Lädt..."
   },
   "cancel": {

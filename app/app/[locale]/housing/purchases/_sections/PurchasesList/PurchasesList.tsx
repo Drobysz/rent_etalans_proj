@@ -13,6 +13,55 @@ import { transitionBounce } from "@/framer_templates/transitions";
 import { variantsOpacityAppearence } from "@/framer_templates/variants";
 import { useTranslations } from "next-intl";
 import { TextService } from "@/helpers/string";
+import { getAppApiUrl, getBackendApiUrl } from "@/lib/api";
+
+function getPaymentSearchText(payment: Payment) {
+    return [
+        payment.reservation_code,
+        payment.reservation?.reservation_code,
+        payment.reserve_id,
+        payment.apartment?.name,
+        payment.reservation?.apartment?.name,
+        payment.email,
+    ].filter(Boolean).join(" ");
+}
+
+function getPaymentCodes(payment: Payment) {
+    return [
+        payment.session_id,
+        payment.reservation_code,
+        payment.reservation?.reservation_code,
+        payment.reserve_id,
+        payment.id,
+    ].filter(Boolean).map(String);
+}
+
+function isSamePayment(left: Payment, right: Payment) {
+    const leftCodes = getPaymentCodes(left);
+    const rightCodes = getPaymentCodes(right);
+
+    return leftCodes.some((code) => rightCodes.includes(code));
+}
+
+function mergePaymentLists(currentPayments: Payment[], incomingPayments: Payment[]) {
+    return incomingPayments.reduce<Payment[]>((result, payment) => {
+        const existingIndex = result.findIndex((storedPayment) => isSamePayment(storedPayment, payment));
+
+        if (existingIndex >= 0) {
+            result[existingIndex] = {
+                ...result[existingIndex],
+                ...payment,
+                services: payment.services?.length ? payment.services : result[existingIndex].services,
+                reservation: payment.reservation ?? result[existingIndex].reservation,
+                apartment: payment.apartment ?? result[existingIndex].apartment,
+            };
+        } else {
+            result.push(payment);
+        }
+
+        return result;
+    }, [...currentPayments]);
+}
 
 export const PurchasesList = ({
     searchValue
@@ -25,28 +74,94 @@ export const PurchasesList = ({
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(()=> {
-        const loadPayments = async ()=> {
-            setIsPending(true);
-
-            const res = await fetch(process.env.NEXT_PUBLIC_BASE_PATH + "/api/cookies/payment-storage", {
+        const fetchStoredPayments = async () => {
+            const res = await fetch(getAppApiUrl("/api/cookies/payment-storage"), {
                 method: "GET",
                 credentials: "include",
             });
 
             if (!res.ok) {
-                setPayments([]);
-                setIsPending(false);
-                return
+                return [];
             }
 
             const item = await res.json();
 
-            setPayments(item.payments);
+            return (item.payments ?? []) as Payment[];
+        };
+        const restorePaymentFromSession = async (sessionId: string) => {
+            const params = new URLSearchParams({
+                session_id: sessionId,
+            });
+
+            await fetch(getAppApiUrl(`/api/cookies/payment-storage/session?${params.toString()}`), {
+                method: "GET",
+                credentials: "include",
+            });
+        };
+        const fetchBackendPayments = async (reserveId: string) => {
+            const normalizedReserveId = reserveId.trim();
+
+            if (!normalizedReserveId) {
+                return [];
+            }
+
+            const params = new URLSearchParams({
+                reserve_id: normalizedReserveId,
+                sort: "desc",
+            });
+            const res = await fetch(getBackendApiUrl(`/payments?${params.toString()}`), {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                },
+            });
+
+            if (!res.ok) {
+                return [];
+            }
+
+            const payload = await res.json();
+
+            return (payload?.data ?? []) as Payment[];
+        };
+        const storePayment = async (payment: Payment) => {
+            await fetch(getAppApiUrl("/api/cookies/payment-storage"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(payment),
+            });
+        };
+        const loadPayments = async ()=> {
+            setIsPending(true);
+
+            let nextPayments = await fetchStoredPayments();
+            const sessionId = new URLSearchParams(window.location.search).get("session_id");
+
+            if (nextPayments.length === 0 && sessionId) {
+                await restorePaymentFromSession(sessionId);
+                nextPayments = await fetchStoredPayments();
+            }
+
+            const backendPayments = await fetchBackendPayments(searchValue);
+
+            if (backendPayments.length > 0) {
+                for (const payment of backendPayments) {
+                    await storePayment(payment);
+                }
+
+                nextPayments = mergePaymentLists(nextPayments, backendPayments);
+            }
+
+            setPayments(nextPayments);
             setIsPending(false);
         }
 
         loadPayments();
-    }, []);
+    }, [searchValue]);
 
     useEffect(()=> {
         const setDefault = ()=> setCurrentPage(1);
@@ -56,7 +171,7 @@ export const PurchasesList = ({
     const ts = TextService;
 
     const filteredPayments = payments.filter(p =>
-        ts.includesNormalized(p.reservation_code ?? p.reservation?.reservation_code ?? p.reserve_id ?? "", searchValue)
+        ts.includesNormalized(getPaymentSearchText(p), searchValue)
     );
 
     const ITEMS_PER_PAGE = 7;

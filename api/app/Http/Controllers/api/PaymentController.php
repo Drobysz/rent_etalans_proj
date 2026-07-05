@@ -31,7 +31,10 @@ class PaymentController extends Controller
                 $query->where(function ($nested) use ($reserveId) {
                     $nested
                         ->where('reserve_id', 'like', "%{$reserveId}%")
-                        ->orWhere('reservation_code', 'like', "%{$reserveId}%");
+                        ->orWhere('reservation_code', 'like', "%{$reserveId}%")
+                        ->orWhereHas('reservation', function ($reservationQuery) use ($reserveId) {
+                            $reservationQuery->where('reservation_code', 'like', "%{$reserveId}%");
+                        });
                 });
             })
             ->orderBy('created_at', $data['sort'] ?? 'desc')

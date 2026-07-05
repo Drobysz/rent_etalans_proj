@@ -164,7 +164,10 @@
     "guests": "Guests",
     "rooms": "Rooms",
     "paymentStatus": "Payment status",
-    "paid": "Paid"
+    "paid": "Paid",
+    "reservationSection": "Apartment reservation",
+    "servicesSection": "Services",
+    "purchaseDate": "Purchase date"
   },
   "success": {
     "title": "Your payment was successfully processed",
@@ -188,6 +191,15 @@
     "visitorsShort": "guests",
     "downloadCustomInvoice": "Download custom invoice",
     "downloadStripeInvoice": "Download Stripe invoice",
+    "servicesSuggestion": {
+      "beforeEarly": "Want to check in 3 hours earlier or check out 3 hours later? You can use our additional services: ",
+      "earlyCheckin": "Early Check-in",
+      "between": " or ",
+      "lateCheckout": "Late Check-out",
+      "afterLate": "."
+    },
+    "getServices": "Get Services",
+    "seePurchases": "See Your Purchases",
     "loading": "Loading..."
   },
   "cancel": {

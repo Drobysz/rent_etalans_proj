@@ -10,7 +10,7 @@ import {
 } from "./_sections";
 import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
-import { Service } from "@/types";
+import { Payment, Service } from "@/types";
 import { getTranslations } from "next-intl/server";
 import { PaymentStorageSync } from "./_components";
 import type { InvoiceApartmentItem } from "@/utils/createInvoicePdf";
@@ -101,6 +101,36 @@ export default async function SuccessPage ({
             days_count: daysCount ?? daysNumber,
         },
     );
+    const paymentForStorage: Payment = {
+        ...(payment as Payment),
+        email,
+        reserve_id,
+        client_number: clientNumber,
+        days_number: daysNumber,
+        days_count: reservationNights,
+        reservation_id: reservationId,
+        reservation_code: reservationCode,
+        apart_id: apartmentId,
+        checkin,
+        checkout,
+        total_price: totalPrice,
+        session_id,
+        services: filteredServices,
+        apartment: selectedApartment ?? (payment as Payment).apartment ?? null,
+        reservation: apartmentId
+            ? {
+                id: reservationId ?? reservationCode ?? reserve_id,
+                reservation_code: reservationCode,
+                checkin,
+                checkout,
+                days_count: reservationNights,
+                rooms_count: roomsCount ?? selectedApartment?.nb_chambers,
+                guests: clientNumber,
+                status: "paid",
+                apartment: selectedApartment ?? null,
+            }
+            : (payment as Payment).reservation ?? null,
+    };
 
     return (
         <Suspense
@@ -111,7 +141,7 @@ export default async function SuccessPage ({
                 />
             }
         >
-            <PaymentStorageSync payment={payment} />
+            <PaymentStorageSync payment={paymentForStorage} />
 
             <div className={s.space}>
                 <section className="flex flex-col gap-4">
@@ -144,6 +174,7 @@ export default async function SuccessPage ({
                             sessionId={session_id}
                             totalPrice={totalPrice}
                             apartment={invoiceApartment}
+                            payment={paymentForStorage}
                         />
                     </div>
                 </section>

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Payment } from "@/types";
+import { getAppApiUrl } from "@/lib/api";
 
 type PaymentStorageSyncProps = {
     payment: Payment;
@@ -11,9 +12,7 @@ export const PaymentStorageSync = ({
     payment,
 }: PaymentStorageSyncProps) => {
     useEffect(() => {
-        const controller = new AbortController();
-
-        fetch(process.env.NEXT_PUBLIC_BASE_PATH + "/api/cookies/payment-storage", {
+        fetch(getAppApiUrl("/api/cookies/payment-storage"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -21,16 +20,10 @@ export const PaymentStorageSync = ({
             },
             credentials: "include",
             body: JSON.stringify(payment),
-            signal: controller.signal,
+            keepalive: true,
         }).catch((error) => {
-            if (error instanceof DOMException && error.name === "AbortError") {
-                return;
-            }
-
             console.error(error);
         });
-
-        return () => controller.abort();
     }, [payment]);
 
     return null;
