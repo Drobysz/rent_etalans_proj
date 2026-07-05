@@ -82,6 +82,7 @@
         "email": "Saisissez un email valide.",
         "dates": "Sélectionnez les dates d'arrivée et de départ.",
         "apartment": "Sélectionnez un appartement.",
+        "guestsLimit": "Cet appartement accepte jusqu'à {count, plural, one {# voyageur} other {# voyageurs}}.",
         "submit": "Impossible de créer la page de paiement."
       }
     },
@@ -167,7 +168,7 @@
   },
   "success": {
     "title": "Votre paiement a bien été traité",
-    "confirmationCode": "Code de confirmation",
+    "confirmationCode": "Code de réservation",
     "email": "Email",
     "reservationCode": "Code de réservation",
     "duration": "Durée",

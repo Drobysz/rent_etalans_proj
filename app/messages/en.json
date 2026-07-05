@@ -82,6 +82,7 @@
         "email": "Enter a valid email.",
         "dates": "Select check-in and check-out dates.",
         "apartment": "Select an apartment.",
+        "guestsLimit": "This apartment allows up to {count, plural, one {# guest} other {# guests}}.",
         "submit": "Unable to create the reservation checkout."
       }
     },
@@ -167,7 +168,7 @@
   },
   "success": {
     "title": "Your payment was successfully processed",
-    "confirmationCode": "Confirmation code",
+    "confirmationCode": "Reservation code",
     "email": "Email",
     "reservationCode": "Reservation code",
     "duration": "Duration",

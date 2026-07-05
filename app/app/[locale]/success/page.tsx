@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import { Service } from "@/types";
 import { getTranslations } from "next-intl/server";
 import { PaymentStorageSync } from "./_components";
+import type { InvoiceApartmentItem } from "@/utils/createInvoicePdf";
 
 type SuccessSearchParams = {
     session_id?: string;
@@ -68,6 +69,19 @@ export default async function SuccessPage ({
     const selectedApartment = apartments.find((apartment) => apartment.id === apartmentId);
 
     const serviceNames = filteredServices.map((service: Service) => service.name);
+    const reservationNights = daysCount ?? daysNumber;
+    const invoiceApartment: InvoiceApartmentItem | undefined = apartmentId && selectedApartment && checkin && checkout
+        ? {
+            title: selectedApartment.name,
+            roomsCount: roomsCount ?? selectedApartment.nb_chambers,
+            guests: clientNumber,
+            checkin,
+            checkout,
+            nights: reservationNights,
+            pricePerNight: selectedApartment.price,
+            amount: selectedApartment.price * reservationNights,
+        }
+        : undefined;
 
     const payment = await createPayment(
         email,
@@ -118,7 +132,7 @@ export default async function SuccessPage ({
                                 guests: clientNumber,
                                 checkin,
                                 checkout,
-                                nights: daysCount ?? daysNumber,
+                                nights: reservationNights,
                             } : undefined}
                         />
                         <ServicesList 
@@ -126,9 +140,10 @@ export default async function SuccessPage ({
                             daysCount={daysNumber}
                             visitorsCount={clientNumber}
                             email={email}
-                            reserveId={reserve_id}
+                            reserveId={reservationCode ?? reserve_id}
                             sessionId={session_id}
                             totalPrice={totalPrice}
+                            apartment={invoiceApartment}
                         />
                     </div>
                 </section>

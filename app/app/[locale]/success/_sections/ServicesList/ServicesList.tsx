@@ -11,7 +11,7 @@ import {
     DownloadInvoiceButton,
     DownloadStripeInvoiceButton
 } from "../../_components";
-import type { InvoiceServiceItem } from "@/utils/createInvoicePdf";
+import type { InvoiceApartmentItem, InvoiceServiceItem } from "@/utils/createInvoicePdf";
 import { useTranslations } from "next-intl";
 
 export const ServicesList = ({
@@ -21,7 +21,8 @@ export const ServicesList = ({
     email,
     reserveId,
     sessionId,
-    totalPrice
+    totalPrice,
+    apartment,
 }: {
     services: Service[];
     daysCount: number;
@@ -30,6 +31,7 @@ export const ServicesList = ({
     reserveId: string;
     sessionId: string;
     totalPrice: number;
+    apartment?: InvoiceApartmentItem;
 })=> {
     const t = useTranslations("success");
     const FINAL_MULTIPLIER = daysCount * visitorsCount;
@@ -99,6 +101,7 @@ export const ServicesList = ({
                     visitorsNumber={visitorsCount}
                     totalPrice={totalPrice}
                     services={invoiceServices}
+                    apartment={apartment}
                 />
             </div>
         </section>

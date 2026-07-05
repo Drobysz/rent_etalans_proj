@@ -11,12 +11,17 @@ const paymentStatusLabels: Record<string, string> = {
 };
 
 export function OrderRow({ order, onViewPayment }: OrderRowProps) {
+  const displayCode = order.reservationCode ?? order.reserveId;
+
   return (
     <tr className={styles.row}>
       <td>
         <span className={styles.strong}>{order.id}</span>
-        <span className={styles.subtle}>{order.reserveId}</span>
-        {order.reservationCode ? <span className={styles.badge}>{order.reservationCode}</span> : null}
+        {order.reservationCode ? (
+          <span className={styles.badge}>{displayCode}</span>
+        ) : (
+          <span className={styles.subtle}>{displayCode}</span>
+        )}
         <span className={styles.subtle}>{order.apartmentName}</span>
         {order.checkin && order.checkout ? (
           <span className={styles.subtle}>{order.checkin} - {order.checkout}</span>

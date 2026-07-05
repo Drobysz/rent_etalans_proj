@@ -82,6 +82,7 @@
         "email": "Geben Sie eine gültige E-Mail-Adresse ein.",
         "dates": "Wählen Sie Anreise- und Abreisedatum.",
         "apartment": "Wählen Sie ein Apartment.",
+        "guestsLimit": "Dieses Apartment erlaubt maximal {count, plural, one {# Gast} other {# Gäste}}.",
         "submit": "Die Checkout-Seite konnte nicht erstellt werden."
       }
     },
@@ -167,7 +168,7 @@
   },
   "success": {
     "title": "Ihre Zahlung wurde erfolgreich verarbeitet",
-    "confirmationCode": "Bestätigungscode",
+    "confirmationCode": "Reservierungscode",
     "email": "E-Mail",
     "reservationCode": "Reservierungscode",
     "duration": "Dauer",

@@ -19,6 +19,15 @@ const paymentProviderLabels: Record<string, string> = {
   manual: "Manuel",
 };
 
+const reservationMetadataKeys = new Set([
+  "apartment",
+  "checkin",
+  "checkout",
+  "nights",
+  "reservationCode",
+  "reserveId",
+]);
+
 export function PaymentModal({ order, onClose }: PaymentModalProps) {
   useEffect(() => {
     if (!order) {
@@ -34,6 +43,10 @@ export function PaymentModal({ order, onClose }: PaymentModalProps) {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose, order]);
+
+  const metadataEntries = order
+    ? Object.entries(order.payment.metadata).filter(([key]) => !reservationMetadataKeys.has(key))
+    : [];
 
   return (
     <AnimatePresence>
@@ -125,7 +138,7 @@ export function PaymentModal({ order, onClose }: PaymentModalProps) {
             <div className={styles.metadata}>
               <h3>Métadonnées</h3>
               <dl>
-                {Object.entries(order.payment.metadata).map(([key, value]) => (
+                {metadataEntries.map(([key, value]) => (
                   <div key={key}>
                     <dt>{key}</dt>
                     <dd>{value}</dd>

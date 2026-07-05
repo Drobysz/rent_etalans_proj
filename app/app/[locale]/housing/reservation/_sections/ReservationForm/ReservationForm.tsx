@@ -155,6 +155,10 @@ export const ReservationForm = () => {
 
         if (!Number.isFinite(nextGuests)) return;
 
+        if (nextGuests > maxGuests) {
+            notifyError(t("errors.guestsLimit", { count: maxGuests }));
+        }
+
         setGuests(Math.min(Math.max(Math.trunc(nextGuests), 1), maxGuests));
     };
 
@@ -173,6 +177,12 @@ export const ReservationForm = () => {
 
         if (!selectedApartment) {
             notifyError(t("errors.apartment"));
+            return;
+        }
+
+        if (guests > maxGuests) {
+            notifyError(t("errors.guestsLimit", { count: maxGuests }));
+            setGuests(maxGuests);
             return;
         }
 

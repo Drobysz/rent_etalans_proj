@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Apartment;
+use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class PaymentStoreRequest extends FormRequest
 {
@@ -39,5 +42,49 @@ class PaymentStoreRequest extends FormRequest
             'service_ids'   => ['nullable', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id']
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            $roomsCount = $this->getRoomsCount();
+
+            if (!$roomsCount) {
+                return;
+            }
+
+            $maxGuests = $roomsCount === 1 ? 2 : 4;
+            $guestCount = (int) $this->input('client_number', 0);
+
+            if ($guestCount > $maxGuests) {
+                $validator->errors()->add(
+                    'client_number',
+                    "The selected apartment allows up to {$maxGuests} guests."
+                );
+            }
+        });
+    }
+
+    private function getRoomsCount(): ?int
+    {
+        $reservationId = $this->integer('reservation_id');
+
+        if ($reservationId) {
+            $reservation = Reservation::query()->find($reservationId);
+
+            if ($reservation) {
+                return (int) $reservation->rooms_count;
+            }
+        }
+
+        $apartmentId = $this->integer('apart_id');
+
+        if (!$apartmentId) {
+            return null;
+        }
+
+        $apartment = Apartment::query()->find($apartmentId);
+
+        return $apartment ? (int) $apartment->nb_chambers : null;
     }
 }
