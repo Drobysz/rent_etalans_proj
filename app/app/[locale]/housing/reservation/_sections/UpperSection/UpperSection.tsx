@@ -20,6 +20,7 @@ export const UpperSection = ()=> {
                 images={apartmentImages}
                 nb_lits={2}
                 format3d={false}
+                isImageLocal
                 imageCoverClassName={s.image_cover}
             />
             <div className="flex flex-col gap-8">
