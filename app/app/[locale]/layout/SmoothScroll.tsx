@@ -11,7 +11,7 @@ export function SmoothScroll({
     children: React.ReactNode
 }) {
     const scrollRef = useRef<LocomotiveScroll | null>(null);
-    const isDesktop = useWindowWidth(768) as boolean;
+    const isDesktop = useWindowWidth(850) as boolean;
 
     useEffect(() => {
         if (!isDesktop) {

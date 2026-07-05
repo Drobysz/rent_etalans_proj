@@ -14,8 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Panneau d'administration",
+  title: {
+    default: "Panneau d'administration",
+    template: "%s | Panneau d'administration",
+  },
   description: "Administration des services de location",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 };
 
 export default function RootLayout({

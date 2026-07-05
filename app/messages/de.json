@@ -2,47 +2,126 @@
   "metadata": {
     "site": {
       "title": "Au calme de la campagne",
-      "description": "Zimmervermietung, Apartmentreservierungen und Zusatzleistungen in Etalans, Bourgogne-Franche-Comte, Frankreich."
+      "description": "Zimmervermietung, Apartmentreservierungen und Zusatzleistungen in Etalans, Bourgogne-Franche-Comte, Frankreich.",
+      "keywords": [
+        "Etalans",
+        "Doubs",
+        "Bourgogne-Franche-Comte",
+        "Apartment mieten",
+        "Zimmervermietung",
+        "Ferienunterkunft",
+        "möbliertes Apartment"
+      ]
     },
     "home": {
-      "title": "Au calme de la campagne | Zimmervermietung in Etalans",
-      "description": "Entdecken Sie Au calme de la campagne, eine ruhige Zimmervermietung in Etalans mit Apartmentreservierung, Ausflugszielen und optionalen Services."
+      "title": "Apartment in Etalans nahe Valdahon mieten",
+      "description": "Übernachten Sie bei Au calme de la campagne, einem möblierten Apartment in Etalans im Doubs, nahe Valdahon, dem Gouffre de Poudrey und den Sehenswürdigkeiten der Bourgogne-Franche-Comte.",
+      "keywords": [
+        "Etalans",
+        "Doubs",
+        "Bourgogne-Franche-Comte",
+        "Apartment mieten",
+        "möbliertes Apartment",
+        "Ferienunterkunft",
+        "Valdahon",
+        "Gouffre de Poudrey",
+        "Tourismus Doubs",
+        "Unterkunft nahe Valdahon"
+      ]
     },
     "reservation": {
-      "title": "Apartment reservieren | Au calme de la campagne",
-      "description": "Buchen Sie ein oder zwei Zimmer in Etalans, wählen Sie Daten und Gäste aus und schließen Sie Ihre Apartmentreservierung online ab."
+      "title": "Apartment in Etalans reservieren",
+      "description": "Reservieren Sie Ihre Apartmentmiete in Etalans online: Wählen Sie Daten, ein oder zwei Zimmer, die Anzahl der Gäste und schließen Sie die Buchung sicher ab.",
+      "keywords": [
+        "Apartment reservieren",
+        "Apartment Etalans",
+        "Reservierung Etalans",
+        "Unterkunft Doubs",
+        "Aufenthalt nahe Valdahon"
+      ]
     },
     "services": {
-      "title": "Zusatzleistungen | Au calme de la campagne",
-      "description": "Ergänzen Sie Ihren Aufenthalt in Etalans mit nützlichen Services wie früher Anreise, später Abreise und weiteren Komfortoptionen."
+      "title": "Zusatzleistungen für Ihren Aufenthalt",
+      "description": "Ergänzen Sie Ihre Unterkunft in Etalans mit Gästeservices wie Early Check-in, Late Check-out, Reinigung und praktischen Komfortoptionen.",
+      "keywords": [
+        "Zusatzleistungen",
+        "Early Check-in",
+        "Late Check-out",
+        "Reinigung",
+        "Gästeservices",
+        "Unterkunft Etalans"
+      ]
     },
     "purchases": {
-      "title": "Ihre Käufe | Au calme de la campagne",
-      "description": "Finden Sie Ihre Apartmentreservierungen, Servicekäufe, Zahlungsstatus, Rechnungen und Reservierungsdetails."
+      "title": "Ihre Käufe",
+      "description": "Finden Sie Ihre Apartmentreservierungen, Servicekäufe, Zahlungsstatus, Rechnungen und Reservierungsdetails.",
+      "keywords": [
+        "Käufe",
+        "Reservierungen",
+        "Rechnungen",
+        "Zahlungen",
+        "Services"
+      ]
     },
     "success": {
-      "title": "Zahlung bestätigt | Au calme de la campagne",
-      "description": "Sehen Sie Ihre bestätigte Zahlung, Ihren Reservierungscode, Apartmentdetails und Rechnungsdownloads."
+      "title": "Zahlung bestätigt",
+      "description": "Sehen Sie Ihre bestätigte Zahlung, Ihren Reservierungscode, Apartmentdetails und Rechnungsdownloads.",
+      "keywords": [
+        "Zahlung bestätigt",
+        "Reservierung bestätigt",
+        "Reservierungsrechnung",
+        "Reservierungscode"
+      ]
     },
     "cancel": {
-      "title": "Zahlung abgebrochen | Au calme de la campagne",
-      "description": "Ihre Zahlung wurde abgebrochen. Kehren Sie zu Au calme de la campagne zurück, um Ihre Reservierung zu ändern oder Services auszuwählen."
+      "title": "Zahlung abgebrochen",
+      "description": "Ihre Zahlung wurde abgebrochen. Kehren Sie zu Au calme de la campagne zurück, um Ihre Reservierung zu ändern oder Services auszuwählen.",
+      "keywords": [
+        "Zahlung abgebrochen",
+        "Reservierung",
+        "Services"
+      ]
     },
     "documentation": {
-      "title": "Dokumentation | Au calme de la campagne",
-      "description": "Lesen Sie nützliche Informationen zu Mahlzeiten, Datenschutz und der Website Au calme de la campagne in Etalans."
+      "title": "Dokumentation",
+      "description": "Lesen Sie nützliche Informationen zu Mahlzeiten, Datenschutz und der Website Au calme de la campagne in Etalans.",
+      "keywords": [
+        "Dokumentation",
+        "Mahlzeiten",
+        "Datenschutz",
+        "Aufenthaltsinformationen"
+      ]
     },
     "privacyPolicy": {
-      "title": "Datenschutzerklärung | Au calme de la campagne",
-      "description": "Erfahren Sie, wie Au calme de la campagne personenbezogene Daten für Reservierungen, Zahlungen und Services verarbeitet und schützt."
+      "title": "Datenschutzerklärung",
+      "description": "Erfahren Sie, wie Au calme de la campagne personenbezogene Daten für Reservierungen, Zahlungen und Services verarbeitet und schützt.",
+      "keywords": [
+        "Datenschutzerklärung",
+        "personenbezogene Daten",
+        "DSGVO",
+        "Reservierungen",
+        "Zahlungen"
+      ]
     },
     "meals": {
-      "title": "Informationen zu Mahlzeiten | Au calme de la campagne",
-      "description": "Sehen Sie Informationen zu Mahlzeiten und Frühstück für Ihren Aufenthalt bei Au calme de la campagne in Etalans."
+      "title": "Informationen zu Mahlzeiten",
+      "description": "Sehen Sie Informationen zu Mahlzeiten und Frühstück für Ihren Aufenthalt bei Au calme de la campagne in Etalans.",
+      "keywords": [
+        "Mahlzeiten",
+        "Frühstück",
+        "Aufenthalt Etalans",
+        "Unterkunft Doubs"
+      ]
     },
     "developer": {
-      "title": "Entwicklerinformationen | Au calme de la campagne",
-      "description": "Finden Sie Entwickler- und Projektinformationen zur Reservierungs- und Service-Website von Au calme de la campagne."
+      "title": "Entwicklerinformationen",
+      "description": "Finden Sie Entwickler- und Projektinformationen zur Reservierungs- und Service-Website von Au calme de la campagne.",
+      "keywords": [
+        "Entwickler",
+        "Website",
+        "Projekt",
+        "Reservierung"
+      ]
     }
   },
   "home": {

@@ -2,47 +2,133 @@
   "metadata": {
     "site": {
       "title": "Au calme de la campagne",
-      "description": "Location de chambres, réservations d'appartement et services supplémentaires à Étalans, en Bourgogne-Franche-Comté."
+      "description": "Location de chambres, réservations d'appartement et services supplémentaires à Étalans, en Bourgogne-Franche-Comté.",
+      "keywords": [
+        "Étalans",
+        "Doubs",
+        "Bourgogne-Franche-Comté",
+        "location appartement",
+        "louer appartement",
+        "hébergement Étalans",
+        "location saisonnière Doubs"
+      ]
     },
     "home": {
-      "title": "Au calme de la campagne | Location de chambres à Étalans",
-      "description": "Découvrez Au calme de la campagne, une location paisible à Étalans avec réservation d'appartement, lieux à visiter et services optionnels."
+      "title": "Location d'appartement à Étalans, près de Valdahon",
+      "description": "Séjournez à Au calme de la campagne, un appartement meublé à louer à Étalans dans le Doubs, idéal pour découvrir Valdahon, le Gouffre de Poudrey et la Bourgogne-Franche-Comté.",
+      "keywords": [
+        "Étalans",
+        "Doubs",
+        "Bourgogne-Franche-Comté",
+        "louer appartement",
+        "location appartement",
+        "appartement à louer",
+        "Valdahon",
+        "Gouffre de Poudrey",
+        "location saisonnière",
+        "hébergement",
+        "appartement meublé",
+        "vacances Doubs",
+        "séjour Bourgogne-Franche-Comté",
+        "logement proche Valdahon",
+        "tourisme Doubs"
+      ]
     },
     "reservation": {
-      "title": "Réserver l'appartement | Au calme de la campagne",
-      "description": "Réservez une ou deux chambres à Étalans, choisissez vos dates et vos voyageurs, puis finalisez votre réservation en ligne."
+      "title": "Réserver un appartement à Étalans",
+      "description": "Réservez facilement votre location d'appartement à Étalans : choisissez vos dates, une ou deux chambres, le nombre de voyageurs et finalisez votre réservation en ligne.",
+      "keywords": [
+        "réserver un appartement",
+        "location appartement Étalans",
+        "réservation Étalans",
+        "appartement Doubs",
+        "hébergement proche Valdahon",
+        "séjour Étalans"
+      ]
     },
     "services": {
-      "title": "Services supplémentaires | Au calme de la campagne",
-      "description": "Ajoutez des services utiles à votre séjour à Étalans, comme l'arrivée anticipée, le départ tardif et d'autres options de confort."
+      "title": "Services supplémentaires pour votre séjour",
+      "description": "Ajoutez des services voyageurs à votre location à Étalans : early check-in, late check-out, ménage et options pratiques pour un séjour plus confortable.",
+      "keywords": [
+        "services supplémentaires",
+        "early check-in",
+        "late check-out",
+        "ménage",
+        "services voyageurs",
+        "location Étalans",
+        "confort séjour"
+      ]
     },
     "purchases": {
-      "title": "Vos achats | Au calme de la campagne",
-      "description": "Retrouvez vos réservations d'appartement, achats de services, statuts de paiement, factures et détails de réservation."
+      "title": "Vos achats",
+      "description": "Retrouvez vos réservations d'appartement, achats de services, statuts de paiement, factures et détails de réservation.",
+      "keywords": [
+        "achats",
+        "réservations",
+        "factures",
+        "paiements",
+        "services"
+      ]
     },
     "success": {
-      "title": "Paiement confirmé | Au calme de la campagne",
-      "description": "Consultez votre paiement confirmé, votre code de réservation, les détails de l'appartement et vos factures."
+      "title": "Paiement confirmé",
+      "description": "Consultez votre paiement confirmé, votre code de réservation, les détails de l'appartement et vos factures.",
+      "keywords": [
+        "paiement confirmé",
+        "réservation confirmée",
+        "facture réservation",
+        "code de réservation"
+      ]
     },
     "cancel": {
-      "title": "Paiement annulé | Au calme de la campagne",
-      "description": "Votre paiement a été annulé. Revenez sur Au calme de la campagne pour modifier votre réservation ou choisir des services."
+      "title": "Paiement annulé",
+      "description": "Votre paiement a été annulé. Revenez sur Au calme de la campagne pour modifier votre réservation ou choisir des services.",
+      "keywords": [
+        "paiement annulé",
+        "réservation",
+        "services"
+      ]
     },
     "documentation": {
-      "title": "Documentation | Au calme de la campagne",
-      "description": "Consultez les informations utiles sur les repas, la confidentialité et le site Au calme de la campagne à Étalans."
+      "title": "Documentation",
+      "description": "Consultez les informations utiles sur les repas, la confidentialité et le site Au calme de la campagne à Étalans.",
+      "keywords": [
+        "documentation",
+        "repas",
+        "confidentialité",
+        "informations séjour"
+      ]
     },
     "privacyPolicy": {
-      "title": "Politique de confidentialité | Au calme de la campagne",
-      "description": "Découvrez comment Au calme de la campagne collecte, utilise et protège les données personnelles liées aux réservations et paiements."
+      "title": "Politique de confidentialité",
+      "description": "Découvrez comment Au calme de la campagne collecte, utilise et protège les données personnelles liées aux réservations et paiements.",
+      "keywords": [
+        "politique de confidentialité",
+        "données personnelles",
+        "RGPD",
+        "réservations",
+        "paiements"
+      ]
     },
     "meals": {
-      "title": "Informations repas | Au calme de la campagne",
-      "description": "Consultez les informations sur les repas et le petit-déjeuner pour votre séjour à Au calme de la campagne à Étalans."
+      "title": "Informations repas",
+      "description": "Consultez les informations sur les repas et le petit-déjeuner pour votre séjour à Au calme de la campagne à Étalans.",
+      "keywords": [
+        "repas",
+        "petit-déjeuner",
+        "séjour Étalans",
+        "location Doubs"
+      ]
     },
     "developer": {
-      "title": "Informations développeur | Au calme de la campagne",
-      "description": "Retrouvez les informations développeur et projet du site de réservation et de services Au calme de la campagne."
+      "title": "Informations développeur",
+      "description": "Retrouvez les informations développeur et projet du site de réservation et de services Au calme de la campagne.",
+      "keywords": [
+        "développeur",
+        "site web",
+        "projet",
+        "réservation"
+      ]
     }
   },
   "home": {

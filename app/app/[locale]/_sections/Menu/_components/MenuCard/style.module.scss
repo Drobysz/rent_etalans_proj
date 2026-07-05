@@ -24,13 +24,12 @@
 
 @media (max-width: 560px) {
     .article {
-        @apply h-30;
+        @apply h-50;
         background-size: cover;
     }
 
     .card {
         @apply gap-1 h-50;
-        flex: none;
     }
 }
 
