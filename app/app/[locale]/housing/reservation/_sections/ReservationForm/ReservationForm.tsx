@@ -157,14 +157,6 @@ export const ReservationForm = () => {
         { value: "1", label: t("oneRoom") },
         { value: "2", label: t("twoRooms") },
     ];
-    const guestOptions: DropdownOption[] = Array.from({ length: maxGuests }, (_, index) => {
-        const guestCount = index + 1;
-
-        return {
-            value: String(guestCount),
-            label: String(guestCount),
-        };
-    });
 
     const notifyError = (message: string) => {
         setNotification({
@@ -172,6 +164,13 @@ export const ReservationForm = () => {
             text: message,
             duration: 8000,
         });
+    };
+    const updateGuests = (value: string) => {
+        const nextGuests = Number(value);
+
+        if (!Number.isFinite(nextGuests)) return;
+
+        setGuests(Math.min(Math.max(Math.trunc(nextGuests), 1), maxGuests));
     };
 
     const submitReservation = async (event: FormEvent<HTMLFormElement>) => {
@@ -253,18 +252,6 @@ export const ReservationForm = () => {
                                 placeholder={t("emailPlaceholder")}
                             />
                         </label>
-                        <button
-                            ref={dateFieldRef}
-                            className={s.date_field}
-                            type="button"
-                            onClick={() => setIsCalendarOpen((value) => !value)}
-                        >
-                            <CalendarDays />
-                            <span>
-                                <small>{t("dates")}</small>
-                                {formatDisplayDate(checkin, t("checkin"))} - {formatDisplayDate(checkout, t("checkout"))}
-                            </span>
-                        </button>
                         <Dropdown
                             label={t("apartment")}
                             value={String(roomsCount)}
@@ -278,12 +265,31 @@ export const ReservationForm = () => {
                                 setApartment(nextApartment && nextApartment.id > 0 ? nextApartment.id : null, nextRoomsCount);
                             }}
                         />
-                        <Dropdown
-                            label={t("guests")}
-                            value={String(guests)}
-                            options={guestOptions}
-                            onChange={(value) => setGuests(Number(value))}
-                        />
+                        <label className={s.field}>
+                            <span>{t("guests")}</span>
+                            <input
+                                type="number"
+                                inputMode="numeric"
+                                min={1}
+                                max={maxGuests}
+                                step={1}
+                                value={guests}
+                                onChange={(event) => updateGuests(event.target.value)}
+                                onBlur={(event) => updateGuests(event.target.value)}
+                            />
+                        </label>
+                        <button
+                            ref={dateFieldRef}
+                            className={s.date_field}
+                            type="button"
+                            onClick={() => setIsCalendarOpen((value) => !value)}
+                        >
+                            <CalendarDays />
+                            <span>
+                                <small>{t("dates")}</small>
+                                {formatDisplayDate(checkin, t("checkin"))} - {formatDisplayDate(checkout, t("checkout"))}
+                            </span>
+                        </button>
                     </motion.div>
                 )}
             </AnimatePresence>

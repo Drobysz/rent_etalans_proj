@@ -15,6 +15,8 @@ use App\Http\Requests\StripeStoreRequest;
 
 use App\Models\{
     Apartment,
+    BlockedDate,
+    Payment,
     Reservation,
     Service
 };
@@ -49,6 +51,12 @@ class StripeController extends Controller
             $checkin = CarbonImmutable::parse($data['checkin'])->startOfDay();
             $checkout = CarbonImmutable::parse($data['checkout'])->startOfDay();
             $reservationDays = max(1, $checkin->diffInDays($checkout));
+
+            if ($this->hasUnavailableDates($apartmentId, $checkin, $checkout)) {
+                return response()->json([
+                    'message' => 'Selected dates are unavailable.',
+                ], 422);
+            }
 
             $reservation = Reservation::query()->create([
                 'email' => $data['email'],
@@ -193,6 +201,37 @@ class StripeController extends Controller
             2 => 90,
             default => null,
         };
+    }
+
+    private function hasUnavailableDates(int $apartmentId, CarbonImmutable $checkin, CarbonImmutable $checkout): bool
+    {
+        $blockedRangeExists = BlockedDate::query()
+            ->whereDate('start_date', '<=', $checkout->toDateString())
+            ->whereDate('end_date', '>=', $checkin->toDateString())
+            ->exists();
+
+        if ($blockedRangeExists) {
+            return true;
+        }
+
+        $reservationExists = Reservation::query()
+            ->where('apart_id', $apartmentId)
+            ->whereIn('status', ['pending', 'paid'])
+            ->whereDate('checkin', '<', $checkout->toDateString())
+            ->whereDate('checkout', '>', $checkin->toDateString())
+            ->exists();
+
+        if ($reservationExists) {
+            return true;
+        }
+
+        return Payment::query()
+            ->where('apart_id', $apartmentId)
+            ->whereNotNull('checkin')
+            ->whereNotNull('checkout')
+            ->whereDate('checkin', '<', $checkout->toDateString())
+            ->whereDate('checkout', '>', $checkin->toDateString())
+            ->exists();
     }
 
     public function getStripeInvoicePdf(Request $request)
