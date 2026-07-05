@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, Loader2 } from "lucide-react";
 import type { FormEvent } from "react";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Apartment } from "@/types";
 import { getApartments } from "@/queries/apartments";
@@ -21,7 +21,7 @@ const defaultApartments: Apartment[] = [
     {
         id: 0,
         name: "Apartment 1 - one room",
-        price: 60,
+        price: 45,
         description: "",
         nb_chambers: 1,
         nb_beds: 1,
@@ -30,7 +30,7 @@ const defaultApartments: Apartment[] = [
     {
         id: -1,
         name: "Apartment 2 - two rooms",
-        price: 100,
+        price: 90,
         description: "",
         nb_chambers: 2,
         nb_beds: 2,
@@ -70,7 +70,9 @@ export const ReservationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAtPageBottom, setIsAtPageBottom] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [calendarAnchorLeft, setCalendarAnchorLeft] = useState<number | undefined>();
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const dateFieldRef = useRef<HTMLButtonElement | null>(null);
     const windowWidth = useWindowWidth() as number;
     const isCompact = windowWidth > 0 && windowWidth < 860;
     const showFields = !isCompact || isExpanded;
@@ -118,6 +120,33 @@ export const ReservationForm = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (!isCalendarOpen) return;
+
+        const updateCalendarAnchor = () => {
+            const formRect = formRef.current?.getBoundingClientRect();
+            const fieldRect = dateFieldRef.current?.getBoundingClientRect();
+
+            if (!formRect || !fieldRect) return;
+
+            const calendarWidth = Math.min(344, window.innerWidth - 32);
+            const desiredLeft = fieldRect.left - formRect.left + fieldRect.width / 2;
+            const minLeft = calendarWidth / 2 + 16 - formRect.left;
+            const maxLeft = window.innerWidth - 16 - formRect.left - calendarWidth / 2;
+
+            setCalendarAnchorLeft(Math.min(Math.max(desiredLeft, minLeft), maxLeft));
+        };
+
+        updateCalendarAnchor();
+        window.addEventListener("resize", updateCalendarAnchor);
+        window.addEventListener("scroll", updateCalendarAnchor, { passive: true });
+
+        return () => {
+            window.removeEventListener("resize", updateCalendarAnchor);
+            window.removeEventListener("scroll", updateCalendarAnchor);
+        };
+    }, [isCalendarOpen, isCompact, showFields]);
+
     const selectedApartment = useMemo(
         () => apartments.find((apartment) => apartment.nb_chambers === roomsCount) ?? apartments[0],
         [apartments, roomsCount],
@@ -138,7 +167,6 @@ export const ReservationForm = () => {
     });
 
     const notifyError = (message: string) => {
-        setError(message);
         setNotification({
             status: "error",
             text: message,
@@ -148,7 +176,6 @@ export const ReservationForm = () => {
 
     const submitReservation = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setError(null);
 
         if (isCompact && !isExpanded) {
             setIsExpanded(true);
@@ -197,6 +224,7 @@ export const ReservationForm = () => {
 
     return (
         <motion.form
+            ref={formRef}
             className={cn(s.form, isCompact && !isExpanded && s.form_collapsed)}
             onSubmit={submitReservation}
             initial={{ y: 80, opacity: 0 }}
@@ -226,6 +254,7 @@ export const ReservationForm = () => {
                             />
                         </label>
                         <button
+                            ref={dateFieldRef}
                             className={s.date_field}
                             type="button"
                             onClick={() => setIsCalendarOpen((value) => !value)}
@@ -267,21 +296,10 @@ export const ReservationForm = () => {
             <button className={s.reserve_btn} type="submit" disabled={isSubmitting}>
                 {isSubmitting ? <Loader2 className={s.loader} /> : t("reserve")}
             </button>
-            <AnimatePresence>
-                {error && (
-                    <motion.p
-                        className={s.error}
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 4 }}
-                    >
-                        {error}
-                    </motion.p>
-                )}
-            </AnimatePresence>
             <DatePicker
                 open={isCalendarOpen}
                 disabledDates={disabledDates}
+                anchorLeft={calendarAnchorLeft}
                 onClose={() => setIsCalendarOpen(false)}
             />
         </motion.form>

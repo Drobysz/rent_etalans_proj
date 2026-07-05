@@ -143,17 +143,56 @@ class StripeController extends Controller
     private function resolveApartment(?int $apartmentId, ?int $roomsCount): ?Apartment
     {
         if ($apartmentId) {
-            return Apartment::query()->find($apartmentId);
+            $apartment = Apartment::query()->find($apartmentId);
+
+            if ($apartment) {
+                return $this->ensureReservationApartmentPrice($apartment);
+            }
         }
 
         if (!$roomsCount) {
             return null;
         }
 
-        return Apartment::query()
+        $apartment = Apartment::query()
             ->where('nb_chambers', $roomsCount)
             ->orderBy('id')
             ->first();
+
+        if (!$apartment) {
+            $apartment = Apartment::query()->create([
+                'name' => $roomsCount === 1 ? 'Apartment 1 - one room' : 'Apartment 2 - two rooms',
+                'nb_chambers' => $roomsCount,
+                'nb_beds' => $roomsCount,
+                'price' => $this->getApartmentPriceForRooms($roomsCount),
+                'apart_link' => '/housing/reservation',
+                'description' => $roomsCount === 1
+                    ? 'One room apartment reservation.'
+                    : 'Two room apartment reservation.',
+            ]);
+        }
+
+        return $this->ensureReservationApartmentPrice($apartment);
+    }
+
+    private function ensureReservationApartmentPrice(Apartment $apartment): Apartment
+    {
+        $price = $this->getApartmentPriceForRooms((int) $apartment->nb_chambers);
+
+        if ($price !== null && (float) $apartment->price !== (float) $price) {
+            $apartment->forceFill(['price' => $price])->save();
+        }
+
+        return $apartment;
+    }
+
+    private function getApartmentPriceForRooms(int $roomsCount): ?int
+    {
+        return match ($roomsCount) {
+            1 => 45,
+            2 => 90,
+            default => null,
+        };
     }
 
     public function getStripeInvoicePdf(Request $request)

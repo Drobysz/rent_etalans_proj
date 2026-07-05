@@ -87,10 +87,31 @@ type ApiPayment = {
   session_id?: string | null;
   email: string;
   client_number?: number | string;
+  days_count?: number | string | null;
   total_price?: number | string;
   reserve_id?: string;
+  reservation_code?: string | null;
+  checkin?: string | null;
+  checkout?: string | null;
   created_at?: string;
   services?: { name: string }[];
+  apartment?: {
+    id?: number | string;
+    name?: string;
+    nb_chambers?: number | string;
+  } | null;
+  reservation?: {
+    reservation_code?: string | null;
+    checkin?: string | null;
+    checkout?: string | null;
+    days_count?: number | string | null;
+    status?: string | null;
+    apartment?: {
+      id?: number | string;
+      name?: string;
+      nb_chambers?: number | string;
+    } | null;
+  } | null;
 };
 
 export type OrdersQuery = {
@@ -189,33 +210,52 @@ export async function getOrders(query: OrdersQuery = {}): Promise<OrdersResult> 
     const payments = payload.data ?? [];
 
     const orders = sortOrders(
-      payments.map((payment) => ({
-        id: String(payment.id),
-        reserveId: payment.reserve_id ?? "inconnu",
-        guestName: `Client ${payment.client_number ?? payment.id}`,
-        guestEmail: payment.email,
-        apartmentName: "Appartement",
-        services: payment.services?.map((service) => service.name) ?? [],
-        createdAt: payment.created_at ?? new Date().toISOString(),
-        total: Number(payment.total_price ?? 0),
-        payment: {
-          id: `payment-${payment.id}`,
-          provider: "stripe",
-          status: "paid",
-          amount: Number(payment.total_price ?? 0),
-          currency: "EUR",
-          transactionId: payment.reserve_id ?? String(payment.id),
-          paymentMethod: "Carte",
-          receiptEmail: payment.email,
+      payments.map((payment) => {
+        const reservationCode = payment.reservation_code ?? payment.reservation?.reservation_code ?? undefined;
+        const checkin = payment.reservation?.checkin ?? payment.checkin ?? undefined;
+        const checkout = payment.reservation?.checkout ?? payment.checkout ?? undefined;
+        const apartment = payment.reservation?.apartment ?? payment.apartment;
+        const apartmentName = apartment?.name ?? (reservationCode ? "Réservation appartement" : "Appartement");
+        const status = payment.reservation?.status === "pending" ? "pending" : "paid";
+        const reserveId = reservationCode ?? payment.reserve_id ?? "inconnu";
+
+        return {
+          id: String(payment.id),
+          reserveId,
+          reservationCode,
+          guestName: `Client ${payment.client_number ?? payment.id}`,
+          guestEmail: payment.email,
+          apartmentName,
+          checkin,
+          checkout,
+          paymentStatus: status,
+          services: payment.services?.map((service) => service.name) ?? [],
           createdAt: payment.created_at ?? new Date().toISOString(),
-          sessionId: payment.session_id ?? undefined,
-          metadata: {
-            reserveId: payment.reserve_id ?? "inconnu",
-            stripeSessionId: payment.session_id ?? "",
-            source: "api",
+          total: Number(payment.total_price ?? 0),
+          payment: {
+            id: `payment-${payment.id}`,
+            provider: "stripe",
+            status,
+            amount: Number(payment.total_price ?? 0),
+            currency: "EUR",
+            transactionId: payment.reserve_id ?? reservationCode ?? String(payment.id),
+            paymentMethod: "Carte",
+            receiptEmail: payment.email,
+            createdAt: payment.created_at ?? new Date().toISOString(),
+            sessionId: payment.session_id ?? undefined,
+            metadata: {
+              reserveId: payment.reserve_id ?? "inconnu",
+              reservationCode: reservationCode ?? "",
+              apartment: apartmentName,
+              checkin: checkin ?? "",
+              checkout: checkout ?? "",
+              nights: String(payment.reservation?.days_count ?? payment.days_count ?? ""),
+              stripeSessionId: payment.session_id ?? "",
+              source: "api",
+            },
           },
-        },
-      })),
+        };
+      }),
       query.sort,
     );
 

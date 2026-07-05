@@ -7,6 +7,10 @@ import styles from "./style.module.scss";
 type RangePickerProps = {
   startDate: string | null;
   endDate: string | null;
+  blockedRanges?: Array<{
+    startDate: string;
+    endDate: string;
+  }>;
   onChange: (range: { startDate: string; endDate: string | null }) => void;
 };
 
@@ -35,13 +39,29 @@ function getMonthDays(monthDate: Date) {
   ];
 }
 
-export function RangePicker({ startDate, endDate, onChange }: RangePickerProps) {
+function expandRange(startDate: string, endDate: string) {
+  const dates = [];
+  let date = fromDateId(startDate);
+  const lastDate = fromDateId(endDate);
+
+  while (date <= lastDate) {
+    dates.push(toDateId(date));
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  }
+
+  return dates;
+}
+
+export function RangePicker({ startDate, endDate, blockedRanges = [], onChange }: RangePickerProps) {
   const [open, setOpen] = useState(false);
   const [monthDate, setMonthDate] = useState(() => {
     const baseDate = startDate ? fromDateId(startDate) : new Date();
     return new Date(baseDate.getFullYear(), baseDate.getMonth(), 1);
   });
   const days = useMemo(() => getMonthDays(monthDate), [monthDate]);
+  const blockedDateIds = useMemo(() => (
+    new Set(blockedRanges.flatMap((range) => expandRange(range.startDate, range.endDate)))
+  ), [blockedRanges]);
   const label = startDate
     ? `${startDate}${endDate ? ` - ${endDate}` : ""}`
     : "Sélectionner une période";
@@ -105,6 +125,7 @@ export function RangePicker({ startDate, endDate, onChange }: RangePickerProps) 
                 const isStart = dateId === startDate;
                 const isEnd = dateId === endDate;
                 const isInRange = Boolean(startDate && endDate && dateId > startDate && dateId < endDate);
+                const isBlocked = blockedDateIds.has(dateId);
 
                 return (
                   <button
@@ -112,6 +133,7 @@ export function RangePicker({ startDate, endDate, onChange }: RangePickerProps) 
                     type="button"
                     className={[
                       styles.day,
+                      isBlocked ? styles.dayBlocked : "",
                       isInRange ? styles.dayInRange : "",
                       isStart || isEnd ? styles.daySelected : "",
                     ].join(" ")}

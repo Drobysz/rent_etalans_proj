@@ -55,6 +55,7 @@
 }
 
 .details,
+.reservation dl,
 .metadata dl {
   @apply grid;
 }
@@ -65,38 +66,49 @@
 }
 
 .details div,
+.reservation dl div,
 .metadata dl div {
   @apply grid gap-1 py-2;
 }
 
 .details dt,
+.reservation dt,
 .metadata dt {
   @apply text-[12px];
   color: var(--admin-text-soft);
 }
 
 .details dd,
+.reservation dd,
 .metadata dd {
   @apply text-[14px];
   color: var(--admin-text);
 }
 
+.reservation,
 .metadata {
   @apply p-4;
 }
 
+.reservation {
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.reservation h3,
 .metadata h3 {
   @apply mb-2 text-[14px];
   font-weight: 500;
   color: var(--admin-text);
 }
 
+.reservation dl,
 .metadata dl {
   @apply grid-cols-2;
 }
 
 @media (max-width: 560px) {
   .details,
+  .reservation dl,
   .metadata dl {
     @apply grid-cols-1;
   }

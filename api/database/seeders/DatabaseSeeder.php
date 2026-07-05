@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nb_chambers' => 1,
                 'nb_beds' => 1,
-                'price' => 60,
+                'price' => 45,
                 'apart_link' => '/housing/reservation',
                 'description' => 'One room reservation option.',
             ],
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             [
                 'nb_chambers' => 2,
                 'nb_beds' => 2,
-                'price' => 100,
+                'price' => 90,
                 'apart_link' => '/housing/reservation',
                 'description' => 'Two rooms reservation option.',
             ],

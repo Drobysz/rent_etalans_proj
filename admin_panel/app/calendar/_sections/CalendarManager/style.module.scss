@@ -154,13 +154,22 @@
   background: #f5f5f5;
 }
 
+.dayBlocked {
+  color: #a3a3a3;
+  text-decoration: line-through;
+  background: #f5f5f5;
+}
+
 .dayInRange {
   background: #fef3c7;
+  color: #171717;
+  text-decoration: none;
 }
 
 .daySelected {
   color: #fff;
   background: #171717;
+  text-decoration: none;
 }
 
 .daySelected:hover {

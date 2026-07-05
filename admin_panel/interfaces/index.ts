@@ -50,9 +50,13 @@ export type PaymentInfo = {
 export type Order = {
   id: string;
   reserveId: string;
+  reservationCode?: string;
   guestName: string;
   guestEmail: string;
   apartmentName: string;
+  checkin?: string;
+  checkout?: string;
+  paymentStatus?: string;
   services: string[];
   createdAt: string;
   total: number;

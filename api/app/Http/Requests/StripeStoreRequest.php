@@ -23,15 +23,15 @@ class StripeStoreRequest extends FormRequest
     {
         return [
             'email'         => ['required', 'email', 'max:80'],
-            'client_number' => ['required', 'numeric', 'digits_between:1,20'],
-            'days_number'   => ['required', 'numeric', 'digits_between:1,365'],
+            'client_number' => ['required', 'integer', 'min:1', 'max:20'],
+            'days_number'   => ['required', 'integer', 'min:1', 'max:365'],
             'reserve_id'    => ['required', 'string', 'max:20'],
             'service_ids'   => ['nullable', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id'],
-            'apart_id'      => ['nullable', 'integer', 'exists:apartments,id'],
+            'apart_id'      => ['nullable', 'integer'],
             'checkin'       => ['nullable', 'date'],
             'checkout'      => ['nullable', 'date', 'after:checkin'],
-            'days_count'    => ['nullable', 'numeric', 'digits_between:1,365'],
+            'days_count'    => ['nullable', 'integer', 'min:1', 'max:365'],
             'rooms_count'   => ['nullable', 'integer', 'in:1,2'],
         ];
     }

@@ -31,6 +31,20 @@
   @apply mt-1 text-[12px];
 }
 
+.badge {
+  @apply mt-1 inline-flex w-fit rounded-full px-2 py-0.5 text-[12px];
+  color: var(--admin-primary);
+  background: var(--admin-primary-soft);
+  font-weight: 600;
+}
+
+.status {
+  @apply mt-1 block w-fit rounded-full px-2 py-0.5 text-[12px];
+  color: var(--admin-success);
+  background: var(--admin-success-bg);
+  font-weight: 600;
+}
+
 .actions {
   @apply text-right;
 }

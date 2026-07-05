@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ import s from "./style.module.scss";
 type DatePickerProps = {
     open: boolean;
     disabledDates: string[];
+    anchorLeft?: number;
     onClose: () => void;
 };
 
@@ -59,6 +61,7 @@ function rangeContainsDisabled(start: string, end: string, disabledDates: Set<st
 export const DatePicker = ({
     open,
     disabledDates,
+    anchorLeft,
     onClose,
 }: DatePickerProps) => {
     const t = useTranslations("reservation.calendar");
@@ -112,9 +115,12 @@ export const DatePicker = ({
             {open && (
                 <motion.div
                     className={s.calendar}
-                    initial={{ opacity: 0, y: 14, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                    style={{
+                        "--calendar-anchor-left": anchorLeft ? `${anchorLeft}px` : "50%",
+                    } as CSSProperties}
+                    initial={{ opacity: 0, x: "-50%", y: 14, scale: 0.98 }}
+                    animate={{ opacity: 1, x: "-50%", y: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: "-50%", y: 10, scale: 0.98 }}
                     transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <div className={s.calendar_header}>

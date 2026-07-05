@@ -3,19 +3,37 @@ import { StripeReceiptButton } from "./StripeReceiptButton";
 import styles from "./style.module.scss";
 import type { OrderRowProps } from "./OrderRow.props";
 
+const paymentStatusLabels: Record<string, string> = {
+  paid: "Payé",
+  pending: "En attente",
+  failed: "Échoué",
+  refunded: "Remboursé",
+};
+
 export function OrderRow({ order, onViewPayment }: OrderRowProps) {
   return (
     <tr className={styles.row}>
       <td>
         <span className={styles.strong}>{order.id}</span>
         <span className={styles.subtle}>{order.reserveId}</span>
+        {order.reservationCode ? <span className={styles.badge}>{order.reservationCode}</span> : null}
         <span className={styles.subtle}>{order.apartmentName}</span>
+        {order.checkin && order.checkout ? (
+          <span className={styles.subtle}>{order.checkin} - {order.checkout}</span>
+        ) : null}
       </td>
       <td>
         <span className={styles.strong}>{order.guestName}</span>
         <span className={styles.subtle}>{order.guestEmail}</span>
       </td>
-      <td className={styles.services}>{order.services.join(", ") || "Aucun service"}</td>
+      <td className={styles.services}>
+        {order.services.length > 0 ? order.services.join(", ") : "Aucun service"}
+        {order.paymentStatus ? (
+          <span className={styles.status}>
+            {paymentStatusLabels[order.paymentStatus] ?? order.paymentStatus}
+          </span>
+        ) : null}
+      </td>
       <td>{formatMoney(order.total)}</td>
       <td>{formatDateTime(order.createdAt)}</td>
       <td className={styles.actions}>

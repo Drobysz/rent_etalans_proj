@@ -100,6 +100,28 @@ export function PaymentModal({ order, onClose }: PaymentModalProps) {
               </div>
             </dl>
 
+            {(order.reservationCode || order.checkin || order.checkout) ? (
+              <div className={styles.reservation}>
+                <h3>Réservation</h3>
+                <dl>
+                  {[
+                    ["Code", order.reservationCode ?? order.reserveId],
+                    ["Appartement", order.apartmentName],
+                    ["Arrivée", order.checkin],
+                    ["Départ", order.checkout],
+                    ["Email client", order.guestEmail],
+                    ["Statut", paymentStatusLabels[order.payment.status] ?? order.payment.status],
+                    ["Montant", formatMoney(order.total)],
+                  ].filter(([, value]) => value).map(([label, value]) => (
+                    <div key={`${label}_${value}`}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ) : null}
+
             <div className={styles.metadata}>
               <h3>Métadonnées</h3>
               <dl>

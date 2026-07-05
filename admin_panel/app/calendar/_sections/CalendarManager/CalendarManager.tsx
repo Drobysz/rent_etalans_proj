@@ -21,7 +21,7 @@ function getTodayId() {
 
 export function CalendarManager({ initialBlockedDates }: CalendarManagerProps) {
   const [startDate, setStartDate] = useState(getTodayId());
-  const [endDate, setEndDate] = useState(getTodayId());
+  const [endDate, setEndDate] = useState<string | null>(getTodayId());
   const [reason, setReason] = useState("");
   const [blockedDates, setBlockedDates] = useState(initialBlockedDates);
   const [message, setMessage] = useState<string | null>(null);
@@ -93,9 +93,13 @@ export function CalendarManager({ initialBlockedDates }: CalendarManagerProps) {
         <RangePicker
           startDate={startDate}
           endDate={endDate}
+          blockedRanges={blockedDates.map((blockedDate) => ({
+            startDate: (blockedDate.start_date ?? blockedDate.date).slice(0, 10),
+            endDate: (blockedDate.end_date ?? blockedDate.start_date ?? blockedDate.date).slice(0, 10),
+          }))}
           onChange={(range) => {
             setStartDate(range.startDate);
-            setEndDate(range.endDate ?? range.startDate);
+            setEndDate(range.endDate);
           }}
         />
         <label>
