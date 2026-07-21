@@ -24,6 +24,13 @@ export type InvoiceApartmentItem = {
   amount: number;
 };
 
+export type InvoiceTouristTaxItem = {
+  guests: number;
+  nights: number;
+  pricePerGuestPerNight: number;
+  amount: number;
+};
+
 export type InvoicePdfData = {
   email: string;
   reserveId: string;
@@ -32,6 +39,7 @@ export type InvoicePdfData = {
   totalPrice: number;
   services: InvoiceServiceItem[];
   apartment?: InvoiceApartmentItem;
+  touristTax?: InvoiceTouristTaxItem;
   paidAt?: string;
   receiptNumber?: string;
 };
@@ -59,7 +67,8 @@ export const createInvoicePdf = (data: InvoicePdfData) => {
   const hasServices = data.services.length > 0;
   const apartmentSubtotal = data.apartment?.amount ?? 0;
   const servicesSubtotal = data.services.reduce((sum, service) => sum + service.amount, 0);
-  const grandTotal = data.totalPrice || apartmentSubtotal + servicesSubtotal;
+  const touristTaxAmount = data.touristTax?.amount ?? 0;
+  const grandTotal = data.totalPrice || apartmentSubtotal + servicesSubtotal + touristTaxAmount;
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
@@ -174,6 +183,11 @@ export const createInvoicePdf = (data: InvoicePdfData) => {
   const totalRows = [
     hasApartment ? { label: "Apartment subtotal", value: apartmentSubtotal, bold: false } : null,
     hasServices ? { label: "Services subtotal", value: servicesSubtotal, bold: false } : null,
+    data.touristTax ? {
+      label: `Tourist tax (${data.touristTax.guests} x ${data.touristTax.nights} x ${formatEuro(data.touristTax.pricePerGuestPerNight)})`,
+      value: touristTaxAmount,
+      bold: false,
+    } : null,
     { label: "Grand total", value: grandTotal, bold: true },
     { label: "Amount paid", value: grandTotal, bold: true },
   ].filter((row): row is { label: string; value: number; bold: boolean } => Boolean(row));

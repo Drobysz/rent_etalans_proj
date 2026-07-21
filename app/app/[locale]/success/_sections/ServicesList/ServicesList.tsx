@@ -12,7 +12,11 @@ import {
     DownloadInvoiceButton,
     DownloadStripeInvoiceButton
 } from "../../_components";
-import type { InvoiceApartmentItem, InvoiceServiceItem } from "@/utils/createInvoicePdf";
+import type {
+    InvoiceApartmentItem,
+    InvoiceServiceItem,
+    InvoiceTouristTaxItem,
+} from "@/utils/createInvoicePdf";
 import { useTranslations } from "next-intl";
 import { getAppApiUrl } from "@/lib/api";
 import { MouseEvent, useState } from "react";
@@ -26,6 +30,7 @@ export const ServicesList = ({
     sessionId,
     totalPrice,
     apartment,
+    touristTax,
     payment,
 }: {
     services: Service[];
@@ -36,6 +41,7 @@ export const ServicesList = ({
     sessionId: string;
     totalPrice: number;
     apartment?: InvoiceApartmentItem;
+    touristTax?: InvoiceTouristTaxItem;
     payment?: Payment;
 })=> {
     const t = useTranslations("success");
@@ -137,6 +143,7 @@ export const ServicesList = ({
                         totalPrice={totalPrice}
                         services={invoiceServices}
                         apartment={apartment}
+                        touristTax={touristTax}
                     />
                 </div>
                 <p className={s.services_hint}>

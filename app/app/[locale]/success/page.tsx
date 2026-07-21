@@ -13,7 +13,8 @@ import { Suspense } from "react";
 import { Payment, Service } from "@/types";
 import { getTranslations } from "next-intl/server";
 import { PaymentStorageSync } from "./_components";
-import type { InvoiceApartmentItem } from "@/utils/createInvoicePdf";
+import { TOURIST_TAX_PER_GUEST_PER_NIGHT } from "@/lib/touristTax";
+import type { InvoiceApartmentItem, InvoiceTouristTaxItem } from "@/utils/createInvoicePdf";
 import { createPageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
@@ -65,6 +66,8 @@ export default async function SuccessPage ({
         rooms_count: roomsCount,
         checkin,
         checkout,
+        tourist_tax_total: touristTaxTotal,
+        tourist_tax_rate: touristTaxRate,
         service_ids: serviceIds,
         total_price: totalPrice,
     } = validation.payment;
@@ -93,6 +96,14 @@ export default async function SuccessPage ({
             amount: selectedApartment.price * reservationNights,
         }
         : undefined;
+    const invoiceTouristTax: InvoiceTouristTaxItem | undefined = invoiceApartment && touristTaxTotal
+        ? {
+            guests: clientNumber,
+            nights: reservationNights,
+            pricePerGuestPerNight: touristTaxRate ?? TOURIST_TAX_PER_GUEST_PER_NIGHT,
+            amount: touristTaxTotal,
+        }
+        : undefined;
 
     const payment = await createPayment(
         email,
@@ -104,6 +115,7 @@ export default async function SuccessPage ({
         serviceNames,
         session_id,
         {
+            apart_name: selectedApartment?.name,
             reservation_id: reservationId,
             reservation_code: reservationCode,
             apart_id: apartmentId,
@@ -185,6 +197,7 @@ export default async function SuccessPage ({
                             sessionId={session_id}
                             totalPrice={totalPrice}
                             apartment={invoiceApartment}
+                            touristTax={invoiceTouristTax}
                             payment={paymentForStorage}
                         />
                     </div>

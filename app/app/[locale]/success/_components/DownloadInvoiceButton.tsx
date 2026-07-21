@@ -1,7 +1,11 @@
 "use client";
 
 import { createInvoicePdf } from "@/utils/createInvoicePdf";
-import type { InvoiceApartmentItem, InvoiceServiceItem } from "@/utils/createInvoicePdf";
+import type {
+  InvoiceApartmentItem,
+  InvoiceServiceItem,
+  InvoiceTouristTaxItem,
+} from "@/utils/createInvoicePdf";
 import { useTranslations } from "next-intl";
 
 type DownloadInvoiceButtonProps = {
@@ -12,6 +16,7 @@ type DownloadInvoiceButtonProps = {
   totalPrice: number;
   services: InvoiceServiceItem[];
   apartment?: InvoiceApartmentItem;
+  touristTax?: InvoiceTouristTaxItem;
 };
 
 export const DownloadInvoiceButton = ({
@@ -22,6 +27,7 @@ export const DownloadInvoiceButton = ({
   totalPrice,
   services,
   apartment,
+  touristTax,
 }: DownloadInvoiceButtonProps) => {
   const t = useTranslations("success");
 
@@ -34,6 +40,7 @@ export const DownloadInvoiceButton = ({
       totalPrice,
       services,
       apartment,
+      touristTax,
       paidAt: new Date().toISOString(),
       receiptNumber: reserveId,
     });

@@ -12,6 +12,8 @@ export type ValidatedPaymentData = {
     rooms_count?: number | null;
     checkin?: string | null;
     checkout?: string | null;
+    tourist_tax_total?: number | null;
+    tourist_tax_rate?: number | null;
     total_price: number;
     service_ids: number[];
 };
