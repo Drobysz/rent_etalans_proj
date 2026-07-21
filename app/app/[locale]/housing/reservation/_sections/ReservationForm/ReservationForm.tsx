@@ -10,6 +10,7 @@ import { getApartments } from "@/queries/apartments";
 import { createInvoice } from "@/queries/createInvoice";
 import { getReservationAvailability } from "@/queries/reservationAvailability";
 import { cn } from "@/lib/utils";
+import { calculateTouristTax } from "@/lib/touristTax";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { useReservation } from "../../context/reservation.context";
 import { DatePicker } from "./DatePicker";
@@ -138,7 +139,9 @@ export const ReservationForm = () => {
         [apartments, roomsCount],
     );
     const maxGuests = roomsCount === 1 ? 2 : 4;
-    const totalPrice = selectedApartment ? selectedApartment.price * daysCount : 0;
+    const apartmentPrice = selectedApartment ? selectedApartment.price * daysCount : 0;
+    const touristTax = selectedApartment ? calculateTouristTax(guests, daysCount) : 0;
+    const totalPrice = apartmentPrice + touristTax;
     const apartmentOptions: DropdownOption[] = [
         { value: "1", label: t("oneRoom") },
         { value: "2", label: t("twoRooms") },
@@ -312,7 +315,14 @@ export const ReservationForm = () => {
             </AnimatePresence>
             {showFields && (
                 <div className={s.summary}>
-                    <span>{daysCount > 0 ? t("nights", { count: daysCount }) : t("selectDates")}</span>
+                    <div>
+                        <span>{daysCount > 0 ? t("nights", { count: daysCount }) : t("selectDates")}</span>
+                        {touristTax > 0 && (
+                            <span>
+                                {t("touristTax", { guests, nights: daysCount })}: {touristTax.toFixed(2)} EUR
+                            </span>
+                        )}
+                    </div>
                     <strong>{totalPrice > 0 ? `${totalPrice.toFixed(2)} EUR` : "-"}</strong>
                 </div>
             )}

@@ -203,6 +203,7 @@
       "guests": "Voyageurs",
       "selectDates": "Sélectionnez les dates",
       "nights": "{count, plural, one {# nuit} other {# nuits}}",
+      "touristTax": "Taxe de séjour ({guests} voyageurs × {nights} nuits)",
       "reserve": "Réserver",
       "expand": "Déplier le formulaire de réservation",
       "collapse": "Replier le formulaire de réservation",

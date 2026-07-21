@@ -196,6 +196,7 @@
       "guests": "Gäste",
       "selectDates": "Daten auswählen",
       "nights": "{count, plural, one {# Nacht} other {# Nächte}}",
+      "touristTax": "Kurtaxe ({guests} Gäste × {nights} Nächte)",
       "reserve": "Reservieren",
       "expand": "Reservierungsformular ausklappen",
       "collapse": "Reservierungsformular einklappen",

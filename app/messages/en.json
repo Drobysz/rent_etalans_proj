@@ -197,6 +197,7 @@
       "guests": "Guests",
       "selectDates": "Select dates",
       "nights": "{count, plural, one {# night} other {# nights}}",
+      "touristTax": "Tourist tax ({guests} guests × {nights} nights)",
       "reserve": "Reserve",
       "expand": "Expand reservation form",
       "collapse": "Collapse reservation form",
