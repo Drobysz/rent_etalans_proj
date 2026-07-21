@@ -61,7 +61,6 @@ export const sendTelegramPurchaseNotification = async (
     method: "POST",
     headers,
     body: JSON.stringify({
-      ...params,
       message,
     }),
   });

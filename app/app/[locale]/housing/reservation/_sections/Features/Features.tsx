@@ -1,7 +1,7 @@
 import {
     Wifi, SquareParking, TvMinimal,
     Heater, FlameKindling, TowelRack,
-    AirVent, WashingMachine, ShowerHead
+    AirVent, Refrigerator, ShowerHead
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import s from "./style.module.scss";
@@ -14,12 +14,12 @@ export const Features = ()=> {
         { label: t("tv"), Icon: TvMinimal },
 
         { label: t("heating"), Icon: Heater },
-        { label: t("firePit"), Icon: FlameKindling },
+        { label: t("grill"), Icon: FlameKindling },
         { label: t("bedding"), Icon: TowelRack },
 
         { label: t("airConditioner"), Icon: AirVent },
-        { label: t("washingMachine"), Icon: WashingMachine },
-        { label: t("outdoorShower"), Icon: ShowerHead },
+        { label: t("refrigerator"), Icon: Refrigerator },
+        { label: t("shower"), Icon: ShowerHead },
     ];
 
     return (

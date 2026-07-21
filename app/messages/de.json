@@ -174,11 +174,11 @@
       "parking": "Parken: 2 Plätze",
       "tv": "Full-HD-TV",
       "heating": "Zentralheizung",
-      "firePit": "Feuerstelle",
+      "grill": "Außengrill",
       "bedding": "Bettwäsche",
       "airConditioner": "Klimaanlage",
-      "washingMachine": "Waschmaschine",
-      "outdoorShower": "Außendusche"
+      "refrigerator": "Kühlschrank",
+      "shower": "Dusche"
     },
     "map": {
       "title": "Wo befindet sich das Apartment?",

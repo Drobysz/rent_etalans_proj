@@ -206,37 +206,13 @@ def send_message(chat_id: int, text: str) -> bool:
         return False
 
 
-def format_purchase_message(payload: dict[str, Any]) -> str:
-    service_names = payload.get("serviceNames") or payload.get("service_names") or []
-    if not isinstance(service_names, list):
-        service_names = []
-
-    services_text = ", ".join(map(str, service_names)) if service_names else "-"
-
-    return "\n".join(
-        [
-            "New purchase",
-            "",
-            f"Email: {payload.get('email', '')}",
-            f"Reservation code: {payload.get('reserveId') or payload.get('reserve_id', '')}",
-            f"Visitors: {payload.get('visitorsCount') or payload.get('client_number', '')}",
-            f"Days: {payload.get('daysCount') or payload.get('days_number', '')}",
-            f"Total price: EUR {payload.get('totalPrice') or payload.get('total_price', '')}",
-            f"Services: {services_text}",
-            f"Payment status: {payload.get('paymentStatus') or payload.get('payment_status', 'paid')}",
-            f"Stripe session: {payload.get('sessionId') or payload.get('session_id', '')}",
-        ]
-    ).strip()
-
-
-def notify_purchase(payload: dict[str, Any]) -> dict[str, Any]:
+def notify_purchase(message: str) -> dict[str, Any]:
     chat_ids = active_chat_ids()
-    text = format_purchase_message(payload)
     sent = []
     failed = []
 
     for chat_id in chat_ids:
-        if send_message(chat_id, text):
+        if send_message(chat_id, message):
             sent.append(chat_id)
         else:
             failed.append(chat_id)
@@ -338,7 +314,12 @@ class BotRequestHandler(BaseHTTPRequestHandler):
             self.send_json(400, {"message": "Invalid JSON"})
             return
 
-        self.send_json(200, notify_purchase(payload))
+        message = payload.get("message") if isinstance(payload, dict) else None
+        if not isinstance(message, str) or not message.strip():
+            self.send_json(400, {"message": "A non-empty message is required"})
+            return
+
+        self.send_json(200, notify_purchase(message))
 
     def log_message(self, format: str, *args: Any) -> None:
         return

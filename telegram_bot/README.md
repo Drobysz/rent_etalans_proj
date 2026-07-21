@@ -26,4 +26,12 @@ The Next.js app calls:
 POST http://127.0.0.1:8765/notify-purchase
 ```
 
+The request body contains only the message already formatted by the app:
+
+```json
+{
+  "message": "Nouvelle réservation payée\n..."
+}
+```
+
 If `TELEGRAM_NOTIFY_SECRET` is set on both sides, the app sends it as `X-Notification-Secret`.

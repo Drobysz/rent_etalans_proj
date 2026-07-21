@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Apartment } from "@/types";
@@ -181,7 +181,7 @@ export const ReservationForm = () => {
         setGuestsInput(String(normalizedGuests));
     };
 
-    const submitReservation = async (event: FormEvent<HTMLFormElement>) => {
+    const submitReservation = async (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (!email || !email.includes("@")) {

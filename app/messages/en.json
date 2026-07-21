@@ -175,11 +175,11 @@
       "parking": "Parking: 2 spaces",
       "tv": "Full HD TV",
       "heating": "Central heating",
-      "firePit": "Fire pit",
+      "grill": "Outdoor grill",
       "bedding": "Bedding",
       "airConditioner": "Air conditioner",
-      "washingMachine": "Washing machine",
-      "outdoorShower": "Outdoor shower"
+      "refrigerator": "Refrigerator",
+      "shower": "Shower"
     },
     "map": {
       "title": "Where is the apartment located?",

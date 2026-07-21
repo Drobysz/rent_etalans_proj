@@ -181,11 +181,11 @@
       "parking": "Parking : 2 places",
       "tv": "TV Full HD",
       "heating": "Chauffage central",
-      "firePit": "Brasero",
+      "grill": "Barbecue d'extérieur",
       "bedding": "Linge de lit",
       "airConditioner": "Climatisation",
-      "washingMachine": "Machine à laver",
-      "outdoorShower": "Douche extérieure"
+      "refrigerator": "Réfrigérateur",
+      "shower": "Douche"
     },
     "map": {
       "title": "Où se trouve l'appartement ?",
