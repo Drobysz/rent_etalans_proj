@@ -25,6 +25,8 @@ use Illuminate\Support\Str;
 
 class StripeController extends Controller
 {
+    private const TOURIST_TAX_PER_GUEST_PER_NIGHT = 1.2;
+
     public function createCheckout(StripeStoreRequest $request)
     {
         $data = $request->validated();
@@ -140,6 +142,12 @@ class StripeController extends Controller
                     : null,
                 'checkin' => $metadata->checkin ?? null,
                 'checkout' => $metadata->checkout ?? null,
+                'tourist_tax_total' => isset($metadata->tourist_tax_total)
+                    ? (float) $metadata->tourist_tax_total
+                    : null,
+                'tourist_tax_rate' => isset($metadata->tourist_tax_rate)
+                    ? (float) $metadata->tourist_tax_rate
+                    : null,
                 'service_ids' => array_values(array_filter(
                     array_map('intval', explode(',', $metadata->service_ids ?? ''))
                 )),
@@ -360,6 +368,38 @@ class StripeController extends Controller
         return ((float) $apartment->price) * $daysNumber;
     }
 
+    private function getTouristTaxInvoiceItem(
+        int $clientNumber,
+        int $daysCount
+    ): array {
+        $multiplier = sprintf(
+            '%d person%s × %d day%s',
+            $clientNumber,
+            $clientNumber > 1 ? 's' : '',
+            $daysCount,
+            $daysCount > 1 ? 's' : '',
+        );
+
+        return [
+            'quantity' => $clientNumber * $daysCount,
+            'price_data' => [
+                'currency' => 'eur',
+                'unit_amount' => (int) round(self::TOURIST_TAX_PER_GUEST_PER_NIGHT * 100),
+                'product_data' => [
+                    'name' => "tourist tax / taxe de séjour",
+                    'description' => $multiplier,
+                ],
+            ],
+        ];
+    }
+
+    private function getTouristTaxTotalPrice(
+        int $clientNumber,
+        int $daysCount
+    ): float {
+        return self::TOURIST_TAX_PER_GUEST_PER_NIGHT * $clientNumber * $daysCount;
+    }
+
     private function createInvoice(
         string $email,
         array $service_ids,
@@ -383,6 +423,7 @@ class StripeController extends Controller
             $days_number,
             $client_number,
         );
+        $touristTaxTotal = 0;
 
         if ($apart_id) {
             $reservationDays = $days_count ?? $days_number;
@@ -393,7 +434,12 @@ class StripeController extends Controller
                 $checkin,
                 $checkout,
             );
+
+            $lineItems[] = $this->getTouristTaxInvoiceItem($client_number, $reservationDays);
+
             $totalPrice += $this->getApartmentTotalPrice($apart_id, $reservationDays);
+            $touristTaxTotal = $this->getTouristTaxTotalPrice($client_number, $reservationDays);
+            $totalPrice += $touristTaxTotal;
         }
 
         $stripe = new StripeClient(config('services.stripe.secret'));
@@ -420,6 +466,10 @@ class StripeController extends Controller
                     'rooms_count'   => $rooms_count ? (string) $rooms_count : '',
                     'checkin'       => $checkin ?? '',
                     'checkout'      => $checkout ?? '',
+                    'tourist_tax_total' => (string) $touristTaxTotal,
+                    'tourist_tax_rate' => $touristTaxTotal > 0
+                        ? (string) self::TOURIST_TAX_PER_GUEST_PER_NIGHT
+                        : '',
                     'total_price'   => (string) $totalPrice,
                 ],
             ],
