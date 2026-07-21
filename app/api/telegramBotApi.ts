@@ -9,6 +9,7 @@ export type TelegramPurchaseNotificationParams = {
   totalPrice: number;
   serviceNames: string[];
   apartment?: {
+    name?: string | null;
     checkin?: string | null;
     checkout?: string | null;
     daysCount?: number | null;
@@ -37,12 +38,12 @@ export const sendTelegramPurchaseNotification = async (
   }
 
   const message = [
-    "Nouvelle réservation payée",
+    `Nouvelle ${params.apartment ? "réservation" : "service"} payée`,
     "",
-    `Client : ${params.email}`,
-    `Code de séjour : ${params.reservationCode ?? params.reserveId}`,
-    `Référence de paiement : ${params.reserveId}`,
+    `Email de client : ${params.email}`,
+    `Code de reservation : ${params.reservationCode ?? params.reserveId}`,
     "",
+    params.apartment?.name ? `Appartement: ${params.apartment?.name}` : null,
     `Voyageurs : ${params.visitorsCount}`,
     `Durée : ${params.apartment?.daysCount ?? params.daysCount} nuit(s)`,
     params.apartment?.checkin ? `Arrivée : ${params.apartment.checkin}` : null,
@@ -55,6 +56,7 @@ export const sendTelegramPurchaseNotification = async (
     `Montant : ${params.totalPrice.toFixed(2)} EUR`,
     `Statut : ${params.paymentStatus ?? "payé"}`,
     params.sessionId ? `Session Stripe : ${params.sessionId}` : null,
+    `Référence de paiement : ${params.reserveId}`,
   ].filter(Boolean).join("\n");
 
   const res = await fetch(notifyUrl!, {

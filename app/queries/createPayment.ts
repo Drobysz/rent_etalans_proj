@@ -13,6 +13,7 @@ export const createPayment = async (
     service_names: string[],
     session_id: string,
     apartment?: {
+        apart_name?: string | null;
         reservation_id?: number | null;
         reservation_code?: string | null;
         apart_id?: number | null;
@@ -72,6 +73,7 @@ export const createPayment = async (
                 serviceNames: service_names,
                 reservationCode: apartment?.reservation_code ?? undefined,
                 apartment: apartment?.apart_id ? {
+                    name: apartment.apart_name ?? null,
                     checkin: apartment.checkin ?? null,
                     checkout: apartment.checkout ?? null,
                     daysCount: apartment.days_count ?? null,
