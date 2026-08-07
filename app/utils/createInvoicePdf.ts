@@ -63,7 +63,7 @@ const formatDate = (date?: string) => {
 export const createInvoicePdf = (data: InvoicePdfData) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
-  const siretNumber = process.env.SIRET_NUMBER?.trim();
+  const siretNumber = process.env.NEXT_PUBLIC_SIRET_NUMBER?.trim();
   const hasApartment = Boolean(data.apartment);
   const hasServices = data.services.length > 0;
   const apartmentSubtotal = data.apartment?.amount ?? 0;
