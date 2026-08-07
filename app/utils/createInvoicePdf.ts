@@ -63,6 +63,7 @@ const formatDate = (date?: string) => {
 export const createInvoicePdf = (data: InvoicePdfData) => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
+  const siretNumber = process.env.SIRET_NUMBER?.trim();
   const hasApartment = Boolean(data.apartment);
   const hasServices = data.services.length > 0;
   const apartmentSubtotal = data.apartment?.amount ?? 0;
@@ -96,10 +97,14 @@ export const createInvoicePdf = (data: InvoicePdfData) => {
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
-  doc.text("13 Rue Des Acots", 20, 63);
-  doc.text("25580 Etalans", 20, 69);
-  doc.text("France", 20, 75);
-  doc.text("+33 6 36 65 20 35", 20, 81);
+  if (siretNumber) {
+    doc.text(`SIRET: ${siretNumber}`, 20, 63);
+  }
+  const addressStartY = siretNumber ? 69 : 63;
+  doc.text("13 Rue Des Acots", 20, addressStartY);
+  doc.text("25580 Etalans", 20, addressStartY + 6);
+  doc.text("France", 20, addressStartY + 12);
+  doc.text("+33 6 36 65 20 35", 20, addressStartY + 18);
 
   doc.setFont("helvetica", "bold");
   doc.text("Bill to", pageWidth - 70, 56);
