@@ -15,20 +15,24 @@
 
 .tab_title {
 	@apply cursor-pointer duration-200 transition
-		max-[340px]:text-sm;
+		text-xl max-[540px]:text-base;
 }
 
 .tab_list {
-	@apply absolute top-9.5 flex w-max
+	@apply absolute top-10.5 flex w-max
 		flex-col gap-1 py-2 
 		px-3 left-1/2 -translate-x-1/2
 		rounded-2xl bg-neutral-200 text-zinc-500;
 }
 
+.tab_header {
+	@apply text-xl max-[620px]:text-lg;
+}
+
 .triangle {
 	@apply absolute -top-1 left-1/2 
 		-translate-1/2 text-neutral-200
-		w-4 h-4;
+		w-6 h-6;
 }
 
 .chevron {

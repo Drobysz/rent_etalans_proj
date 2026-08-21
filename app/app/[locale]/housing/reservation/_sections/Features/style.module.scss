@@ -27,11 +27,7 @@
 
 @media (max-width: 460px) {
     .features_list {
-        @apply text-xs;
-    }
-
-    .feature svg {
-        @apply w-5 h-5;
+        @apply text-sm;
     }
 }
 

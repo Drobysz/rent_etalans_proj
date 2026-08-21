@@ -1,7 +1,6 @@
 import { MoveRight } from "lucide-react";
 import s from "../style.module.scss";
 import Link from "next/link";
-import { PathService } from "@/helpers/path";
 import { useTranslations } from "next-intl";
 import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
 import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
@@ -20,7 +19,7 @@ export const Note = ()=> {
                 <ViewReveal>
                     <Link
                         className={s.link}
-                        href={PathService.withBasePath("/housing/reservation")}
+                        href={"/housing/reservation"}
                     >
                         <span>{t("reservationLink")}</span>
                         <div>

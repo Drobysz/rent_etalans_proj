@@ -34,6 +34,10 @@
     animation: load 5s linear forwards;
 }
 
+.view_sign {
+    @apply text-xl leading-4;
+}
+
 @keyframes load{
     to { width: 100%; }
 }
@@ -44,11 +48,15 @@
     }
 
     .progress_line {
-        @apply w-10;
+        @apply w-15;
     }
 
     .link {
         @apply text-xs;
+    }
+
+    .view_sign {
+        @apply text-base leading-4;
     }
 }
 

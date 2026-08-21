@@ -24,11 +24,11 @@
     }
 
     .yard_image {
-        @apply w-85 h-50;
+        @apply w-100 h-auto;
     }
 
     .paragraph {
-        @apply w-85;
+        @apply w-90 text-lg;
     }
 }
 
@@ -37,21 +37,11 @@
         @apply text-2xl;
     }
 
-    .yard_image {
-        @apply w-65 h-35;
-    }
-
     .paragraph {
-        @apply w-60 text-sm;
+        @apply w-75 text-base;
     }
 
     .inner_content {
         @apply top-30;
-    }
-}
-
-@media (max-width: 420px) {
-    .title {
-        @apply text-xl;
     }
 }

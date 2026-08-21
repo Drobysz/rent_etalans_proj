@@ -13,12 +13,11 @@
 }
 
 .title {
-    @apply text-4xl text-neutral-600
-        pt-3;
+    @apply text-4xl text-neutral-600;
 }
 
 .subtitle {
-    @apply text-sm text-neutral-500;
+    @apply text-neutral-500;
 }
 
 .paragraph {
@@ -51,9 +50,9 @@
         @apply text-4xl;
     }
 
-    .subtitle {
-        @apply pb-2;
-    }
+    // .subtitle {
+    //     @apply pb-2;
+    // }
 }
 
 @media (max-width: 640px) {
@@ -70,10 +69,6 @@
 
     .title {
         @apply text-3xl pt-0;
-    }
-
-    .subtitle {
-        @apply text-xs;
     }
 
     .image_cover {

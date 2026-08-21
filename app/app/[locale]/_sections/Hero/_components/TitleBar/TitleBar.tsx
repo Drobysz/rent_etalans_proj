@@ -51,7 +51,7 @@ export const TitleBar = ({
                 >
                     <SplitText
                         tag="span"
-                        className="w-fit leading-3"
+                        className={s.view_sign}
                     >
                         {t("view")}
                     </SplitText>

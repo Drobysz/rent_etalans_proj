@@ -145,6 +145,7 @@ export const Tab = ({
                             key={`tab_list_${idx}`}
                             href={item.href ?? "#"}
                             colorLine="dark"
+                            className={s.tab_header}
                         >
                             {item.label}
                         </UnderlinedLink>

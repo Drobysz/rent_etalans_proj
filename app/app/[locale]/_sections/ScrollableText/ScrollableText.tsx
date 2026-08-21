@@ -12,6 +12,7 @@ import { useWindowWidth } from "@/hooks";
 import { useTranslations } from "next-intl";
 import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
 import { motion } from "framer-motion";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
 
 export const ScrollableText = ()=> {
     const ref = useRef<HTMLDivElement>(null);
@@ -37,20 +38,8 @@ export const ScrollableText = ()=> {
                 >
                     {t("title")}
                 </h3>
-                <motion.div
-                    viewport={{
-                        once: true,
-                    }}
-                    initial={{
-                        clipPath: "inset(48% 48% 48% 48% round 24px)",
-                    }}
-                    whileInView={{
-                        clipPath: "inset(0% 0% 0% 0% round 24px)",
-                    }}
-                    transition={{
-                        duration: 1.3,
-                        ease: [0.33, 1, 0.68, 1]
-                    }}
+                <ViewReveal
+                    animationType="disclosure"
                 >
                     <Image
                         className={s.yard_image}
@@ -59,7 +48,7 @@ export const ScrollableText = ()=> {
                         height={300}
                         alt={t("imageAlt")}
                     />
-                </motion.div>
+                </ViewReveal>
                 <div className="flex flex-col gap-4">
                     <SplitText 
                         className={cn(
