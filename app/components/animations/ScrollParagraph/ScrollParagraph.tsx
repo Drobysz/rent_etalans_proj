@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import ScrollParagraphProps from './ScrollParagraph.props';
 import { motion, MotionValue, useTransform } from 'framer-motion';
+import { ViewReveal } from '../ViewReveal/ViewReveal';
 
 
 export const ScrollParagraph = ({children, className, scrollYProgress }: ScrollParagraphProps) => {
@@ -13,24 +14,26 @@ export const ScrollParagraph = ({children, className, scrollYProgress }: ScrollP
     const len = words.length;
 
     return (
-        <p className={className}>
-            {
-                words.map( (w : string, idx: number) => {
-                    const start = idx / len;
-                    const end = start + (1 / len)
+        <ViewReveal>
+            <p className={className}>
+                {
+                    words.map( (w : string, idx: number) => {
+                        const start = idx / len;
+                        const end = start + (1 / len)
 
-                    return (
-                        <Word 
-                            range={[start, end]} 
-                            scrollYProgress={scrollYProgress} 
-                            key={idx}
-                        >
+                        return (
+                            <Word 
+                                range={[start, end]} 
+                                scrollYProgress={scrollYProgress} 
+                                key={idx}
+                            >
                                 {w}
-                        </Word>
-                    );
-                } )
-            }
-        </p>
+                            </Word>
+                        );
+                    } )
+                }
+            </p>
+        </ViewReveal>
     );
 };
 

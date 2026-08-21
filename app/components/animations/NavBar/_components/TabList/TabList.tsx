@@ -6,6 +6,7 @@ import { TabListProps } from "./TabList.props";
 import { useTranslations } from "next-intl";
 import { PathService } from "@/helpers/path";
 import { TabListType } from "../../types";
+import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
 
 export const TabList = ({
 	setPosition,
@@ -39,7 +40,11 @@ export const TabList = ({
 					href={tab.href ?? ""}
 					list={tab.links ?? []} 
 				>
-					{tab.label}
+					<SplitByRowsText
+						tag="span"
+					>
+						{tab.label}
+					</SplitByRowsText>
 				</Tab>
 			))}
 		</>

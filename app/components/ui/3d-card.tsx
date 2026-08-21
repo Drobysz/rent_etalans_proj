@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 
 import React, { createContext, useState, useContext, useRef, useEffect, DetailedHTMLProps, HTMLAttributes, ReactNode, ElementType } from "react";
+import { ViewReveal } from "../animations/ViewReveal/ViewReveal";
 
 const MouseEnterContext = createContext<
   [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
@@ -67,7 +68,7 @@ export const CardContainer = ({
   };
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
-      <div
+      <ViewReveal
         className={cn(
           "flex items-center justify-center",
           containerClassName
@@ -91,7 +92,7 @@ export const CardContainer = ({
         >
           {children}
         </div>
-      </div>
+      </ViewReveal>
     </MouseEnterContext.Provider>
   );
 };
