@@ -7,6 +7,21 @@ use Illuminate\Support\Str;
 
 class Reservation extends Model
 {
+    public const STATUS_PENDING = 'pending';
+
+    public const STATUS_PAID = 'paid';
+
+    public const STATUS_CONFIRMED = 'confirmed';
+
+    public const STATUS_PAYMENT_FAILED = 'payment_failed';
+
+    public const STATUS_EXPIRED = 'expired';
+
+    public const OCCUPYING_STATUSES = [
+        self::STATUS_PAID,
+        self::STATUS_CONFIRMED,
+    ];
+
     protected $fillable = [
         'reservation_code',
         'email',
@@ -51,5 +66,10 @@ class Reservation extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function scopeOccupying($query)
+    {
+        return $query->whereIn('status', self::OCCUPYING_STATUSES);
     }
 }

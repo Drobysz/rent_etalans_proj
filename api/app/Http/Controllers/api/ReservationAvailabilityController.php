@@ -111,6 +111,9 @@ class ReservationAvailabilityController extends Controller
     private function getReservedDates(?int $apartmentId): array
     {
         $paymentDates = Payment::query()
+            // Payments created before reservations were introduced are known paid
+            // bookings. Reservations now provide the source of truth for new ones.
+            ->whereNull('reservation_id')
             ->whereNotNull('checkin')
             ->whereNotNull('checkout')
             ->when($apartmentId, fn ($query) => $query->where('apart_id', $apartmentId))
@@ -120,7 +123,7 @@ class ReservationAvailabilityController extends Controller
             ));
 
         $reservationDates = Reservation::query()
-            ->whereIn('status', ['pending', 'paid'])
+            ->occupying()
             ->when($apartmentId, fn ($query) => $query->where('apart_id', $apartmentId))
             ->get(['checkin', 'checkout'])
             ->flatMap(fn (Reservation $reservation) => (

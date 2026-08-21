@@ -52,6 +52,10 @@ Route::post(
     [StripeController::class, 'validatePurchase']
 );
 Route::post(
+    '/stripe/webhook',
+    [StripeController::class, 'webhook']
+);
+Route::post(
     '/stripe/invoice-pdf',
     [StripeController::class, 'getStripeInvoicePdf']
 );

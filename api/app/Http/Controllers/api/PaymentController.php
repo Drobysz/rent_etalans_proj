@@ -115,16 +115,12 @@ class PaymentController extends Controller
         $serviceIds = $data['service_ids'] ?? [];
         unset($data['service_ids']);
 
-        $payment = DB::transaction( function () use ($data, $serviceIds, $reservation)
+        $payment = DB::transaction( function () use ($data, $serviceIds)
         {
             $payment = Payment::create($data);
 
             if (!empty($serviceIds)) {
                 $payment->services()->sync($serviceIds);
-            }
-
-            if ($reservation) {
-                $reservation->forceFill(['status' => 'paid'])->save();
             }
 
             return $payment;

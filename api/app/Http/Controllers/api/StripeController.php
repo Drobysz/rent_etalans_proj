@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Services\ReservationPaymentService;
 use Illuminate\Http\Request;
 
 // Stripe
@@ -10,6 +11,8 @@ use Stripe\Stripe;
 use Stripe\StripeClient;
 use Stripe\Checkout\Session;
 use Stripe\Exception\InvalidRequestException;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Webhook;
 
 use App\Http\Requests\StripeStoreRequest;
 
@@ -68,7 +71,7 @@ class StripeController extends Controller
                 'days_count' => $reservationDays,
                 'rooms_count' => $apartment->nb_chambers,
                 'guests' => $data['client_number'],
-                'status' => 'pending',
+                'status' => Reservation::STATUS_PENDING,
             ]);
         }
 
@@ -101,7 +104,10 @@ class StripeController extends Controller
         return response()->json([ 'url' => $checkout_session->url ], 200);
     }
 
-    public function validatePurchase(Request $request) {
+    public function validatePurchase(
+        Request $request,
+        ReservationPaymentService $reservationPayments
+    ) {
         $validated = $request->validate([
             'session_id' => 'required|string'
         ]);
@@ -118,6 +124,10 @@ class StripeController extends Controller
         if ($session->payment_status !== 'paid') {
             return response()->json(['valid' => false], 400);
         }
+
+        // Webhooks are the primary confirmation path. This reconciliation handles
+        // the small window where Stripe redirects before webhook delivery.
+        $reservationPayments->confirm($session);
 
         $metadata = $session->metadata;
 
@@ -154,6 +164,48 @@ class StripeController extends Controller
                 'total_price' => ((float) ($session->amount_total ?? 0)) / 100,
             ],
         ]);
+    }
+
+    public function webhook(
+        Request $request,
+        ReservationPaymentService $reservationPayments
+    ) {
+        $secret = config('services.stripe.webhook_secret');
+
+        if (!$secret) {
+            return response()->json([
+                'message' => 'Stripe webhook secret is not configured.',
+            ], 500);
+        }
+
+        try {
+            $event = Webhook::constructEvent(
+                $request->getContent(),
+                (string) $request->header('Stripe-Signature'),
+                $secret,
+            );
+        } catch (\UnexpectedValueException|SignatureVerificationException) {
+            return response()->json(['message' => 'Invalid webhook payload.'], 400);
+        }
+
+        /** @var Session $session */
+        $session = $event->data->object;
+
+        match ($event->type) {
+            'checkout.session.completed',
+            'checkout.session.async_payment_succeeded' => $reservationPayments->confirm($session),
+            'checkout.session.expired' => $reservationPayments->markIncomplete(
+                $session,
+                Reservation::STATUS_EXPIRED,
+            ),
+            'checkout.session.async_payment_failed' => $reservationPayments->markIncomplete(
+                $session,
+                Reservation::STATUS_PAYMENT_FAILED,
+            ),
+            default => null,
+        };
+
+        return response()->json(['received' => true]);
     }
 
     private function resolveApartment(?int $apartmentId, ?int $roomsCount): ?Apartment
@@ -224,7 +276,7 @@ class StripeController extends Controller
 
         $reservationExists = Reservation::query()
             ->where('apart_id', $apartmentId)
-            ->whereIn('status', ['pending', 'paid'])
+            ->occupying()
             ->whereDate('checkin', '<', $checkout->toDateString())
             ->whereDate('checkout', '>', $checkin->toDateString())
             ->exists();
@@ -234,6 +286,7 @@ class StripeController extends Controller
         }
 
         return Payment::query()
+            ->whereNull('reservation_id')
             ->where('apart_id', $apartmentId)
             ->whereNotNull('checkin')
             ->whereNotNull('checkout')
