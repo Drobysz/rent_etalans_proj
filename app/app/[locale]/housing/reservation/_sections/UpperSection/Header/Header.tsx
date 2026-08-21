@@ -1,22 +1,31 @@
 import { cn } from "@/lib/utils";
 import s from "../style.module.scss";
-import { bilbo_swash_caps } from "@/fonts/fonts";
+import { bagel } from "@/fonts/fonts";
 import { useTranslations } from "next-intl";
+import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
+import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
 
 export const Header = ()=> {
     const t = useTranslations("reservation.header");
 
     return (
         <header className={s.header}>
-            <h1 className={cn(
-                bilbo_swash_caps.className,
-                s.title
-            )}>
+            <SplitByRowsText 
+                className={cn(
+                    bagel.className,
+                    s.title
+                )}
+                tag="h1"
+            >
                 {t("title")}
-            </h1>
-            <p className={s.subtitle}>
+            </SplitByRowsText>
+            <SplitText 
+                className={s.subtitle}
+                tag="p"
+                animationType="blurred"
+            >
                 {t("subtitle")}
-            </p>
+            </SplitText>
         </header>
     )
 }

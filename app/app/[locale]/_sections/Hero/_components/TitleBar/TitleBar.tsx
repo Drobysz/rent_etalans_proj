@@ -4,6 +4,7 @@ import s from './style.module.scss';
 import { cn } from "@/lib/utils";
 import { bilbo_swash_caps } from "@/fonts/fonts";
 import { useTranslations } from "next-intl";
+import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
 
 export const TitleBar = ({
     count,
@@ -34,10 +35,12 @@ export const TitleBar = ({
                 ))}
             </ul>
             <div className={s.inner_content}>
-                <h2 className={cn(
-                    "text-5xl max-[768px]:text-2xl",
-                    bilbo_swash_caps.className,
-                )}>
+                <h2 
+                    className={cn(
+                        "text-5xl max-[768px]:text-2xl",
+                        bilbo_swash_caps.className,
+                    )}
+                >
                     {article.label}
                 </h2>
 
@@ -46,7 +49,12 @@ export const TitleBar = ({
                     href={article.href}
                     className={s.link}
                 >
-                    {t("view")}
+                    <SplitText
+                        tag="span"
+                        className="w-fit leading-3"
+                    >
+                        {t("view")}
+                    </SplitText>
                 </Link>
             </div>
         </article>

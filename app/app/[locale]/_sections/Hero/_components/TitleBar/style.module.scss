@@ -8,12 +8,12 @@
 }
 
 .inner_content {
-    @apply flex items-center gap-3 justify-between;
+    @apply flex items-center gap-5 justify-between;
 }
 
 .link {
     @apply duration-300 transition-all hover:scale-102
-        hover:opacity-85 pt-0.5;
+        hover:opacity-85 pt-0.5 flex items-center;
 }
 
 .bar_progress_lines {

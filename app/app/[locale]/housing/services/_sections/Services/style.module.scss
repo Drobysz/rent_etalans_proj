@@ -5,7 +5,8 @@
 }
 
 .title {
-    @apply text-amber-500 text-center text-3xl;
+    @apply text-amber-500 text-3xl
+        flex;
 }
 
 @media (max-width: 1024px) {

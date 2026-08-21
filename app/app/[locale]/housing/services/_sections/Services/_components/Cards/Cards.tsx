@@ -8,7 +8,6 @@ import { useContext } from "react";
 import { GlobalContext } from "@/app/[locale]/context/global.context";
 import { getLocalizedServiceDescription } from "@/helpers";
 import { useLocale, useTranslations } from "next-intl";
-import { useWindowWidth } from "@/hooks";
 
 export const Cards = ()=> {
     const t = useTranslations("services");

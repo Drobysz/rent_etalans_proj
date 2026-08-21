@@ -5,6 +5,7 @@ import s from "./style.module.scss";
 import articles from "./articlesData";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
 
 export const Articles = ()=> {
     const [hover, setHover] = useState(false);
@@ -12,10 +13,19 @@ export const Articles = ()=> {
 
     return (
         <section className="flex flex-col gap-4">
-            <header>
-                <h2 className={s.title}>
+            <header className="flex flex-col gap-5">
+                <div className="px-3">
+                    <hr 
+                        className={s.line}
+                    />
+                </div>
+                <SplitText 
+                    className={s.title}
+                    tag="h2"
+                    animationType="unwrapping"
+                >
                     {t("title")}
-                </h2>
+                </SplitText>
             </header>
             <div 
                 className={s.articles}

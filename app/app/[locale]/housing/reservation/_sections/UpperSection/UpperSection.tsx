@@ -8,6 +8,9 @@ import { bagel } from "@/fonts/fonts";
 import { Header } from "./Header/Header";
 import { useWindowWidth } from "@/hooks";
 import { useTranslations } from "next-intl";
+import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
+import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
 
 export const UpperSection = ()=> {
     const isDesktop = useWindowWidth(860) as boolean;
@@ -16,39 +19,53 @@ export const UpperSection = ()=> {
     return (
         <section className={s.upper_section}>
             {!isDesktop && <Header />}
-            <ImageSwitcher 
-                images={apartmentImages}
-                nb_lits={2}
-                format3d={false}
-                isImageLocal
-                imageCoverClassName={s.image_cover}
-            />
+            <ViewReveal>
+                <ImageSwitcher 
+                    images={apartmentImages}
+                    nb_lits={2}
+                    format3d={false}
+                    isImageLocal
+                    imageCoverClassName={s.image_cover}
+                />
+            </ViewReveal>
             <div className="flex flex-col gap-8">
                 {isDesktop && <Header />}
                 <div className={s.paragraph}>
-                    <h2 className={cn(
-                        s.paragraph_title,
-                        bagel.className
-                    )}>
+                    <SplitByRowsText 
+                        className={cn(
+                            s.paragraph_title,
+                            bagel.className
+                        )}
+                        tag="h2"
+                    >
                         {t("housingTitle")}
-                    </h2>
+                    </SplitByRowsText>
 
-                    <p className={s.desc}>
+                    <SplitText 
+                        className={s.desc}
+                        tag="p"
+                    >
                         {t("housingDescription")}
-                    </p>
+                    </SplitText>
                 </div>
 
                 <div className={s.paragraph}>
-                    <h2 className={cn(
-                        s.paragraph_title,
-                        bagel.className
-                    )}>
+                    <SplitByRowsText 
+                        className={cn(
+                            s.paragraph_title,
+                            bagel.className
+                        )}
+                        tag="h2"
+                    >
                         {t("notesTitle")}
-                    </h2>
+                    </SplitByRowsText>
 
-                    <p className={s.desc}>
+                    <SplitText 
+                        className={s.desc}
+                        tag="p"
+                    >
                         {t("notesDescription")}
-                    </p>
+                    </SplitText>
                 </div>
             </div>
         </section>

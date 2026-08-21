@@ -1,5 +1,8 @@
 import { useTranslations } from "next-intl";
 import s from "./style.module.scss";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
+import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
+import { SplitText } from "@/components/animations/Texts/SplitText/SplitText";
 
 export const Map = ()=> {
     const t = useTranslations("reservation.map");
@@ -7,14 +10,23 @@ export const Map = ()=> {
     return (
         <section className="flex flex-col gap-4 self-stretch max-[590px]:gap-2">
             <header className={s.header}>
-                <h2 className={s.title}>
+                <SplitByRowsText 
+                    className={s.title}
+                    tag="h2"
+                >
                     {t("title")}
-                </h2>
-                <p className={s.subtitle}>
+                </SplitByRowsText>
+                <SplitText 
+                    className={s.subtitle}
+                    tag="p"
+                >
                     {t("subtitle")}
-                </p>
+                </SplitText>
             </header>
-            <div className={s.map}>
+            <ViewReveal 
+                className={s.map}
+                animationType="disclosure"
+            >
                 <iframe 
                     src="https://shorturl.at/f6LFu" 
                     width="100%" 
@@ -26,7 +38,7 @@ export const Map = ()=> {
                     loading="lazy" 
                     referrerPolicy="strict-origin-when-cross-origin" 
                 />
-            </div>
+            </ViewReveal>
         </section>
     )
 }

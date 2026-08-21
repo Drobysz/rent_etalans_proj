@@ -16,6 +16,7 @@ import { useReservation } from "../../context/reservation.context";
 import { DatePicker } from "./DatePicker";
 import { Dropdown, type DropdownOption } from "./Dropdown";
 import s from "./style.module.scss";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
 
 const defaultApartments: Apartment[] = [
     {

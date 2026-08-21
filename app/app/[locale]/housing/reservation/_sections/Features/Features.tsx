@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import s from "./style.module.scss";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
 
 export const Features = ()=> {
     const t = useTranslations("reservation.features");
@@ -23,7 +24,9 @@ export const Features = ()=> {
     ];
 
     return (
-        <section>
+        <ViewReveal
+            as="section"
+        >
             <ul className={s.features_list}>
                 {featuresList.map((
                     {Icon, label}, idx
@@ -41,6 +44,6 @@ export const Features = ()=> {
                     </li>
                 )}
             </ul>
-        </section>
+        </ViewReveal>
     )
 }

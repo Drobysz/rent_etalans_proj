@@ -5,6 +5,7 @@ import s from './style.module.scss';
 import { TitleBar } from './_components';
 import { motion } from 'framer-motion';
 import { PathService } from '@/helpers/path';
+import { ViewReveal } from '@/components/animations/ViewReveal/ViewReveal';
 
 export const Hero = () => {
     const [imgId, setImgId] = useState(0);
@@ -26,30 +27,22 @@ export const Hero = () => {
     }, [imgId, articlesCount]);
 
     return (
-        <motion.section
-            initial={{ 
-                scale: 0.85,
-                width: "50%",
-                height: "10%",
-                translate: "35%"
-            }}
-            animate={{ 
-                scale: 1,
-                width: "100%",
-                height: "100%",
-                translate: "0%"
-            }}
-            transition={{ duration: 1 }}
+        <ViewReveal
+            as="section"
+            animationType="disclosure"
             className='overflow-hidden'
         >
             <motion.div
+                viewport={{
+                    once: true,
+                }}
                 initial={{ 
-                    opacity: 0,
+                    filter: "blur(10px)",
                 }}
                 animate={{ 
-                    opacity: 1,
+                    filter: "blur(0px)",
                 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 1.2 }}
                 className={s.body}
                 style={{
                     backgroundImage: `url('${PathService.withBasePath(articles[imgId].src)}')`,
@@ -61,6 +54,6 @@ export const Hero = () => {
                     imgId={imgId} 
                 />
             </motion.div>
-        </motion.section>
+        </ViewReveal>
     )
 }

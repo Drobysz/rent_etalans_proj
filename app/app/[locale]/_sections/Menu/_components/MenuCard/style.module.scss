@@ -2,7 +2,7 @@
 
 .card {
     @apply flex flex-col gap-4 
-        h-100;
+        h-115;
     flex: 1 1 0;
     transition: flex-grow .35s ease;
 }
@@ -22,7 +22,7 @@
         h-4 w-4;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 575px) {
     .article {
         @apply h-50;
         background-size: cover;

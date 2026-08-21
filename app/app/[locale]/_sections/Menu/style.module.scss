@@ -2,7 +2,7 @@
 
 .container {
     @apply grid justify-center;
-    grid-template-columns: auto minmax(275px, 950px) auto;
+    grid-template-columns: auto minmax(275px, 1050px) auto;
     grid-template-areas: ". main .";
 }
 

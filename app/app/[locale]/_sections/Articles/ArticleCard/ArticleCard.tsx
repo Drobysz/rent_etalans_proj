@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { bagel } from "@/fonts/fonts";
 import { useWindowWidth } from "@/hooks";
 import { useTranslations } from "next-intl";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
 
 export const ArticleCard = ({
     label, href, img_url,
@@ -19,7 +20,8 @@ export const ArticleCard = ({
     const t = useTranslations("home.articles");
 
     return (
-        <article 
+        <ViewReveal
+            as="article" 
             className={cn(
                 s.article,
                 isConcealed && "blur-xs",
@@ -60,6 +62,6 @@ export const ArticleCard = ({
                     {t("view")}
                 </a>
             </div>
-        </article>
+        </ViewReveal>
     )
 }

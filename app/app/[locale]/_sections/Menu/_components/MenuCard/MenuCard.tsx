@@ -8,6 +8,8 @@ import { MoveRight } from "lucide-react";
 import { MenuCardProps } from "./MenuCards.props";
 import { PathService } from "@/helpers/path";
 import { useWindowWidth } from "@/hooks";
+import { ViewReveal } from "@/components/animations/ViewReveal/ViewReveal";
+import { SplitByRowsText } from "@/components/animations/Texts/SplitByRowsText/SplitByRowsText";
 
 export const MenuCard = ({
     className,
@@ -21,7 +23,8 @@ export const MenuCard = ({
     const isLabelVisible = !isDesktop || !areCardsHovered || hover;
 
     return (
-        <article 
+        <ViewReveal
+            as="article" 
             onMouseEnter={()=> setHover(true)}
             onMouseLeave={()=> setHover(false)}
             className={cn(
@@ -47,7 +50,12 @@ export const MenuCard = ({
                     !isLabelVisible && "opacity-0"
                 )}
             >
-                {label}
+                <SplitByRowsText
+                    tag="span"
+                    className="text-2xl"
+                >
+                    {label}
+                </SplitByRowsText>
                 <MoveRight 
                     className={cn(
                         s.arrow,
@@ -56,6 +64,6 @@ export const MenuCard = ({
                     )}
                 />
             </h2>            
-        </article>
+        </ViewReveal>
     )
 }

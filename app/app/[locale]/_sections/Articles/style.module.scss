@@ -1,7 +1,12 @@
 @reference "tailwindcss";
 
 .title {
-    @apply text-4xl text-neutral-700 pl-3;
+    @apply text-4xl text-neutral-600 pl-3;
+}
+
+.line {
+    @apply text-zinc-300 bg-zinc-300 
+        h-0.5 rounded-full;
 }
 
 .articles {
