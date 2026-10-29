@@ -142,6 +142,9 @@ export async function createSiteMetadata(locale: string): Promise<Metadata> {
       images: [image],
     },
     robots: getPublicRobots(),
+    verification: {
+      google: "eAcZK48rcMdUn3lLZQcqaL8Oz_7mq7nQ4i4IT2d9Lv4"
+    }
   };
 }
 

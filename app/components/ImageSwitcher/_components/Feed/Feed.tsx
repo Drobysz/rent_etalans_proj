@@ -100,7 +100,7 @@ export const Feed = ({
       }
 
       if (isSwipeRight) {
-       goPrev();
+        goPrev();
       }
     };
 
